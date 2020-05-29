@@ -1,0 +1,19 @@
+{
+  "name": "yacht-z",
+  "version": "1.0.0",
+  "description": "Making Yatch-z with best html css practices for cse 190",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sssaiya/yacht-z.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sssaiya/yacht-z/issues"
+  },
+  "homepage": "https://github.com/sssaiya/yacht-z#readme"
+}
