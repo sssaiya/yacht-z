@@ -11,6 +11,7 @@
     "test": "npm run lint && npm run validate",
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
+    "build-prod": "",
     "css": ""
   },
   "repository": {
