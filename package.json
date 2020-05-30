@@ -6,10 +6,12 @@
   "scripts": {
     "serve": "firebase serve",
     "local": "wait-on http://localhost:5000 && open http://localhost:5000 & npm run serve",
-    "prelocal": "npm run lint",
+    "prelocal": "npm run lint && npm run validate",
     "postlocal": "kill -9 $(lsof -t -i:5000)",
-    "test": "npm run lint",
-    "lint": "eslint public/*.js"
+    "test": "npm run lint && npm run validate",
+    "lint": "eslint public/*.js",
+    "validate": "html-validate public/*.html",
+    "css" :""
   },
   "repository": {
     "type": "git",
