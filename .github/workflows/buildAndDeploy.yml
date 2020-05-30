@@ -14,7 +14,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build
-        run: npm run build-prod
+        -run: npm run build-prod
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
@@ -36,5 +36,10 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
+
+      - name: Add Lighthouse
+        -run: npm run lighthouse:ci
+        -run: deploy ../public/lighthouse-report.html
+        
         env:
           FIREBASE_TOKEN: ${{ '1//06gjH5ddXVmbKCgYIARAAGAYSNgF-L9Ir_kyglWO9umc9lc1f_HJjB7zby9IVN0jRGQCq0RZTIe7aF_tJiceV3Rv8cqFvGiDUYQ' }}
