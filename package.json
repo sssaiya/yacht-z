@@ -4,7 +4,14 @@
   "description": "Making Yatch-z with best html css practices for cse 190",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "firebase serve",
+    "local": "wait-on http://localhost:5000 && open http://localhost:5000 & npm run serve",
+    "prelocal": "npm run lint && npm run validate",
+    "postlocal": "kill -9 $(lsof -t -i:5000)",
+    "test": "npm run lint && npm run validate",
+    "lint": "eslint public/*.js",
+    "validate": "html-validate public/*.html",
+    "css" :""
   },
   "repository": {
     "type": "git",
@@ -15,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/sssaiya/yacht-z/issues"
   },
-  "homepage": "https://github.com/sssaiya/yacht-z#readme"
+  "homepage": "https://github.com/sssaiya/yacht-z#readme",
+  "dependencies": {
+    "wait-on": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0"
+  }
 }
