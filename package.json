@@ -11,7 +11,7 @@
     "test": "npm run lint && npm run validate",
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
-    "css" :""
+    "css": ""
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/sssaiya/yacht-z#readme",
   "dependencies": {
+    "html-validate": "^2.23.0",
     "wait-on": "^5.0.0"
   },
   "devDependencies": {
