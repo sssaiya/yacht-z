@@ -38,8 +38,9 @@ jobs:
           args: deploy --only hosting
 
       - name: Add Lighthouse
-      - run: npm run lighthouse:ci
-      - run: deploy ../public/lighthouse-report.html
+      - run: |
+        npm run lighthouse:ci
+        deploy ../public/lighthouse-report.html
 
-        env:
+      env:
           FIREBASE_TOKEN: ${{ '1//06gjH5ddXVmbKCgYIARAAGAYSNgF-L9Ir_kyglWO9umc9lc1f_HJjB7zby9IVN0jRGQCq0RZTIe7aF_tJiceV3Rv8cqFvGiDUYQ' }}
