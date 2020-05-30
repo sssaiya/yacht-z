@@ -38,7 +38,7 @@ jobs:
           args: deploy --only hosting
 
       - name: Add Lighthouse
-      - run: |
+        run: |
         npm run lighthouse:ci
         deploy ../public/lighthouse-report.html
 
