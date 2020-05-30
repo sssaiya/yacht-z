@@ -13,7 +13,9 @@
     "validate": "html-validate public/*.html",
     "build-prod": "",
     "css": "",
-    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-report.html --quiet --chrome-flags='--headless' https://kitconcept.com"
+    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-report.html --quiet --chrome-flags='--headless' https://yacht-z.web.app/",
+    "lighthouse": "wait-on http://localhost:5000 && node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-localhost-report.html --view --quiet --chrome-flags='--headless' http://localhost:5000 & npm run serve",
+    "postlighthouse": "kill -9 $(lsof -t -i:5000)"
   },
   "repository": {
     "type": "git",
@@ -27,10 +29,10 @@
   "homepage": "https://github.com/sssaiya/yacht-z#readme",
   "dependencies": {
     "html-validate": "^2.23.0",
-    "lighthouse": "^6.0.0",
     "wait-on": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.1.0"
+    "eslint": "^7.1.0",
+    "lighthouse": "^6.0.0"
   }
 }
