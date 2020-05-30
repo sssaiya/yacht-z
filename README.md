@@ -1,3 +1,5 @@
+![Build and Deploy](https://github.com/sssaiya/yacht-z/workflows/Build%20and%20Deploy/badge.svg?branch=master)
+
 # Yacht-z
 
 ### Commands
@@ -14,7 +16,7 @@ Runs unit tests
 
 Runs Lighthouse report on localhost, result in lighthouse-localhouse-report.html
 
-
+### Deployment
 
 All Pushes to master on successfull checks will build website and deploy to
 
