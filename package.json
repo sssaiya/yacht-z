@@ -11,9 +11,9 @@
     "test": "npm run lint && npm run validate",
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
-    "build-prod": "",
+    "build-prod": "npm run lighthouse:ci",
     "css": "",
-    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-report.html --quiet --chrome-flags='--headless' https://yacht-z.web.app/",
+    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./public/lighthouse-report.html --quiet --chrome-flags='--headless' https://yacht-z.web.app/",
     "lighthouse": "wait-on http://localhost:5000 && node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-localhost-report.html --view --quiet --chrome-flags='--headless' http://localhost:5000 & npm run serve",
     "postlighthouse": "kill -9 $(lsof -t -i:5000)"
   },
