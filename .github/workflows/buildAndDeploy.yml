@@ -39,7 +39,7 @@ jobs:
 
       - name: Add Lighthouse
         run: |
-        npm run lighthouse:ci
+        npm run lighthouse:ci |
         deploy ../public/lighthouse-report.html
 
       env:
