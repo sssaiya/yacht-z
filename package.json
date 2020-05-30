@@ -12,7 +12,8 @@
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
     "build-prod": "",
-    "css": ""
+    "css": "",
+    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-report.html --quiet --chrome-flags='--headless' https://kitconcept.com"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/sssaiya/yacht-z#readme",
   "dependencies": {
     "html-validate": "^2.23.0",
+    "lighthouse": "^6.0.0",
     "wait-on": "^5.0.0"
   },
   "devDependencies": {
