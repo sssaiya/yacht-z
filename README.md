@@ -19,3 +19,7 @@ Runs Lighthouse report on localhost, result in lighthouse-localhouse-report.html
 All Pushes to master on successfull checks will build website and deploy to
 
 https://yacht-z.web.app/
+
+And will generate an update Lighthouse report on
+
+https://yacht-z.web.app/lighthouse-report.html
