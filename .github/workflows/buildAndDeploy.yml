@@ -15,6 +15,10 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build-prod
+
+      - name: Make Lighthouse report
+        run: npm run lighthouse:ci
+        
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
@@ -27,6 +31,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
+      
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
@@ -36,5 +41,8 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
+      
+
+
         env:
           FIREBASE_TOKEN: ${{ '1//06gjH5ddXVmbKCgYIARAAGAYSNgF-L9Ir_kyglWO9umc9lc1f_HJjB7zby9IVN0jRGQCq0RZTIe7aF_tJiceV3Rv8cqFvGiDUYQ' }}
