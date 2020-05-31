@@ -30,7 +30,3 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Linting JS
       run: npm run lint
-
-  lighthouse: actions/setup-node@v1
-      - run: npm install -g @lhci/cli@0.4.x
-      - run: lhci autorun --upload.target=temporary-public-storage
