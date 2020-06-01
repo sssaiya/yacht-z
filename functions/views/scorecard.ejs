@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yacht-Z</title>
+
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    #diceRollsForm {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Yacht-Z</h1>
+  </header>
+  <main>
+    <form id="scorecardForm" method="post" action="/app">
+      <table id="scorecard">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">You</th>
+            <th scope="col">Opponent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Ones</th>
+            <td>
+              <% if (typeof body.ones !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="ones">
+              <% } else { %>
+                <button name="ones" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Twos</th>
+            <td>
+              <% if (typeof body.twos !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="twos">
+              <% } else { %>
+                <button name="twos" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Threes</th>
+            <td>
+              <% if (typeof body.threes !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="threes">
+              <% } else { %>
+                <button name="threes" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Fours</th>
+            <td>
+              <% if (typeof body.fours !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="fours">
+              <% } else { %>
+                <button name="fours" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Fives</th>
+            <td>
+              <% if (typeof body.fives !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="fives">
+              <% } else { %>
+                <button name="fives" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Sixes</th>
+            <td>
+              <% if (typeof body.sixes !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="sixes">
+              <% } else { %>
+                <button name="sixes" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Sum</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Bonus</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Three of a Kind</th>
+            <td>
+              <% if (typeof body.threeOfAKind !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="threeOfAKind">
+              <% } else { %>
+                <button name="threeOfAKind" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Four of a Kind</th>
+            <td>
+              <% if (typeof body.fourOfAKind !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="fourOfAKind">
+              <% } else { %>
+                <button name="fourOfAKind" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Full House</th>
+            <td>
+              <% if (typeof body.fullHouse !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="fullHouse">
+              <% } else { %>
+                <button name="fullHouse" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Small Straight</th>
+            <td>
+              <% if (typeof body.smallStraight !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="smallStraight">
+              <% } else { %>
+                <button name="smallStraight" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Large Straight</th>
+            <td>
+              <% if (typeof body.largeStraight !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="largeStraight">
+              <% } else { %>
+                <button name="largeStraight" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Chance</th>
+            <td>
+              <% if (typeof body.chance !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="chance">
+              <% } else { %>
+                <button name="chance" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">YACHT-Z</th>
+            <td>
+              <% if (typeof body.yachtZ !== 'undefined') { %>
+                <p><%= body.dicetotal %></p>
+                <input type="hidden" name="yachtZ">
+              <% } else { %>
+                <button name="yachtZ" type="submit">Select</button>
+              <% } %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">TOTAL SCORE</th>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table id="diceRolls">
+        <thead>
+          <tr>
+            <td colspan="7"></td>
+            <th scope="col">Total:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Dice:</th>
+            <td>
+              <% if (typeof body.die1 !== 'undefined') { %>
+                <%= dice.pop() %>
+              <% } else { %>
+                0
+              <% } %>
+            </td>
+            <td>
+              <% if (typeof body.die2 !== 'undefined') { %>
+                <%= dice.pop() %>
+              <% } else { %>
+                0
+              <% } %>
+            </td>
+            <td>
+              <% if (typeof body.die3 !== 'undefined') { %>
+                <%= dice.pop() %>
+              <% } else { %>
+                0
+              <% } %>
+            </td>
+            <td>
+              <% if (typeof body.die4 !== 'undefined') { %>
+                <%= dice.pop() %>
+              <% } else { %>
+                0
+              <% } %>
+            </td>
+            <td>
+              <% if (typeof body.die5 !== 'undefined') { %>
+                <%= dice.pop() %>
+              <% } else { %>
+                0
+              <% } %>
+            </td>
+            <td>
+              <% if (typeof body.die6 !== 'undefined') { %>
+                <%= dice.pop() %>
+              <% } else { %>
+                0
+              <% } %>
+            </td>
+            <td id="dicetotal">
+              <%= body.dicetotal %>
+              <input type="hidden" name="dicetotal" value="<%= body.dicetotal %>">
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Re-roll:</th>
+            <td>
+              <input id="die1" name="die1" type="checkbox">
+            </td>
+            <td>
+              <input id="die2" name="die2" type="checkbox">
+            </td>
+            <td>
+              <input id="die3" name="die3" type="checkbox">
+            </td>
+            <td>
+              <input id="die4" name="die4" type="checkbox">
+            </td>
+            <td>
+              <input id="die5" name="die5" type="checkbox">
+            </td>
+            <td>
+              <input id="die6" name="die6" type="checkbox">
+            </td>
+            <td>
+              <button name="roll" type="submit">Roll</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </main>
+</body>
+</html>
