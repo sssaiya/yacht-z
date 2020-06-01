@@ -3,6 +3,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 const cors = require('cors');
+const path = require('path');
 const express = require('express');
 const app = express();
 
@@ -15,9 +16,10 @@ app.use(cors({ origin: true }));
 
 // Route handler for the move choice
 app.get('/move/:choice', (req, res) => {
+  let options = [];
   let moveChoice = req.params.choice;
 
-  if (moveChoice === 'ones') {
+  /*if (moveChoice === 'ones') {
     res.status(200).send(moveChoice);
   } else if (moveChoice === 'twos') {
     res.status(200).send(moveChoice);
@@ -45,7 +47,8 @@ app.get('/move/:choice', (req, res) => {
     res.status(200).send(moveChoice);
   } else {
     res.status(200).send('Not recognized');
-  }
+  }*/
+  res.sendFile(path.join(__dirname, '../public/scorecard.html'));
 });
 
 // Route handler for a basic roll
