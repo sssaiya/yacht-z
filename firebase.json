@@ -1,11 +1,20 @@
 {
   "hosting": {
     "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ], 
+    "cleanUrls": true,
     "rewrites": [
       {
-        "source": "**",
-        "function": "app"
+        "source": "/move/*",
+        "function": "move"
+      },
+      {
+        "source": "/roll/*",
+        "function": "move"
       }
     ]
   },
