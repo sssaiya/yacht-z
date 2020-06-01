@@ -46,7 +46,6 @@ app.get('/move/:choice', (req, res) => {
   } else {
     res.status(200).send('Not recognized');
   }
-  
 });
 
 // Route handler for a basic roll

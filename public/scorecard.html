@@ -26,7 +26,7 @@
     <h1>Yacht-Z</h1>
   </header>
   <main>
-    <form action="/move" method="get">
+    <form method="post">
       <table id="scorecard">
         <thead>
           <tr>
@@ -38,104 +38,104 @@
         <tbody>
           <tr>
             <th scope="row">Ones</th>
-            <td class="player ones">
-                <button type="submit">Select</button>
+            <td class="player ones" id="player-ones">
+                <button type="submit" formaction="/move/ones">Select</button>
             </td>
-            <td class="opponent ones"></td>
+            <td class="opponent ones" id="opponent-ones"></td>
           </tr>
           <tr>
             <th scope="row">Twos</th>
-            <td class="player twos">
-                <button type="submit">Select</button>
+            <td class="player twos" id="player-twos">
+                <button type="submit" formaction="/move/twos">Select</button>
             </td>
-            <td class="opponent twos"></td>
+            <td class="opponent twos" id="opponent-twos"></td>
           </tr>
           <tr>
             <th scope="row">Threes</th>
-            <td class="player threes">
-              <button type="submit">Select</button>
+            <td class="player threes" id="player-threes">
+              <button type="submit" formaction="/move/threes">Select</button>
             </td>
-            <td class="opponent threes"></td>
+            <td class="opponent threes" id="opponent-threes"></td>
           </tr>
           <tr>
             <th scope="row">Fours</th>
-            <td class="player fours">
-              <button type="submit">Select</button>
+            <td class="player fours" id="player-fours">
+              <button type="submit" formaction="/move/fours">Select</button>
             </td>
-            <td class="opponent fours"></td>
+            <td class="opponent fours" id="opponent-fours"></td>
           </tr>
           <tr>
             <th scope="row">Fives</th>
-            <td class="player fives">
-              <button type="submit">Select</button>
+            <td class="player fives" id="player-fives">
+              <button type="submit" formaction="/move/fives">Select</button>
             </td>
-            <td class="opponent fives"></td>
+            <td class="opponent fives" id="opponent-fives"></td>
           </tr>
           <tr>
             <th scope="row">Sixes</th>
-            <td class="player sixes">
-                <button type="submit">Select</button>
+            <td class="player sixes" id="player-sixes">
+                <button type="submit" formaction="/move/sixes">Select</button>
             </td>
-            <td class="opponent sixes"></td>
+            <td class="opponent sixes" id="opponent-sixes"></td>
           </tr>
           <tr>
             <th scope="row">Sum</th>
-            <td class="player sum"></td>
-            <td class="opponent sum"></td>
+            <td class="player sum" id="player-sum"></td>
+            <td class="opponent sum" id="opponent-sum"></td>
           </tr>
           <tr>
             <th scope="row">Bonus</th>
-            <td class="player bonus"></td>
-            <td class="opponent bonus"></td>
+            <td class="player bonus" id="player-bonus"></td>
+            <td class="opponent bonus" id="opponent-bonus"></td>
           </tr>
           <tr>
             <th scope="row">Three of a Kind</th>
-            <td class="player three-of-a-kind">
-              <button type="submit">Select</button>
+            <td class="player three-of-a-kind" id="player-three-of-a-kind">
+              <button type="submit" formaction="/move/three-of-a-kind">Select</button>
             </td>
-            <td class="opponent three-of-a-kind"></td>
+            <td class="opponent three-of-a-kind" id="opponent-three-of-a-kind"></td>
           </tr>
-          <tr> 
+          <tr>
             <th scope="row">Four of a Kind</th>
-            <td class="player four-of-a-kind">
-              <button type="submit">Select</button>
+            <td class="player four-of-a-kind" id="player-four-of-a-kind">
+              <button type="submit" formaction="/move/four-of-a-kind">Select</button>
             </td>
-            <td class="opponent four-of-a-kind"></td>
+            <td class="opponent four-of-a-kind" id="opponent-four-of-a-kind"></td>
           </tr>
           <tr>
             <th scope="row">Full House</th>
-            <td class="player full-house">
-              <button type="submit">Select</button>
+            <td class="player full-house" id="player-full-house">
+              <button type="submit" formaction="/move/full-house">Select</button>
             </td>
-            <td class="opponent full-house"></td>
+            <td class="opponent full-house" id="opponent-full-house"></td>
           </tr>
           <tr>
             <th scope="row">Small Straight</th>
-            <td class="player small-straight">
-                <button type="submit">Select</button>
+            <td class="player small-straight" id="playersmall-straight">
+                <button type="submit" formaction="/move/small-straight">Select</button>
             </td>
-            <td class="opponent small-straight"></td>
+            <td class="opponent small-straight" id="opponent-small-straight"></td>
           </tr>
           <tr>
             <th scope="row">Large Straight</th>
-            <td class="player large-straight">
-              <button type="submit">Select</button>
+            <td class="player large-straight" id="player-large-straight">
+              <button type="submit" formaction="/move/large-straight">Select</button>
             </td>
-            <td class="opponent large-straight"></td>
+            <td class="opponent large-straight" id="opponent-large-straight"></td>
           </tr>
           <tr>
             <th scope="row">Chance</th>
-            <td class="player chance">
-              <button type="submit">Select</button>
+            <td class="player chance" id="player-chance">
+              <button type="submit" formaction="/move/chance">Select</button>
             </td>
-            <td class="opponent chance"></td>
+            <td class="opponent chance" id="opponent-chance"></td>
           </tr>
           <tr>
             <th scope="row">YACHT-Z</th>
-            <td class="player yacht-z">
-              <button type="submit">Select</button>
+            <td class="player yacht-z" id="player-yacht-z">
+              <button type="submit" formaction="/move/yacht-z">Select</button>
             </td>
-            <td class="opponent yacht-z"></td>
+            <td class="opponent yacht-z" id="opponent-yacht-z"></td>
           </tr>
           <tr>
             <th scope="row">TOTAL SCORE</th>
