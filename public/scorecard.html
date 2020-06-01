@@ -27,159 +27,193 @@
   </header>
   <main>
     <table id="scorecard">
-      <tr>
-        <th></th>
-        <th>You</th>
-        <th>Opponent</th>
-      </tr>
-      <tr>
-        <th>Ones</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Twos</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Threes</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Fours</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Fives</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Sixes</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Sum</th>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Bonus</th>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Three of a Kind</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Four of a Kind</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Full House</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Small Straight</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Large Straight</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Chance</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>YACHT-Z</th>
-        <td>
-          <button>Select</button>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>TOTAL SCORE</th>
-        <td></td>
-        <td></td>
-      </tr>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">You</th>
+          <th scope="col">Opponent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Ones</th>
+          <td>
+            <form action="/move/ones" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Twos</th>
+          <td>
+            <form action="/move/twos" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Threes</th>
+          <td>
+            <form action="/move/threes" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Fours</th>
+          <td>
+            <form action="/move/fours" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Fives</th>
+          <td>
+            <form action="/move/fives" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Sixes</th>
+          <td>
+            <form action="/move/sixes" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Sum</th>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Bonus</th>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Three of a Kind</th>
+          <td>
+            <form action="/move/three-of-a-kind" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Four of a Kind</th>
+          <td>
+            <form action="/move/four-of-a-kind" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Full House</th>
+          <td>
+            <form action="/move/full-house" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Small Straight</th>
+          <td>
+            <form action="/move/small-straight" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Large Straight</th>
+          <td>
+            <form action="/move/large-straight" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Chance</th>
+          <td>
+            <form action="/move/chance" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">YACHT-Z</th>
+          <td>
+            <form action="/move/yacht-z" method="GET">
+              <button>Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">TOTAL SCORE</th>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
     </table>
 
-    <form id="diceRollsForm">
+    <form  action="/roll/1" id="diceRollsForm" method="POST">
       <table id="diceRolls">
-        <tr>
-          <td colspan="7"></td>
-          <th>Total:</th>
-        </tr>
-        <tr>
-          <th>Dice:</th>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-          <td>4</td>
-          <td>5</td>
-          <td>6</td>
-          <th id="diceTotal"></th>
-        </tr>
-        <tr>
-          <th>Re-roll:</th>
-          <td>
-            <input id="die1" name="die1" type="checkbox">
-          </td>
-          <td>
-            <input id="die2" name="die2" type="checkbox">
-          </td>
-          <td>
-            <input id="die3" name="die3" type="checkbox">
-          </td>
-          <td>
-            <input id="die4" name="die4" type="checkbox">
-          </td>
-          <td>
-            <input id="die5" name="die5" type="checkbox">
-          </td>
-          <td>
-            <input id="die6" name="die6" type="checkbox">
-          </td>
-          <td>
-            <input type="submit" value="Roll">
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <td colspan="7"></td>
+            <th scope="col">Total:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Dice:</th>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td id="diceTotal"></td>
+          </tr>
+          <tr>
+            <th scope="row">Re-roll:</th>
+            <td>
+              <input id="die1" name="die1" type="checkbox">
+            </td>
+            <td>
+              <input id="die2" name="die2" type="checkbox">
+            </td>
+            <td>
+              <input id="die3" name="die3" type="checkbox">
+            </td>
+            <td>
+              <input id="die4" name="die4" type="checkbox">
+            </td>
+            <td>
+              <input id="die5" name="die5" type="checkbox">
+            </td>
+            <td>
+              <input id="die6" name="die6" type="checkbox">
+            </td>
+            <td>
+              <button type="submit">Roll</button>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </form>
   </main>
