@@ -9,12 +9,8 @@
     "cleanUrls": true,
     "rewrites": [
       {
-        "source": "/move/*",
-        "function": "move"
-      },
-      {
-        "source": "/roll/*",
-        "function": "move"
+        "source": "/app",
+        "function": "app"
       }
     ]
   },

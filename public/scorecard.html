@@ -26,151 +26,100 @@
     <h1>Yacht-Z</h1>
   </header>
   <main>
-    <table id="scorecard">
-      <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">You</th>
-          <th scope="col">Opponent</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Ones</th>
-          <td>
-            <form action="/move/ones" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Twos</th>
-          <td>
-            <form action="/move/twos" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Threes</th>
-          <td>
-            <form action="/move/threes" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Fours</th>
-          <td>
-            <form action="/move/fours" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Fives</th>
-          <td>
-            <form action="/move/fives" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Sixes</th>
-          <td>
-            <form action="/move/sixes" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Sum</th>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Bonus</th>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Three of a Kind</th>
-          <td>
-            <form action="/move/three-of-a-kind" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Four of a Kind</th>
-          <td>
-            <form action="/move/four-of-a-kind" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Full House</th>
-          <td>
-            <form action="/move/full-house" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Small Straight</th>
-          <td>
-            <form action="/move/small-straight" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Large Straight</th>
-          <td>
-            <form action="/move/large-straight" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">Chance</th>
-          <td>
-            <form action="/move/chance" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">YACHT-Z</th>
-          <td>
-            <form action="/move/yacht-z" method="get">
-              <button type="submit">Select</button>
-            </form>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <th scope="row">TOTAL SCORE</th>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+    <form id="scorecardForm" method="get" action="/app">
+      <button type="submit">Start</button>
+      <table id="scorecard">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">You</th>
+            <th scope="col">Opponent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Ones</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Twos</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Threes</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Fours</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Fives</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Sixes</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Sum</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Bonus</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Three of a Kind</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Four of a Kind</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Full House</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Small Straight</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Large Straight</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Chance</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">YACHT-Z</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">TOTAL SCORE</th>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
 
-    <form  action="/roll/1" id="diceRollsForm" method="post">
       <table id="diceRolls">
         <thead>
           <tr>
@@ -181,37 +130,23 @@
         <tbody>
           <tr>
             <th scope="row">Dice:</th>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td id="diceTotal"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          <td id="diceTotal"></td>
           </tr>
           <tr>
             <th scope="row">Re-roll:</th>
-            <td>
-              <input id="die1" name="die1" type="checkbox">
-            </td>
-            <td>
-              <input id="die2" name="die2" type="checkbox">
-            </td>
-            <td>
-              <input id="die3" name="die3" type="checkbox">
-            </td>
-            <td>
-              <input id="die4" name="die4" type="checkbox">
-            </td>
-            <td>
-              <input id="die5" name="die5" type="checkbox">
-            </td>
-            <td>
-              <input id="die6" name="die6" type="checkbox">
-            </td>
-            <td>
-              <button type="submit">Roll</button>
-            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
