@@ -9,58 +9,63 @@ const app = express();
 // Allow cross-origin requests
 app.use(cors({ origin: true }));
 
-// app.get("/", (req, res) => {
-//     res.status(200).send(leaderboard)
-// });
+// ejs HTML templater
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
-// Route handler for the move choice
-app.get('/move/:choice', (req, res) => {
-  let moveChoice = req.params.choice;
+// Parse form post body
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
 
-  if (moveChoice === 'ones') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'twos') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'threes') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'fours') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'fives') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'sixes') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'three-of-a-kind') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'four-of-a-kind') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'full-house') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'small-straight') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'large-straight') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'chance') {
-    res.status(200).send(moveChoice);
-  } else if (moveChoice === 'yacht-z') {
-    res.status(200).send(moveChoice);
-  } else {
-    res.status(200).send('Not recognized');
-  }
-  
+// ejs views aoo - GET
+// For the initial start request
+app.get('/app', (req, res) => {
+  let diceRolls = [];
+  diceRolls = getNRolls(6);
+  let diceSum = 0;
+  diceRolls.forEach(num => { diceSum += num });
+  res.render('scorecard', { body: { 
+    dicetotal: diceSum, 
+    die1: '', 
+    die2: '',
+    die3: '',
+    die4: '',
+    die5: '',
+    die6: ''
+  }, dice: diceRolls });
 });
 
-// Route handler for a basic roll
-app.get('/roll/:numRolls', (req, res) => {
-  let numRolls = req.params.numRolls;
-  if (numRolls < 1 || numRolls > 6) {
-    res.status(400).send({error: 'Incorrect syntax'} );
+// ejs views app - POST
+// For every subsequent post
+app.post('/app', (req, res) => {
+  let diceRolls = [];
+
+  // Find num to reroll
+  let numRolls = 0;
+  Object.keys(req.body).forEach(elem => { 
+    if (elem.substr(0,3) === 'die') { 
+      numRolls += 1;
+    } 
+  });
+  
+  diceRolls = getNRolls(numRolls);
+  let diceSum = 0;
+  diceRolls.forEach(num => { diceSum += num });
+  req.body.dicetotal = diceSum;
+  res.render('scorecard', { body: req.body, dice: diceRolls });
+});
+
+// Rolls a die n number of times and returns an array
+function getNRolls(n) {
+  if (n < 1 || n > 6) {
+    return [];
   }
   let diceRolls = [];
-  for (let i = 0; i < numRolls; i++) {
+  for (let i = 0; i < n; i++) {
     diceRolls.push(1 + Math.floor(Math.random()*6));
   }
-  res.status(200).send(diceRolls);
-});
+  return diceRolls;
+}
 
 // Expose Express API as a single Cloud Function:
-exports.move = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app);
