@@ -1,10 +1,13 @@
 const functions = require("firebase-functions");
 // The Firebase Admin SDK to access Cloud Firestore.
-const admin = require("firebase-admin");
-admin.initializeApp();
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
+const cors = require('cors');
 const express = require("express");
 const app = express();
 
+// Allow cross-origin requests
+app.use(cors({ origin: true }));
 
 // app.get("/", (req, res) => {
 //     res.status(200).send(leaderboard)
@@ -67,4 +70,4 @@ app.get("/chance", (req, res) => {
 });
 
 // Expose Express API as a single Cloud Function:
-exports.widgets = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app);
