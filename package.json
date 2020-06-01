@@ -8,11 +8,12 @@
     "local": "wait-on http://localhost:5000 && open http://localhost:5000 & npm run serve",
     "prelocal": "npm run lint && npm run validate",
     "postlocal": "kill -9 $(lsof -t -i:5000)",
-    "test": "npm run lint && npm run validate",
+    "test": "npm run lint && npm run validate && npm run purgeDiff",
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
     "build-prod": "npm run lighthouse:ci",
-    "css": "",
+    "css": "node_modules/purgecss/bin/purgecss",
+    "purgeDiff": "node purgeCSSDiff.js",
     "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./public/lighthouse-report.html --quiet --chrome-flags='--headless' https://yacht-z.web.app/",
     "lighthouse": "wait-on http://localhost:5000 && node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-localhost-report.html --view --quiet --chrome-flags='--headless' http://localhost:5000 & npm run serve",
     "postlighthouse": "kill -9 $(lsof -t -i:5000)"
@@ -28,11 +29,13 @@
   },
   "homepage": "https://github.com/sssaiya/yacht-z#readme",
   "dependencies": {
+    "diff": "^4.0.2",
     "html-validate": "^2.23.0",
     "wait-on": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^7.1.0",
-    "lighthouse": "^6.0.0"
+    "lighthouse": "^6.0.0",
+    "purgecss": "2.2.0"
   }
 }
