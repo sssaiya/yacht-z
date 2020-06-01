@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yacht-Z</title>
+
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    #diceRollsForm {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Yacht-Z</h1>
+  </header>
+  <main>
+    <table id="scorecard">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">You</th>
+          <th scope="col">Opponent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Ones</th>
+          <td>
+            <form method="GET" action="/ones">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Twos</th>
+          <td>
+            <form method="GET" action="/twos">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Threes</th>
+          <td>
+            <form method="GET" action="/threes">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Fours</th>
+          <td>
+            <form method="GET" action="/fours">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Fives</th>
+          <td>
+            <form method="GET" action="/fives">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Sixes</th>
+          <td>
+            <form method="GET" action="/sixes">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Sum</th>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Bonus</th>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Three of a Kind</th>
+          <td>
+            <form method="GET" action="/three-of-a-kind">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Four of a Kind</th>
+          <td>
+            <form method="GET" action="/four-of-a-kind">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Full House</th>
+          <td>
+            <form method="GET" action="/full-house">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Small Straight</th>
+          <td>
+            <form method="GET" action="/small-straight">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Large Straight</th>
+          <td>
+            <form method="GET" action="/large-straight">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Chance</th>
+          <td>
+            <form method="GET" action="/chance">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">YACHT-Z</th>
+          <td>
+            <form method="GET" action="/yacht-z">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">TOTAL SCORE</th>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form id="diceRollsForm" method="POST" action="/dicerolls">
+      <table id="diceRolls">
+        <thead>
+          <tr>
+            <td colspan="7"></td>
+            <th scope="col">Total:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Dice:</th>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <th id="diceTotal" scope="row"></th>
+          </tr>
+          <tr>
+            <th scope="row">Re-roll:</th>
+            <td>
+              <input id="die1" name="die1" type="checkbox">
+            </td>
+            <td>
+              <input id="die2" name="die2" type="checkbox">
+            </td>
+            <td>
+              <input id="die3" name="die3" type="checkbox">
+            </td>
+            <td>
+              <input id="die4" name="die4" type="checkbox">
+            </td>
+            <td>
+              <input id="die5" name="die5" type="checkbox">
+            </td>
+            <td>
+              <input id="die6" name="die6" type="checkbox">
+            </td>
+            <td>
+              <button type="submit">Roll</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </main>
+</body>
+
+</html>
