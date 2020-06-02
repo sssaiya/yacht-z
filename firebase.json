@@ -9,6 +9,10 @@
     "cleanUrls": true,
     "rewrites": [
       {
+        "source": "/",
+        "function": "app"
+      },
+      {
         "source": "/app",
         "function": "app"
       }
