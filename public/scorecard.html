@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
   <!-- Add this to all HTMl pages of the app for it to be a PWA ! -->
   <link rel="manifest" href="manifest.webmanifest">
   <title>Yacht-Z</title>
 
   <style>
-    table, th, td {
+    table,
+    th,
+    td {
       border: 1px solid black;
       border-collapse: collapse;
       padding: 5px;
@@ -23,6 +27,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Yacht-Z</h1>
@@ -138,7 +143,7 @@
             <td></td>
             <td></td>
             <td></td>
-          <td id="diceTotal"></td>
+            <td id="diceTotal"></td>
           </tr>
           <tr>
             <th scope="row">Re-roll:</th>
@@ -154,5 +159,15 @@
       </table>
     </form>
   </main>
+
+  <!-- Install button, hidden by default -->
+  <div id="installContainer" class="hidden">
+    <button id="butInstall" type="button">
+      Install
+    </button>
+  </div>
+
+  <script src="scorecard.js"></script>
 </body>
+
 </html>
