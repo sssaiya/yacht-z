@@ -21,9 +21,6 @@ app.get('/', (req,res) =>{
   res.redirect('scorecard');
 })
 
-app.get('/lighthouse', (req,res) =>{
-  res.redirect('lighthouse-report');
-})
 
 // ejs views aoo - GET
 // For the initial start request

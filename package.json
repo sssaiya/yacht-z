@@ -18,6 +18,12 @@
     "lighthouse": "wait-on http://localhost:5000 && node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-localhost-report.html --view --quiet --chrome-flags='--headless' http://localhost:5000 & npm run serve",
     "postlighthouse": "kill -9 $(lsof -t -i:5000)"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sssaiya/yacht-z.git"
@@ -35,6 +41,7 @@
   },
   "devDependencies": {
     "eslint": "^7.1.0",
+    "husky": "^4.2.5",
     "lighthouse": "^6.0.0",
     "purgecss": "2.2.0"
   }
