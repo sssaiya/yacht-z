@@ -1,10 +1,8 @@
-![Build and Deploy](https://github.com/sssaiya/yacht-z/workflows/Build%20and%20Deploy/badge.svg?branch=master)
+[![Build and Deploy](https://github.com/sssaiya/yacht-z/workflows/Build%20and%20Deploy/badge.svg?branch=master)](https://github.com/sssaiya/yacht-z/actions?query=workflow%3A%22Build+and+Deploy%22) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2ac452595d5f44ba85536baca398893a)](https://app.codacy.com/manual/sssaiya/yacht-z?utm_source=github.com&utm_medium=referral&utm_content=sssaiya/yacht-z&utm_campaign=Badge_Grade_Dashboard)
 
 # Yacht-z
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2ac452595d5f44ba85536baca398893a)](https://app.codacy.com/manual/sssaiya/yacht-z?utm_source=github.com&utm_medium=referral&utm_content=sssaiya/yacht-z&utm_campaign=Badge_Grade_Dashboard)
-
-### Commands
+## Commands
 
 `npm run local`
 
@@ -18,12 +16,12 @@ Runs unit tests
 
 Runs Lighthouse report on localhost, result in lighthouse-localhouse-report.html
 
-### Deployment
+## Deployment
 
 All Pushes to master on successfull checks will build website and deploy to
 
-https://yacht-z.web.app/
+[Yacht-Z-App](https://yacht-z.web.app/)
 
 And will generate an update Lighthouse report on
 
-https://yacht-z.web.app/lighthouse-report.html
+[Lighthouse](https://yacht-z.web.app/lighthouse-report.html)
