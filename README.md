@@ -2,6 +2,8 @@
 
 # Yacht-z
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2ac452595d5f44ba85536baca398893a)](https://app.codacy.com/manual/sssaiya/yacht-z?utm_source=github.com&utm_medium=referral&utm_content=sssaiya/yacht-z&utm_campaign=Badge_Grade_Dashboard)
+
 ### Commands
 
 `npm run local`
