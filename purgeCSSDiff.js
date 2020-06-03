@@ -8,7 +8,9 @@ async function purge() {
       content: ["public/*.js", "public/*.html"],
       css: ["public/*.css"],
     })
-    .catch((e) => {});
+    .catch((e) => {
+      console.log(e);
+    });
 }
 Promise.resolve(purge()).then(function (value) {
   var removed = false;
@@ -30,12 +32,12 @@ Promise.resolve(purge()).then(function (value) {
           : "\x1b[42m";
 
         if (toRemove) {
-          console.log(color + "%s\x1b[0m", part.value);
+          console.error(color + "%s\x1b[0m", part.value);
           removed = true;
         }
       });
       if (!removed) {
-        console.log("\x1b[42m%s\x1b[0m", "✓ No Unused CSS in "+fileName);
+        console.log("\x1b[42m%s\x1b[0m", "✓ No Unused CSS in " + fileName);
         removed = false;
       }
     });
