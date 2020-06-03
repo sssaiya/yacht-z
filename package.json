@@ -9,6 +9,7 @@
     "prelocal": "npm run lint && npm run validate",
     "postlocal": "kill -9 $(lsof -t -i:5000)",
     "pretest": "npm run lint && npm run validate && npm run purgeDiff",
+    "test": "npm run test:unit",
     "test:unit": "mocha",
     "coverage": "nyc npm run test:unit",
     "lint": "eslint public/*.js",
