@@ -10,7 +10,7 @@
     "postlocal": "kill -9 $(lsof -t -i:5000)",
     "pretest": "npm run lint && npm run validate && npm run purgeDiff",
     "test": "npm run test:unit",
-    "test:unit": "mocha",
+    "test:unit": "",
     "coverage": "nyc npm run test:unit",
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
@@ -49,5 +49,11 @@
     "mocha": "^7.2.0",
     "nyc": "^15.1.0",
     "purgecss": "2.2.0"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "public/*.js"
+    ]
   }
 }
