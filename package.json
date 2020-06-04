@@ -8,7 +8,10 @@
     "local": "wait-on http://localhost:5000 && open http://localhost:5000 & npm run serve",
     "prelocal": "npm run lint && npm run validate",
     "postlocal": "kill -9 $(lsof -t -i:5000)",
-    "test": "npm run lint && npm run validate && npm run purgeDiff",
+    "pretest": "npm run lint && npm run validate && npm run purgeDiff",
+    "test": "",
+    "test:unit": "",
+    "coverage": "nyc npm test:unit",
     "lint": "eslint public/*.js",
     "validate": "html-validate public/*.html",
     "build-prod": "npm run lighthouse:ci",
@@ -43,6 +46,15 @@
     "eslint": "^7.1.0",
     "husky": "^4.2.5",
     "lighthouse": "^6.0.0",
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
     "purgecss": "2.2.0"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "public/*.js"
+    ],
+    "exclude": ["public/service-worker.js"]
   }
 }
