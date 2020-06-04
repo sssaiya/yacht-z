@@ -17,3 +17,51 @@
   font-size: 1em;
   padding: 0.75em;
 }
+
+/* My Styles */
+
+:root {
+  --body-font-stack:  Arial, Helvetica, sans-serif;
+  --header-font-stack:  Arial, Helvetica, sans-serif;
+}
+
+* {
+  font-family: var(--body-font-stack);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  align-items: center;
+  color: pink;
+}
+
+#scorecardForm {
+  min-width: 25vw;
+}
+
+#scorecard {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+#scorecard th {
+  width: 25%;
+}
+
+#scorecard th:first-child {
+  width: 50%;
+}
+
+#diceRolls {
+  width: 100%;
+}
+
+#diceRolls th:last-child {
+  width: 25%;
+}
+
