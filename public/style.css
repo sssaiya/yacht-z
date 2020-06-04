@@ -41,11 +41,17 @@ header {
 }
 
 #scorecardForm {
-  min-width: 25vw;
+  min-width: 50vw;
+  display: flex;
+  flex-direction: row;
+}
+
+#scorecardForm button {
+  height: fit-content;
 }
 
 #scorecard {
-  width: 100%;
+  /* width: 100%; */
   margin-bottom: 15px;
 }
 
@@ -58,7 +64,7 @@ header {
 }
 
 #diceRolls {
-  width: 100%;
+  /* width: 100%; */
 }
 
 #diceRolls th:last-child {
