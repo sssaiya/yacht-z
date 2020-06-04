@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Mocha Requires a <div> with ID Mocha to Inject UI -->
+    <div id="mocha"></div>
+
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script>mocha.setup('bdd')</script>
+
+    <!-- This Projects Libraries / Pieces of Code Here -->
+    <!-- <script src=”.....”></script> -->
+
+    <!-- This Projects Unit Tests Here -->
+    <script src="../sw/first-browser-test.js"></script>
+    <script src="../sw/wait-for-sw-state.js"></script>
+    <script src="../test.js"></script>
+
+    <script src="../sw/sw-test-cleanup.js"></script>
+
+
+    <script>
+        mocha.checkLeaks();
+        mocha.run();
+    </script>
+
+</body>
+
+</html>

@@ -15,11 +15,13 @@ async function purge() {
 Promise.resolve(purge()).then(function (value) {
   var removed = false;
   value.forEach(function (purged) {
-    const fileName = purged.file;
+    const fileName = purged.file.toString();
     const purgedCss = purged.css.toString();
     // console.log(fileName);
     fs.readFile(fileName, "utf8", function (err, data) {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       const originalCss = data.toString();
 
       var diff = jsdiff.diffCss(originalCss, purgedCss);
