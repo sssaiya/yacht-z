@@ -17,11 +17,8 @@ app.set("views", "./views");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.redirect("scorecard");
-});
 
-// ejs views aoo - GET
+// ejs views app - GET
 // For the initial start request
 app.get("/app", (req, res) => {
   let diceRolls = [];

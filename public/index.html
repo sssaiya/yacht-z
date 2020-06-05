@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    <!-- Add this to all HTMl pages of the app for it to be a PWA ! -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Yacht-Z</title>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        #diceRollsForm {
+            margin-top: 20px;
+        }
+
+        /* Single player button */
+
+        #singlePlayer {
+            position: absolute;
+            width: 586px;
+            height: 65px;
+            left: 427px;
+            top: 615px;
+
+            background: #C4C4C4;
+            border-radius: 5px;
+        }
+
+        /* Play Single-player Mode */
+
+        #singlePlayerText {
+            position: absolute;
+            width: 554px;
+            height: 36px;
+            left: 444px;
+            top: 631px;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 25px;
+            line-height: 29px;
+            text-align: center;
+
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Yacht-Z</h1>
+        <!-- <button type="submit" formmethod="get" formaction="/app?">Start</button> -->
+        <form action="/app" method="get">
+            <button id="singlePlayer" type="submit">Play Single Player</button>
+        </form>
+    </header>
+</body>
+
+</html>
