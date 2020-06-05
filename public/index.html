@@ -10,30 +10,42 @@
     <title>Yacht-Z</title>
 
     <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 5px;
+        body {
+            font-family: Roboto;
+            font-weight: normal;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+            text-align: center;
+            font-style: normal;
         }
 
-        th {
-            text-align: left;
+        #titleText {
+            width: 328px;
+            height: 88px;
+
+            font-style: italic;
+            font-size: 75px;
+            line-height: 88px;
+            /* identical to box height */
+
+            color: #FFFFFF;
         }
 
-        #diceRollsForm {
-            margin-top: 20px;
+        #titleBox {
+            /* Rectangle 2 */
+            width: 410px;
+            height: 107px;
+
+            background: #5A5A5A;
         }
 
         /* Single player button */
 
         #singlePlayer {
-            position: absolute;
             width: 586px;
             height: 65px;
-            left: 427px;
-            top: 615px;
 
             background: #C4C4C4;
             border-radius: 5px;
@@ -42,18 +54,11 @@
         /* Play Single-player Mode */
 
         #singlePlayerText {
-            position: absolute;
             width: 554px;
             height: 36px;
-            left: 444px;
-            top: 631px;
 
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
             font-size: 25px;
             line-height: 29px;
-            text-align: center;
 
             color: #000000;
         }
@@ -62,7 +67,10 @@
 
 <body>
     <header>
-        <h1>Yacht-Z</h1>
+        <div id="titleBox">
+            <p id="titleText">Yacht-Z</p>
+        </div>
+
         <!-- <button type="submit" formmethod="get" formaction="/app?">Start</button> -->
         <form action="/app" method="get">
             <button id="singlePlayer" type="submit">Play Single Player</button>
