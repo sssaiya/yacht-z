@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    <!-- Add this to all HTMl pages of the app for it to be a PWA ! -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Yacht-Z</title>
+
+    <style>
+        body {
+            font-family: Roboto;
+            font-weight: normal;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+            text-align: center;
+            font-style: normal;
+        }
+
+        #titleText {
+            width: 328px;
+            height: 88px;
+
+            font-style: italic;
+            font-size: 75px;
+            line-height: 88px;
+            /* identical to box height */
+
+            color: #FFFFFF;
+        }
+
+        #titleBox {
+            /* Rectangle 2 */
+            width: 410px;
+            height: 107px;
+
+            background: #5A5A5A;
+        }
+
+        /* Single player button */
+
+        #singlePlayer {
+            width: 586px;
+            height: 65px;
+
+            background: #C4C4C4;
+            border-radius: 5px;
+        }
+
+        /* Play Single-player Mode */
+
+        #singlePlayerText {
+            width: 554px;
+            height: 36px;
+
+            font-size: 25px;
+            line-height: 29px;
+
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="titleBox">
+            <p id="titleText">Yacht-Z</p>
+        </div>
+
+        <!-- <button type="submit" formmethod="get" formaction="/app?">Start</button> -->
+        <form action="/app" method="get">
+            <button id="singlePlayer" type="submit">Play Single Player</button>
+        </form>
+    </header>
+</body>
+
+</html>
