@@ -21,23 +21,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // ejs views app - GET
 // For the initial start request
 app.get("/app", (req, res) => {
-  let diceRolls = [];
-  diceRolls = getNRolls(6);
+  let newRolls = [];
+  newRolls = getNRolls(6);
   let diceSum = 0;
-  diceRolls.forEach((num) => {
+  newRolls.forEach((num) => {
     diceSum += num;
   });
-  res.render("scorecard", {
-    body: {
-      dicetotal: diceSum,
-      die1: "",
-      die2: "",
-      die3: "",
-      die4: "",
-      die5: "",
-      die6: "",
-    },
-    dice: diceRolls,
+  res.render("scorecard-temp", {
+    body: { dicetotal: diceSum },
+    dice: newRolls,
   });
 });
 
@@ -46,21 +38,35 @@ app.get("/app", (req, res) => {
 app.post("/app", (req, res) => {
   let diceRolls = [];
 
-  // Find num to reroll
+  // Find num to reroll and keep previous rolls
   let numRolls = 0;
+  let prevRolls = [];
+  let submitSelect = false;
   Object.keys(req.body).forEach((elem) => {
     if (elem.substr(0, 3) === "die") {
-      numRolls += 1;
+      if (elem.includes('value')) {
+        prevRolls.push(req.body[`${elem}`]);
+      } else {
+        numRolls += 1;
+      }
+    }
+    if (elem.includes('Select')) {
+      submitSelect = true;
     }
   });
 
-  diceRolls = getNRolls(numRolls);
+  diceRolls = getNRolls(5 - numRolls);
   let diceSum = 0;
   diceRolls.forEach((num) => {
     diceSum += num;
   });
   req.body.dicetotal = diceSum;
-  res.render("scorecard", { body: req.body, dice: diceRolls });
+
+  if (submitSelect) {
+    diceRolls = prevRolls;
+  }
+
+  res.render("scorecard-temp", { body: req.body, dice: diceRolls, prevRolls: prevRolls });
 });
 
 // Rolls a die n number of times and returns an array

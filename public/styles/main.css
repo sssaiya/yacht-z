@@ -59,17 +59,29 @@ th {
 }
 
 .player-dice input[type="checkbox"]+label {
-  background: url('images/die-onepip.png') no-repeat;
   background-size: cover;
   height: 50px;
   width: 50px;
   display: inline-block;
   padding: 0 0 0 0px;
+  transition: 0.1s ease all;
+}
+
+.player-dice input[type="checkbox"]+label:hover {
+  cursor: pointer;
+  transition: 0.1s ease all;
+  transform: scale(1.10);
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.75));
+}
+
+.player-dice input[type="checkbox"]+label:active {
+  transform: scale(1.05);
+  transition: 0.05s ease all;
 }
 
 .player-dice input[type="checkbox"]:checked+label {
-  background: url('images/die-onepip-lock.png') no-repeat;
-  background-size: cover;
+  background: url('../images/die-lock.png') no-repeat !important;
+  background-size: cover !important;
   height: 50px;
   width: 50px;
   display: inline-block;
@@ -188,6 +200,19 @@ th {
   font-weight: bold;
   grid-area: reroll;
   padding: 7px 20px;
+  transition: 0.2s ease all;
+}
+
+#rerollBtn:hover {
+  background-color: rgb(196, 196, 196);
+  cursor: pointer;
+  transition: 0.2s ease all;
+}
+
+#rerollBtn:active {
+  background-color: rgb(155, 155, 155);
+  cursor: pointer;
+  transition: none;
 }
 
 #scorecard {
@@ -197,11 +222,19 @@ th {
 }
 
 #scorecard button {
+  background-color: white;
   border: none;
   border-radius: 5px;
   height: 40px;
   margin-left: 5%;
+  transition: 0.2s ease all;
   width: 90%;
+}
+
+#scorecard button:hover {
+  background-color: rgb(182, 182, 182);
+  cursor: pointer;
+  transition: 0.2s ease all;
 }
 
 #user {
