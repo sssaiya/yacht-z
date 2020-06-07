@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto';
+  font-weight: normal;
+  position: relative;
+  margin: 0;
+  width: auto;
+  text-align: center;
+  font-style: normal;
+}
+
+header {
+  margin: 70px 0;
+}
+
+#titleText {
+  color: #FFFFFF;
+  font-style: italic;
+  font-size: 5em;
+  text-align: center;
+  margin: 0;
+}
+
+#titleBox {
+  /* Rectangle 2 */
+  background: #5A5A5A;
+  border-radius: 8px;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  height: 107px;
+  width: 410px;
+  margin: 0 auto;
+}
+
+/* Single player button */
+
+#singlePlayer {
+  background: #C4C4C4;
+  border: none;
+  border-radius: 5px;
+  color: rgb(61, 61, 61);
+  font-size: 2em;
+  height: 65px;
+  margin: 0;
+  transition: 0.2s ease all;
+  width: 586px;
+}
+
+#singlePlayer:hover {
+  color: white;
+  cursor: pointer;
+  background: rgb(87, 87, 87);
+  transition: 0.2s ease all;
+}
+
+#singlePlayer:hover p {
+  color: white;
+  cursor: pointer;
+  background: rgb(87, 87, 87);
+  transition: 0.2s ease all;
+}

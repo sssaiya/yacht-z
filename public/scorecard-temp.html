@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scorecard Temp</title>
+
+  <!-- Main Scorecard CSS -->
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+
+<body id="yachZscorecard">
+  <header>
+    <svg id="bgTriangle" height="79" width="102" focusable="false">
+      <polygon points="0,0 50,75 100,0" />
+    </svg>
+    <div id="headerText">
+      <p>Welcome to</p>
+      <h1>Yacht-Z</h1>
+    </div>
+  </header>
+
+  <main>
+    <!-- Gameboard Form -->
+    <form id="gameboard">
+
+      <div id="opponent" class="player-character">
+        <!-- TODO: replace #opponentImg with <img> element  -->
+        <div id="opponentImg" class="player-icon"></div>
+        <p id="opponentName" class="player-name">CPU</p>
+        <p id="opponentScore" class="player-score">30 points</p>
+      </div>
+
+      <div id="playerDiceWrapper">
+        <!-- Dice Row 1 -->
+        <div id="playerDiceRow1" class="player-diceRow">
+          <div class="player-dice">
+            <input id="die1" name="die1" type="checkbox">
+            <label for="die1"></label>
+          </div>
+          <div class="player-dice">
+            <input id="die2" name="die2" type="checkbox">
+            <label for="die2"></label>
+          </div>
+          <div class="player-dice">
+            <input id="die3" name="die3" type="checkbox">
+            <label for="die3"></label>
+          </div>
+        </div>
+        <!-- Dice Row 2 -->
+        <div id="playerDiceRow2" class="player-diceRow">
+          <div class="player-dice">
+            <input id="die4" name="die4" type="checkbox">
+            <label for="die4"></label>
+          </div>
+          <div class="player-dice">
+            <input id="die5" name="die5" type="checkbox">
+            <label for="die5"></label>
+          </div>
+        </div>
+      </div>
+
+      <button id="rerollBtn" type="submit">
+        REROLL
+      </button>
+
+      <div id="user" class="player-character">
+
+        <!-- TODO: replace #opponentImg with <img> element  -->
+        <div id="userImg" class="player-icon"></div>
+
+        <p id="userName" class="player-name">USER</p>
+        <p id="userScore" class="player-score">100 points</p>
+      </div>
+
+      <table id="scorecard">
+        <colgroup>
+          <col id="columnHeader">
+          <col id="columnPlayer">
+          <col id="columnOpponent">
+        </colgroup>
+        <thead>
+          <tr>
+            <th id="blankHeaderSpace" scope="col"></th>
+            <th id="youHeader" scope="col">You</th>
+            <th id="cpuHeader" scope="col">CPU</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="leftColumn" scope="row">Ones</th>
+            <td class="centerColumn">
+              <button name="ones" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Twos</th>
+            <td class="centerColumn">
+              <button name="twos" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Threes</th>
+            <td class="centerColumn">
+              <button name="threes" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Fours</th>
+            <td class="centerColumn">
+              <button name="fours" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Fives</th>
+            <td class="centerColumn">
+              <button name="fives" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Sixes</th>
+            <td class="centerColumn">
+              <button name="sixes" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Sum</th>
+            <td class="centerColumn"></td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Bonus</th>
+            <td class="centerColumn"></td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Three of a Kind</th>
+            <td class="centerColumn">
+              <button name="threeOfAKind" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Four of a Kind</th>
+            <td class="centerColumn">
+              <button name="fourOfAKind" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Full House</th>
+            <td class="centerColumn">
+              <button name="fullHouse" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Small Straight</th>
+            <td class="centerColumn">
+              <button name="smallStraight" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Large Straight</th>
+            <td class="centerColumn">
+              <button name="largeStraight" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">Chance</th>
+            <td class="centerColumn">
+              <button name="chance" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">YACHT-Z</th>
+            <td class="centerColumn">
+              <button name="yachtZ" type="submit">Select</button>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr>
+            <th class="leftColumn" scope="row">TOTAL SCORE</th>
+            <td class="centerColumn"></td>
+            <td class="rightColumn"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  align-items: center;
+  background-color: rgb(54, 53, 53);
+  color: white;
+  font-family: sans-serif;
+}
+
+header {
+  align-items: center;
+  display: grid;
+  justify-items: center;
+  grid-template-areas:
+    'triangle'
+    'title';
+  height: 12vh;
+  margin: 18px;
+}
+
+header h1 {
+  background-color: white;
+  color: rgb(54, 53, 53);
+  font-size: 1.2em;
+  font-style: italic;
+  padding: 1px 15px;
+}
+
+header p {
+  font-size: 0.8em;
+  margin-bottom: 3px;
+}
+
+table,
+th,
+td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+th {
+  text-align: left;
+}
+
+.player-character {
+  display: grid;
+  justify-items: center;
+  max-height: 100px;
+}
+
+.player-dice input[type="checkbox"] {
+  display: none;
+  height: 50px;
+  width: 50px;
+}
+
+.player-dice input[type="checkbox"]+label {
+  background: url('images/die-onepip.png') no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.player-dice input[type="checkbox"]:checked+label {
+  background: url('images/die-onepip-lock.png') no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.player-diceRow {
+  align-items: center;
+  display: grid;
+  justify-items: center;
+  max-width: 320px;
+  width: 100%;
+}
+
+.player-icon {
+  background-color: white;
+  border-radius: 40px;
+  height: 50px;
+  width: 50px;
+}
+
+.player-name {
+  font-size: 1.2em;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.player-score {
+  font-size: 1em;
+  font-style: italic;
+  text-align: center;
+  margin-top: 3px;
+}
+
+#bgTriangle {
+  grid-area: triangle;
+  margin-left: 3px;
+}
+
+#bgTriangle polygon {
+  fill: rgb(54, 53, 53);
+  stroke: rgb(255, 255, 255);
+  stroke-width: 2;
+}
+
+#columnHeader {
+  width: 140px;
+}
+
+#columnPlayer,
+#columnOpponent {
+  width: calc((90vw - 150px) / 2);
+}
+
+#gameboard {
+  align-items: center;
+  display: grid;
+  grid-template-areas:
+    'opponent'
+    'dice'
+    'reroll'
+    'user'
+    'scorecard';
+  grid-template-rows: 22vh 24vh 12vh 23vh auto;
+  height: 82vh;
+  justify-items: center;
+}
+
+#headerText {
+  grid-area: title;
+  margin: -110px 0 0 0px;
+  text-align: center;
+}
+
+#opponent {
+  grid-area: opponent;
+}
+
+#playerDiceRow1 {
+  grid-template-areas: 'die1 die2 die3';
+}
+
+#playerDiceRow2 {
+  grid-template-areas: 'empty1 die4 die5 empty2';
+  grid-template-columns: 17% 33% 33% 17%;
+}
+
+#playerDiceRow2> :first-child {
+  grid-area: die4;
+}
+
+#playerDiceRow2> :last-child {
+  grid-area: die5;
+}
+
+#playerDiceWrapper {
+  align-items: center;
+  display: grid;
+  grid-area: dice;
+  grid-template-areas:
+    'topRow'
+    'bottomRow';
+  justify-items: center;
+  row-gap: 10px;
+  width: 100%;
+}
+
+#rerollBtn {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 3px;
+  color: rgb(66, 66, 66);
+  filter: drop-shadow(3px 3px 3px black);
+  font-family: sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  grid-area: reroll;
+  padding: 7px 20px;
+}
+
+#scorecard {
+  grid-area: scorecard;
+  margin: 20px 0 40px 0;
+  max-width: 500px;
+}
+
+#scorecard button {
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  margin-left: 5%;
+  width: 90%;
+}
+
+#user {
+  align-self: flex-start;
+  grid-area: user;
+}
+
+@media only screen and (min-width: 500px) {
+  #columnPlayer,
+  #columnOpponent {
+    width: 150px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  header {
+    align-items: center;
+    display: grid;
+    justify-items: center;
+    grid-template-areas:
+      'triangle emptySpace'
+      'title emptySpace';
+    grid-template-columns: 50% 50%;
+    height: 12vh;
+    margin: 18px;
+  }
+  
+  #blankHeaderSpace {
+    width: 143px;
+  }
+
+  #cpuHeader {
+    width: 132px;
+  }
+
+  #gameboard {
+    align-items: center;
+    display: grid;
+    grid-template-areas:
+      'opponent scorecard'
+      'dice scorecard'
+      'reroll scorecard'
+      'user scorecard';
+    grid-template-rows: 22vh 24vh 12vh 23vh;
+    grid-template-columns: 50% 50%;
+    height: 82vh;
+    justify-items: center;
+  }
+
+  #playerDiceWrapper {
+    row-gap: 20px;
+  }
+
+  #scorecard {
+    margin: 0;
+    position: absolute;
+    right: 12.5%;
+    top: 2.5vh;
+  }
+
+  #scorecard tbody {
+    display: block;
+    overflow-y: auto;
+    height: 90vh;
+    width: 448px;
+  }
+
+  #scorecard thead tr {
+    display: block;
+  }
+
+  #scorecard .leftColumn {
+    width: 162.67px;
+  }
+
+  #scorecard .centerColumn {
+    width: 162.67px;
+  }
+
+  #scorecard .rightColumn {
+    width: 162.67px;
+  }
+
+  #youHeader {
+    width: 139px;
+  }
+}
+
+@media only screen and (min-width: 1000px) and (max-height: 833px) and (pointer: fine) {
+  #blankHeaderSpace {
+    width: 138px;
+  }
+
+  #cpuHeader {
+    width: 142px;
+  }
+
+  #youHeader {
+    width: 134px;
+  }
+}
