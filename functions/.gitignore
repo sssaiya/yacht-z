@@ -1,1 +1,3 @@
 node_modules/
+*.cmd
+*.ps1
