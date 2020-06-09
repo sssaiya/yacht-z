@@ -1,5 +1,9 @@
+const MAX_REROLLS = 2;
 // GLOBAL reference for dice values. after every roll, store values here
 let currentRolls = []; 
+// number of times player has rerolled
+let numRerolls = 0;
+
 
 // get sum of all numbers - used in reduce function to add all die values
 function getSum(total, num) {
@@ -10,7 +14,7 @@ function getSum(total, num) {
 // getNOccurences(2, 2) would be true but getNOccurences(2, 1) would be false
 function getNOccurences(n, value) {
     let temp = 0;
-    for(let die in currentRolls){
+    for(const die of currentRolls){
         if (die == value) temp++;
     }
     return (n == temp);
@@ -94,33 +98,35 @@ function score(value) {
     let final = 0;
     switch(value){
         case 'ones':
-            for(let die in currentRolls){
+            for(const die of currentRolls){
                 if(die == 1) final++;
             }
         break;
         case 'twos':
-            for(let die in currentRolls){
+            for(const die of currentRolls){
                 if(die == 2) final+=2;
             }
         break;
         case 'threes':
-            for(let die in currentRolls){
+            for(const die of currentRolls){
                 if(die == 3) final+=3;
             }
         break;
         case 'fours':
-            for(let die in currentRolls){
+            for(const die of currentRolls){
                 if(die == 4) final+=4;
             }
         break;
         case 'fives':
-            for(let die in currentRolls){
+            for(const die of currentRolls){
                 if(die == 5) final+=5;
             }
         break;
         case 'sixes':
-            for(let die in currentRolls){
-                if(die == 6) final+=6;
+            console.log(currentRolls)
+            for(const die of currentRolls){
+                console.log(die);
+                if (die == 6) {final+=6;}
             }
         break;
         case  '3-of-a-kind':
@@ -146,6 +152,7 @@ function score(value) {
         break;
         default: 
     }
+    console.log(final)
     return final;
 }
 
@@ -159,8 +166,30 @@ function completeMove(move){
     }
 }
 
+function updateDice(rollBtn,dice) {
+    if (numRerolls == MAX_REROLLS) {
+        rollBtn.disabled = true;
+        rollBtn.style.opacity = .4;
+    }
+    rollBtn.innerText = 'REROLL';
+    let rollValues = getNDiceRolls(5);
+    currentRolls = [];
+    for (let i = 0; i < 5; i++) {
+        if (dice[i].checked) {
+            currentRolls.push(dice[i].nextElementSibling.nextElementSibling.value);
+            dice[i].checked = false;
+        } else {
+            dice[i].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
+            dice[i].nextElementSibling.style.backgroundSize = 'cover';
+            dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
+            currentRolls.push(rollValues[i]);
+        }
+    }
+    numRerolls++;
+}
+
 window.onload = () => {
-    document.querySelector('#gameboard').onsubmit = (e) => {e.preventDefault();};
+    document.querySelector('#gameboard').onsubmit = (e) => {e.preventDefault()};
     
     // Scorecard button onclick handlers
     document.querySelector('button[name="onesSelect"]').onclick = () => {completeMove('ones')};
@@ -171,27 +200,11 @@ window.onload = () => {
     document.querySelector('button[name="sixesSelect"]').onclick = () => {completeMove('sixes')};
 
     // dice 
-    let dice = []
+    let dice = [];
     for (let i = 1; i < 6; i++) {
         dice.push(document.getElementById(`die${i}`));
     }
     
     let rollBtn = document.getElementById('rerollBtn');
-    rollBtn.onclick = () => {
-        rollBtn.innerText = 'REROLL';
-        let rollValues = getNDiceRolls(5);
-        for (let i = 0; i < 5; i++) {
-            if (dice[i].checked) {
-                dice[i].checked = false;
-            } else {
-                dice[i].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
-                dice[i].nextElementSibling.style.backgroundSize = 'cover';
-                dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
-            }
-        }
-
-    };
-
-    
-
+    rollBtn.onclick = (e) => {updateDice(e.target, dice)};
 };
