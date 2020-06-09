@@ -152,9 +152,30 @@ function score(value) {
 // when a button is selected on the scorecard, make sure the move is valid, then add score
 function completeMove(move){
     if(validateMove(move)){
-        document.getElementById(move).innerHTML = score(move);
+        document.querySelector(`#${move}Row .centerColumn`).innerHTML = score(move);
     }
     else{
         // TODO error 
     }
 }
+
+window.onload = () => {
+    document.querySelector('#gameboard').onsubmit = (e) => {e.preventDefault();};
+    
+    // Scorecard button onclick handlers
+    document.querySelector('button[name="onesSelect"]').onclick = () => {completeMove('ones')};
+    document.querySelector('button[name="twosSelect"]').onclick = () => {completeMove('twos')};
+    document.querySelector('button[name="threesSelect"]').onclick = () => {completeMove('threes')};
+    document.querySelector('button[name="foursSelect"]').onclick = () => {completeMove('fours')};
+    document.querySelector('button[name="fivesSelect"]').onclick = () => {completeMove('fives')};
+    document.querySelector('button[name="sixesSelect"]').onclick = () => {completeMove('sixes')};
+
+    let rollBtn = document.getElementById('rerollBtn');
+    rollBtn.onclick = () => {
+        rollBtn.innerText = 'REROLL';
+        console.log(getNDiceRolls(5));
+    };
+
+    
+
+};

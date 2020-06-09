@@ -11,6 +11,8 @@
 </head>
 
 <body id="yachZscorecard">
+  <script src="cs-scoring.js" defer></script>
+
   <header>
     <svg id="bgTriangle" height="79" width="102" focusable="false">
       <polygon points="0,0 50,75 100,0" />
@@ -102,7 +104,7 @@
       </div>
 
       <button id="rerollBtn" type="submit" name="reroll">
-        REROLL
+        ROLL
       </button>
 
       <div id="user" class="player-character">
@@ -128,7 +130,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr id="onesRow">
             <th class="leftColumn" scope="row">Ones</th>
             <td class="centerColumn">
               <% if (typeof body.onesSelect !== 'undefined') { %>
@@ -140,7 +142,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="twosRow">
             <th class="leftColumn" scope="row">Twos</th>
             <td class="centerColumn">
               <% if (typeof body.twosSelect !== 'undefined') { %>
@@ -152,7 +154,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="threesRow">
             <th class="leftColumn" scope="row">Threes</th>
             <td class="centerColumn">
               <% if (typeof body.threesSelect !== 'undefined') { %>
@@ -164,7 +166,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="foursRow">
             <th class="leftColumn" scope="row">Fours</th>
             <td class="centerColumn">
               <% if (typeof body.foursSelect !== 'undefined') { %>
@@ -176,7 +178,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="fivesRow">
             <th class="leftColumn" scope="row">Fives</th>
             <td class="centerColumn">
               <% if (typeof body.fivesSelect !== 'undefined') { %>
@@ -188,7 +190,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="sixesRow">
             <th class="leftColumn" scope="row">Sixes</th>
             <td class="centerColumn">
               <% if (typeof body.sixesSelect !== 'undefined') { %>
@@ -200,17 +202,17 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="sumRow">
             <th class="leftColumn" scope="row">Sum</th>
             <td class="centerColumn"></td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="bonusRow">
             <th class="leftColumn" scope="row">Bonus</th>
             <td class="centerColumn"></td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="3OAKRow">
             <th class="leftColumn" scope="row">Three of a Kind</th>
             <td class="centerColumn">
               <% if (typeof body.threeOfAKindSelect !== 'undefined') { %>
@@ -222,7 +224,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="4OAKRow">
             <th class="leftColumn" scope="row">Four of a Kind</th>
             <td class="centerColumn">
               <% if (typeof body.fourOfAKindSelect !== 'undefined') { %>
@@ -234,7 +236,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="fullHouseRow">
             <th class="leftColumn" scope="row">Full House</th>
             <td class="centerColumn">
               <% if (typeof body.fullHouseSelect !== 'undefined') { %>
@@ -246,7 +248,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="smallStraightRow">
             <th class="leftColumn" scope="row">Small Straight</th>
             <td class="centerColumn">
               <% if (typeof body.smallStraightSelect !== 'undefined') { %>
@@ -258,7 +260,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="largeStraightRow">
             <th class="leftColumn" scope="row">Large Straight</th>
             <td class="centerColumn">
               <% if (typeof body.largeStraightSelect !== 'undefined') { %>
@@ -270,7 +272,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="chanceRow">
             <th class="leftColumn" scope="row">Chance</th>
             <td class="centerColumn">
               <% if (typeof body.chanceSelect !== 'undefined') { %>
@@ -282,7 +284,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="yachtZRow">
             <th class="leftColumn" scope="row">YACHT-Z</th>
             <td class="centerColumn">
               <% if (typeof body.yachtZSelect !== 'undefined') { %>
@@ -294,7 +296,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr>
+          <tr id="totalScoreRow">
             <th class="leftColumn" scope="row">TOTAL SCORE</th>
             <td class="centerColumn"></td>
             <td class="rightColumn"></td>
