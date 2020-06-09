@@ -247,7 +247,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="chanceSelect">
               <% } else { %>
-              <button name="chanceSelect" type="submit">Select</button>
+              <button name="chanceSelect" type="submit"><%=scores.chance %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -259,7 +259,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="yachtZSelect">
               <% } else { %>
-              <button name="yachtZSelect" type="submit">Select</button>
+              <button name="yachtZSelect" type="submit"><%=scores.yacht_z %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>

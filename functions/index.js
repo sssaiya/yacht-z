@@ -49,7 +49,6 @@ app.post("/app", (req, res) => {
   }
 
   const scores = makeScoreArray(dice);
-  console.log(scores);
 
   res.render("scorecard-temp", {
     body: req.body,
@@ -87,6 +86,8 @@ function makeScoreArray(dice) {
     full_house: fullHouseScore(dice),
     small_straight: straight(4, dice),
     large_straight: straight(5, dice),
+    chance: chanceScore(dice),
+    yacht_z: yacht_z_score(dice),
   };
   return scores;
 }
@@ -106,11 +107,7 @@ function upperScores(n, dice) {
 function threeFourOfAKindScore(n, dice) {
   if (![3, 4].includes(n)) return;
   let score = 0;
-  var counts = {};
-  dice.forEach((die) => {
-    counts[die] = (counts[die] || 0) + 1;
-  });
-  const diceCount = Object.values(counts);
+  const diceCount = dieCounter(dice);
   diceCount.forEach((count) => {
     if (count >= n) {
       let diceSum = 0;
@@ -125,15 +122,19 @@ function threeFourOfAKindScore(n, dice) {
 
 // For Full House
 function fullHouseScore(dice) {
-  var counts = {};
-  dice.forEach((die) => {
-    counts[die] = (counts[die] || 0) + 1;
-  });
-  const diceCount = Object.values(counts);
+  const diceCount = dieCounter(dice);
 
   if (diceCount.includes(2) && diceCount.includes(3)) {
     return 25;
   } else return 0;
+}
+
+function dieCounter(dice) {
+  var counts = {};
+  dice.forEach((die) => {
+    counts[die] = (counts[die] || 0) + 1;
+  });
+  return Object.values(counts);
 }
 
 const smallStraights = [
@@ -170,9 +171,7 @@ function straight(n, dice) {
   const diceSortedUnique = new Set(diceSorted);
   const diceSortedUniqueArray = [...diceSortedUnique];
 
-  console.log(diceSortedUniqueArray);
   if (n == 4) {
-    console.log(smallStraights);
 
     //small straight check
     if (isArrayInArray(smallStraights, diceSortedUniqueArray)) {
@@ -186,12 +185,25 @@ function straight(n, dice) {
   return score;
 }
 
+function yacht_z_score(dice) {
+  const diceCount = dieCounter(dice);
+  if (diceCount.includes(5)) {
+    return 50;
+  }
+  return 0;
+}
+
+function chanceScore(dice) {
+  let score = 0;
+  dice.forEach((die) => {
+    score += die;
+  });
+  return score;
+}
 // Expose Express API as a single Cloud Function:
 exports.app = functions.https.onRequest(app);
 
 // TODO
-// 1) Game Logic - After you roll, instead of "select" in the buttons it should have what your score
-//for that box should be. This can be implemented easily using javascript within the EJS template file
 
 // SUm in EJS logic
 
