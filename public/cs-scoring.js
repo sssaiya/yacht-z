@@ -55,7 +55,7 @@ function checkYachtZ(){
 function getNDiceRolls(rolls) {
     let temp = [];
     for(let i = 0; i < rolls; i++) {
-        temp.push((Math.random()*6) + 1);
+        temp.push(Math.floor((Math.random()*6)) + 1);
     }
     return temp;
 }
@@ -170,10 +170,26 @@ window.onload = () => {
     document.querySelector('button[name="fivesSelect"]').onclick = () => {completeMove('fives')};
     document.querySelector('button[name="sixesSelect"]').onclick = () => {completeMove('sixes')};
 
+    // dice 
+    let dice = []
+    for (let i = 1; i < 6; i++) {
+        dice.push(document.getElementById(`die${i}`));
+    }
+    
     let rollBtn = document.getElementById('rerollBtn');
     rollBtn.onclick = () => {
         rollBtn.innerText = 'REROLL';
-        console.log(getNDiceRolls(5));
+        let rollValues = getNDiceRolls(5);
+        for (let i = 0; i < 5; i++) {
+            if (dice[i].checked) {
+                dice[i].checked = false;
+            } else {
+                dice[i].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
+                dice[i].nextElementSibling.style.backgroundSize = 'cover';
+                dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
+            }
+        }
+
     };
 
     
