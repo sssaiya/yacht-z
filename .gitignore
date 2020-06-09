@@ -67,3 +67,5 @@ node_modules/
 #lighthouse reports
 *.report.html
 *-report.html
+
+.DS_store

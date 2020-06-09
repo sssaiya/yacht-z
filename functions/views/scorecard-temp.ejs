@@ -37,66 +37,36 @@
         <div id="playerDiceRow1" class="player-diceRow">
           <div class="player-dice">
             <input id="die1" name="die1" type="checkbox">
-            <% let die1num = 0 %>
-            <% if (typeof body.die1 !== 'undefined') { %>
-            <% die1num = prevRolls[0]; %>
-            <% } else { %>
-            <% die1num = dice.pop(); %>
-            <% } %>
-            <label for="die1" style="background: url('images/die-<%= die1num;%>pips.png')
+            <label for="die1" style="background: url('images/die-<%= dice[0];%>pips.png')
             no-repeat; background-size: cover"></label>
-            <input type="hidden" name="die1value" value="<%= die1num; %>">
+            <input type="hidden" name="die1value" value="<%= dice[0]; %>">
           </div>
           <div class="player-dice">
             <input id="die2" name="die2" type="checkbox">
-            <% let die2num = 0 %>
-            <% if (typeof body.die2 !== 'undefined') { %>
-            <% die2num = prevRolls[1]; %>
-            <% } else { %>
-            <% die2num = dice.pop(); %>
-            <% } %>
-            <label for="die2" style="background: url('images/die-<%= die2num;%>pips.png')
+            <label for="die2" style="background: url('images/die-<%= dice[1];%>pips.png')
               no-repeat; background-size: cover"></label>
-            <input type="hidden" name="die2value" value="<%= die2num; %>">
+            <input type="hidden" name="die2value" value="<%= dice[1]; %>">
           </div>
           <div class="player-dice">
             <input id="die3" name="die3" type="checkbox">
-            <% let die3num = 0 %>
-            <% if (typeof body.die3 !== 'undefined') { %>
-            <% die3num = prevRolls[2]; %>
-            <% } else { %>
-            <% die3num = dice.pop(); %>
-            <% } %>
-            <label for="die3" style="background: url('images/die-<%= die3num;%>pips.png')
+            <label for="die3" style="background: url('images/die-<%= dice[2];%>pips.png')
               no-repeat; background-size: cover"></label>
-            <input type="hidden" name="die3value" value="<%= die3num; %>">
+            <input type="hidden" name="die3value" value="<%= dice[2]; %>">
           </div>
         </div>
         <!-- Dice Row 2 -->
         <div id="playerDiceRow2" class="player-diceRow">
           <div class="player-dice">
             <input id="die4" name="die4" type="checkbox">
-            <% let die4num = 0 %>
-            <% if (typeof body.die4 !== 'undefined') { %>
-            <% die4num = prevRolls[3]; %>
-            <% } else { %>
-            <% die4num = dice.pop(); %>
-            <% } %>
-            <label for="die4" style="background: url('images/die-<%= die4num;%>pips.png')
+            <label for="die4" style="background: url('images/die-<%= dice[3];%>pips.png')
               no-repeat; background-size: cover"></label>
-            <input type="hidden" name="die4value" value="<%= die4num; %>">
+            <input type="hidden" name="die4value" value="<%= dice[3]; %>">
           </div>
           <div class="player-dice">
             <input id="die5" name="die5" type="checkbox">
-            <% let die5num = 0 %>
-            <% if (typeof body.die5 !== 'undefined') { %>
-            <% die5num = prevRolls[4]; %>
-            <% } else { %>
-            <% die5num = dice.pop(); %>
-            <% } %>
-            <label for="die5" style="background: url('images/die-<%= die5num;%>pips.png')
+            <label for="die5" style="background: url('images/die-<%= dice[4];%>pips.png')
               no-repeat; background-size: cover"></label>
-            <input type="hidden" name="die5value" value="<%= die5num; %>">
+            <input type="hidden" name="die5value" value="<%= dice[4]; %>">
           </div>
         </div>
       </div>
@@ -135,7 +105,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="onesSelect">
               <% } else { %>
-              <button name="onesSelect" type="submit">Select</button>
+              <button name="onesSelect" type="submit"><%= scores.ones %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -147,7 +117,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="twosSelect">
               <% } else { %>
-              <button name="twosSelect" type="submit">Select</button>
+              <button name="twosSelect" type="submit"><%= scores.twos %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -159,7 +129,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="threesSelect">
               <% } else { %>
-              <button name="threesSelect" type="submit">Select</button>
+              <button name="threesSelect" type="submit"><%= scores.threes %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -171,7 +141,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="foursSelect">
               <% } else { %>
-              <button name="foursSelect" type="submit">Select</button>
+              <button name="foursSelect" type="submit"><%= scores.fours %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -183,7 +153,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="fivesSelect">
               <% } else { %>
-              <button name="fivesSelect" type="submit">Select</button>
+              <button name="fivesSelect" type="submit"><%= scores.fives %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -195,7 +165,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="sixesSelect">
               <% } else { %>
-              <button name="sixesSelect" type="submit">Select</button>
+              <button name="sixesSelect" type="submit"><%= scores.sixes %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -217,7 +187,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="threeOfAKindSelect">
               <% } else { %>
-              <button name="threeOfAKindSelect" type="submit">Select</button>
+              <button name="threeOfAKindSelect" type="submit"><%= scores.three_of_a_kind %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -229,7 +199,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="fourOfAKindSelect">
               <% } else { %>
-              <button name="fourOfAKindSelect" type="submit">Select</button>
+              <button name="fourOfAKindSelect" type="submit"><%= scores.four_of_a_kind %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -241,7 +211,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="fullHouseSelect">
               <% } else { %>
-              <button name="fullHouseSelect" type="submit">Select</button>
+              <button name="fullHouseSelect" type="submit"><%= scores.full_house %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -253,7 +223,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="smallStraightSelect">
               <% } else { %>
-              <button name="smallStraightSelect" type="submit">Select</button>
+              <button name="smallStraightSelect" type="submit"><%= scores.small_straight %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -265,7 +235,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="largeStraightSelect">
               <% } else { %>
-              <button name="largeStraightSelect" type="submit">Select</button>
+              <button name="largeStraightSelect" type="submit"><%=scores.large_straight %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -277,7 +247,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="chanceSelect">
               <% } else { %>
-              <button name="chanceSelect" type="submit">Select</button>
+              <button name="chanceSelect" type="submit"><%=scores.chance %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -289,7 +259,7 @@
               <p><%= body.dicetotal %></p>
               <input type="hidden" name="yachtZSelect">
               <% } else { %>
-              <button name="yachtZSelect" type="submit">Select</button>
+              <button name="yachtZSelect" type="submit"><%=scores.yacht_z %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
