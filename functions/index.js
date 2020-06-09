@@ -27,50 +27,34 @@ app.get("/app", (req, res) => {
     diceSum += num;
   });
   const scores = makeScoreArray(newRolls);
-  console.log(scores);
   res.render("scorecard-temp", {
     body: { dicetotal: diceSum },
     dice: newRolls,
+    scores: scores,
   });
 });
 
 // ejs views app - POST
 // For every subsequent post On clicking reRoll
 app.post("/app", (req, res) => {
-  let finalRolls = [];
+  let dieNames = ["die1", "die2", "die3", "die4", "die5"];
+  let dice = [];
 
-  if (req.body.die1 == undefined) {
-    finalRolls.push(getOneRoll());
-  } else {
-    finalRolls.push(parseInt(req.body.die1value));
-  }
-  if (req.body.die2 == undefined) {
-    finalRolls.push(getOneRoll());
-  } else {
-    finalRolls.push(parseInt(req.body.die2value));
-  }
-  if (req.body.die3 == undefined) {
-    finalRolls.push(getOneRoll());
-  } else {
-    finalRolls.push(parseInt(req.body.die3value));
-  }
-  if (req.body.die4 == undefined) {
-    finalRolls.push(getOneRoll());
-  } else {
-    finalRolls.push(parseInt(req.body.die4value));
-  }
-  if (req.body.die5 == undefined) {
-    finalRolls.push(getOneRoll());
-  } else {
-    finalRolls.push(parseInt(req.body.die5value));
+  for (let i = 0; i < dieNames.length; i++) {
+    if (req.body[dieNames[i]] == undefined) {
+      dice.push(getOneRoll());
+    } else {
+      dice.push(parseInt(req.body[dieNames[i] + "value"]));
+    }
   }
 
-  const scores = makeScoreArray(finalRolls);
+  const scores = makeScoreArray(dice);
   console.log(scores);
 
   res.render("scorecard-temp", {
     body: req.body,
-    dice: finalRolls,
+    dice: dice,
+    scores: scores,
   });
 });
 
@@ -101,6 +85,8 @@ function makeScoreArray(dice) {
     three_of_a_kind: threeFourOfAKindScore(3, dice),
     four_of_a_kind: threeFourOfAKindScore(4, dice),
     full_house: fullHouseScore(dice),
+    small_straight: straight(4, dice),
+    large_straight: straight(5, dice),
   };
   return scores;
 }
@@ -148,6 +134,56 @@ function fullHouseScore(dice) {
   if (diceCount.includes(2) && diceCount.includes(3)) {
     return 25;
   } else return 0;
+}
+
+const smallStraights = [
+  [1, 2, 3, 4, 5],
+  [1, 2, 3, 4, 6],
+  [2, 3, 4, 5, 6],
+  [1, 2, 3, 4],
+  [2, 3, 4, 5],
+  [3, 4, 5, 6],
+];
+const largeStraights = [
+  [1, 2, 3, 4, 5],
+  [2, 3, 4, 5, 6],
+];
+
+// Checks if a specific array is in an array
+function isArrayInArray(arr, item) {
+  var item_as_string = JSON.stringify(item);
+
+  var contains = arr.some(function (ele) {
+    return JSON.stringify(ele) === item_as_string;
+  });
+  return contains;
+}
+
+// n = 4 for small straight, 5 for large straight
+// TODO - Test this !! :)
+function straight(n, dice) {
+  if (![4, 5].includes(n)) return 0;
+  let score = 0;
+  let copy = [...dice];
+  const diceSorted = copy.sort();
+
+  const diceSortedUnique = new Set(diceSorted);
+  const diceSortedUniqueArray = [...diceSortedUnique];
+
+  console.log(diceSortedUniqueArray);
+  if (n == 4) {
+    console.log(smallStraights);
+
+    //small straight check
+    if (isArrayInArray(smallStraights, diceSortedUniqueArray)) {
+      score = 30;
+    }
+  } else {
+    //large straight check
+    if (isArrayInArray(largeStraights, diceSortedUniqueArray)) score = 40;
+  }
+
+  return score;
 }
 
 // Expose Express API as a single Cloud Function:
