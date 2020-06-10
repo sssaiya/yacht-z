@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #5A5A5A;
+  background-color: #092526;
   font-family: 'Roboto';
   font-weight: normal;
   position: relative;
@@ -14,8 +14,8 @@ body {
   font-style: normal;
 }
 
-header {
-  margin: 70px 0;
+main {
+  margin-top: -10em;
 }
 
 #titleText {
@@ -41,7 +41,7 @@ header {
 /* Single player button */
 
 #singlePlayer {
-  background: rgb(165, 165, 165);
+  background: #F053C2;
   border: none;
   border-radius: 5px;
   color: rgb(255, 255, 255);
