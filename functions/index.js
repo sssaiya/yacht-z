@@ -27,7 +27,7 @@ app.get("/app", (req, res) => {
     diceSum += num;
   });
   const scores = makeScoreArray(newRolls);
-  res.render("scorecard-temp", {
+  res.render("scorecard", {
     body: { dicetotal: diceSum, rollNum: 0 },
     dice: newRolls,
     scores: scores,
