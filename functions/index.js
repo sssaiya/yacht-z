@@ -28,9 +28,11 @@ app.get("/app", (req, res) => {
   });
   const scores = makeScoreArray(newRolls);
   res.render("scorecard-temp", {
-    body: { dicetotal: diceSum },
+    body: { dicetotal: diceSum, rollNum: 0 },
     dice: newRolls,
     scores: scores,
+    visibility: 'style=visibility:hidden',
+    Roll: 'ROLL'
   });
 });
 
@@ -54,6 +56,8 @@ app.post("/app", (req, res) => {
     body: req.body,
     dice: dice,
     scores: scores,
+    visibility: 'style=visibility:visible',
+    Roll: 'REROLL'
   });
 });
 
