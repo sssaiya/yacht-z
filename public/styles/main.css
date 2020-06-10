@@ -5,7 +5,7 @@
 
 body {
   align-items: center;
-  background-color: rgb(54, 53, 53);
+  background-color: #092526;
   color: white;
   font-family: sans-serif;
 }
@@ -34,12 +34,27 @@ header p {
   margin-bottom: 3px;
 }
 
+table {
+  box-shadow: 0px 0px 10px rgba(240, 83, 194, 1);
+  overflow: hidden;
+}
+
+.points th, .points td {
+  height: 1vh !important;
+}
+
+th,td {
+  height: 4.75vh;
+  overflow: hidden;
+}
+
 table,
 th,
 td {
   border: 1px solid white;
   border-collapse: collapse;
   padding: 5px;
+  background-color: #092526;
 }
 
 th {
@@ -116,15 +131,32 @@ th {
   margin-top: 3px;
 }
 
-#bgTriangle {
-  grid-area: triangle;
-  margin-left: 3px;
+#flamingo {
+  position:absolute;
+  bottom: 0;
+  height: 45vh;
+  width: 20vw;
+  z-index: -1;
 }
 
-#bgTriangle polygon {
-  fill: rgb(54, 53, 53);
-  stroke: rgb(255, 255, 255);
-  stroke-width: 2;
+#yacht {
+  position:absolute;
+  top: 5em;
+  height: 50vh;
+  width: 110vw;
+  right: 0;
+  z-index: -1;
+}
+
+#sand {
+  position: absolute;
+  bottom: 37vh;
+  left: 15vw;
+  background-color: #FFCD83;
+  width: 85vw;
+  height: 2px;
+  box-shadow: 0px 0px 5px rgba(255,255,255, 0.50);
+  z-index: -1;
 }
 
 #columnHeader {
@@ -158,6 +190,10 @@ th {
 
 #opponent {
   grid-area: opponent;
+}
+
+.player-score {
+  color: #95E71F;
 }
 
 #playerDiceRow1 {
@@ -218,14 +254,22 @@ th {
 #scorecard {
   grid-area: scorecard;
   margin: 20px 0 40px 0;
-  max-width: 500px;
+  /*max-width: 500px;*/
+  max-height: 100vh;
+  transform: translatez(-50rem) rotatex(35deg) rotateZ(20deg);
+  transition: transform 750ms, box-shadow 750ms;
+}
+
+#scorecard:hover {
+  transform: none;
+  box-shadow: 0 1rem 5rem 1rem rgba(0, 0, 0, 0.25);
 }
 
 #scorecard button {
   background-color: white;
   border: none;
+  height: 100%;
   border-radius: 5px;
-  height: 40px;
   margin-left: 5%;
   transition: 0.2s ease all;
   width: 90%;
@@ -253,7 +297,7 @@ th {
   header {
     align-items: center;
     display: grid;
-    justify-items: center;
+    justify-items: left;
     grid-template-areas:
       'triangle emptySpace'
       'title emptySpace';
@@ -261,7 +305,7 @@ th {
     height: 12vh;
     margin: 18px;
   }
-  
+
   #blankHeaderSpace {
     width: 143px;
   }
