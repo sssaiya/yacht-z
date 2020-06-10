@@ -52,7 +52,7 @@ app.post("/app", (req, res) => {
 
   const scores = makeScoreArray(dice);
 
-  res.render("scorecard-temp", {
+  res.render("scorecard", {
     body: req.body,
     dice: dice,
     scores: scores,
