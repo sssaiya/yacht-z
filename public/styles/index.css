@@ -10,12 +10,26 @@ body {
   position: relative;
   margin: 0;
   width: auto;
+  height: 100vh;
   text-align: center;
   font-style: normal;
 }
 
 main {
-  margin-top: -10em;
+  position:absolute;
+  top: 50vh;
+  right: 0;
+  left:0;
+}
+
+header {
+  width: 100vw;
+  text-align: center;
+  overflow:hidden;
+}
+#home-img {
+  width: 200%;
+  transform: translate(-26%,0);
 }
 
 #titleText {
@@ -43,12 +57,13 @@ main {
 .home_buttons {
   border: none;
   border-radius: 5px;
+  background-color: #092526;
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
-  font-size: 2em;
+  font-size: 1.5em;
   height: 65px;
   margin: 0;
   transition: 0.2s ease all;
-  width: 586px;
+  width: 70vw;
 }
 
 .home_buttons:hover {
@@ -66,7 +81,6 @@ main {
 
 #createRoom {
   border: 2px solid #00e1ff;
-  background: none;
   color: #00e1ff;
   display: none;
   grid-area: create;
@@ -82,7 +96,6 @@ main {
 
 #joinRoom {
   border: 2px solid #95e71f;
-  background: none;
   color: #95e71f;
   display: none;
   grid-area: join;
@@ -112,7 +125,6 @@ main {
 }
 
 #singlePlayer {
-  background: none;
   border: 2px solid rgb(255, 117, 214);
   color: rgb(255, 117, 214);
 }
@@ -151,4 +163,24 @@ main {
   margin: 0 auto;
   max-width: 586px;
   width: 100%;
+}
+
+@media only screen and (min-width: 700px) {
+  #home-img {
+    width: 100%;
+    transform: translate(0,0);
+  }
+  main {
+    top: 40vh;
+  }
+  .home_buttons {
+    width: 50vw;
+    font-size: 2em;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  main {
+    top:70vh;
+  }
 }
