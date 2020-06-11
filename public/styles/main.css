@@ -19,25 +19,16 @@ header {
     'triangle'
     'title';
   height: 12.5vh;
+  overflow: hidden;
+}
+
+header {
+  height:8vh;
   margin: 18px;
 }
 
-header h1 {
-  background-color: white;
-  color: rgb(54, 53, 53);
-  font-size: 1.2em;
-  font-style: italic;
-  padding: 1px 15px;
-}
-
-header p {
-  font-size: 0.8em;
-  margin-bottom: 3px;
-}
-
-table {
-  box-shadow: 0px 0px 10px rgba(240, 83, 194, 1);
-  overflow: hidden;
+header img {
+  height: 100%;
 }
 
 .points th, .points td {
@@ -49,12 +40,16 @@ th,td {
   overflow: hidden;
 }
 
+table {
+  overflow-y:auto;
+}
+
 table,
 th,
 td {
   border: 1px solid white;
   border-collapse: collapse;
-  padding: 5px;
+  padding: 3.5px;
   background-color: #092526;
 }
 
@@ -144,13 +139,13 @@ th {
   position:absolute;
   bottom: 0;
   height: 45vh;
-  width: 20vw;
+  width: 40vw;
   z-index: -1;
 }
 
 #yacht {
   position:absolute;
-  top: 5em;
+  top: 9vh;
   height: 50vh;
   width: 110vw;
   right: 0;
@@ -165,10 +160,10 @@ th {
 
 #sand {
   position: absolute;
-  bottom: 37vh;
-  left: 15vw;
+  bottom: 40vh;
+  left: 0;
   background-color: #FFCD83;
-  width: 85vw;
+  width: 100vw;
   height: 2px;
   box-shadow: 0px 0px 5px rgba(255,255,255, 0.50);
   z-index: -1;
@@ -268,16 +263,21 @@ th {
 
 #scorecard {
   grid-area: scorecard;
-  margin: 20px 0 40px 0;
-  /*max-width: 500px;*/
-  max-height: 100vh;
-  transform: translatez(-50rem) rotatex(35deg) rotateZ(20deg);
-  transition: transform 750ms, box-shadow 750ms;
+  box-shadow: 0px 0px 10px rgba(240, 83, 194, 1);
+  position: absolute;
+  top: 0;
+  font-size: 0.75em;
+  width: 90vw;
+  margin-left: 6vw;
+  transform: translate(0,93vh);
+  transition: 1s ease-in-out;
 }
 
-#scorecard:hover {
-  transform: none;
-  box-shadow: 0 1rem 5rem 1rem rgba(0, 0, 0, 0.25);
+#scorecard-label {
+  text-align:center;
+  letter-spacing:0.5em;
+  font-size: 1.3em;
+  width: 100vw;
 }
 
 #scorecard button {
@@ -329,6 +329,39 @@ th {
 
   #cpuHeader {
     width: 144px;
+    width: 170px;
+  }
+
+  #cpuHeader {
+    width: 159px;
+  }
+
+  #flamingo {
+    position:absolute;
+    bottom: 0;
+    height: 45vh;
+    width: 20vw;
+    z-index: -1;
+  }
+
+  #yacht {
+    position:absolute;
+    top: 5em;
+    height: 50vh;
+    width: 110vw;
+    right: 0;
+    z-index: -1;
+  }
+
+  #sand {
+    position: absolute;
+    bottom: 37vh;
+    left: 15vw;
+    background-color: #FFCD83;
+    width: 85vw;
+    height: 2px;
+    box-shadow: 0px 0px 5px rgba(255,255,255, 0.50);
+    z-index: -1;
   }
 
   #gameboard {
@@ -354,12 +387,16 @@ th {
     position: absolute;
     right: 12.5%;
     top: 2.5vh;
+    box-shadow: 0px 0px 10px rgba(240, 83, 194, 1);
+    position: absolute;
+    font-size: 0.75em;
+    width: auto;
+    transform: translate(0,0);
   }
 
   #scorecard tbody {
     display: block;
-    overflow-y: auto;
-    height: 90vh;
+    max-height: 90vh;
     width: 448px;
   }
 
@@ -388,7 +425,6 @@ th {
   #blankHeaderSpace {
     width: 138px;
   }
-
   #cpuHeader {
     width: 142px;
   }
