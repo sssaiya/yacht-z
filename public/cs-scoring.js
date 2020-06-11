@@ -46,6 +46,22 @@ function checkFullHouse(){
     return false;
 }
 
+function checkSmallStraight(){
+    currentRolls.sort((a,b) => a-b);
+    if (/1234|2345|3456/.test(currentRolls.join("").replace(/(.)\1/,"$1"))) {
+       return true;
+    }
+    return false;
+}
+
+function checkLargeStraight(){
+    currentRolls.sort((a,b) => a-b);
+    if (/12345|23456/.test(currentRolls.join("").replace(/(.)\1/,"$1"))){
+        return true;
+    }
+    return false;
+}
+
 // check for a 5 of a kind thru brute force, check if there are 5 occurences of each possible die value
 function checkYachtZ(){
     for(let i = 1; i <= 6; i++){
@@ -82,11 +98,9 @@ function validateMove(value) {
         case  'full-house':
             return checkFullHouse();
         case 'small-straight':
-            // TODO check for small straight
-        break;
+            return checkSmallStraight();
         case 'large-straight':
-            // TODO check for large straight
-        break;
+            return checkLargeStraight();
         case 'yacht-z':
             return checkYachtZ();
         default: 
@@ -123,10 +137,8 @@ function score(value) {
             }
         break;
         case 'sixes':
-            console.log(currentRolls)
             for(const die of currentRolls){
-                console.log(die);
-                if (die == 6) {final+=6;}
+                if (die == 6) final+=6;
             }
         break;
         case  '3-of-a-kind':
@@ -152,17 +164,16 @@ function score(value) {
         break;
         default: 
     }
-    console.log(final)
     return final;
 }
 
 // when a button is selected on the scorecard, make sure the move is valid, then add score
 function completeMove(move){
     if(validateMove(move)){
-        document.querySelector(`#${move}Row .centerColumn`).innerHTML = score(move);
+        document.querySelector(`#${move}>.centerColumn`).innerHTML = score(move);
     }
     else{
-        // TODO error 
+        alert("Invalid move! Select another row");
     }
 }
 
@@ -189,19 +200,19 @@ function updateDice(rollBtn,dice) {
 }
 
 window.onload = () => {
+    // prevent form submission so that everything stays cient-side
     document.querySelector('#gameboard').onsubmit = (e) => {e.preventDefault()};
     
-    // Scorecard button onclick handlers
-    document.querySelector('button[name="onesSelect"]').onclick = () => {completeMove('ones')};
-    document.querySelector('button[name="twosSelect"]').onclick = () => {completeMove('twos')};
-    document.querySelector('button[name="threesSelect"]').onclick = () => {completeMove('threes')};
-    document.querySelector('button[name="foursSelect"]').onclick = () => {completeMove('fours')};
-    document.querySelector('button[name="fivesSelect"]').onclick = () => {completeMove('fives')};
-    document.querySelector('button[name="sixesSelect"]').onclick = () => {completeMove('sixes')};
+    // add click listener to each scorecard button to complete each move
+    let scoringButtons = document.getElementById('scorecard').querySelectorAll('button');
+    for(const button of scoringButtons){
+        button.addEventListener('click', completeMove(button.name))
+        console.log("added");
+    }
 
-    // dice 
+    // dice checkbox reference  
     let dice = [];
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 5; i++) {
         dice.push(document.getElementById(`die${i}`));
     }
     
