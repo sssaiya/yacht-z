@@ -236,16 +236,53 @@ th {
   transition: none;
 }
 
+#toggle {
+  position:absolute;
+  cursor:pointer;
+  left:-100%;
+  top:-100%;
+}
+
+#toggle + label {
+  width: 88vw;
+  margin-top: -2vh;
+  border: 1px solid white;
+  border-radius: 3px;
+  padding: 8px 0;
+  color: #FFF;
+  line-height: 30px;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  transition: all 500ms ease;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(240, 83, 194, 1);
+  visibility: visible;
+  opacity: 1;
+}
+
+#toggle + label:after {
+  content:"OPEN SCORECARD"
+}
+
+#toggle:checked ~ #scorecard {
+  top: 0;
+}
+
+#toggle:checked + label:after {
+  content:"CLOSE SCORECARD"
+}
+
 #scorecard {
   grid-area: scorecard;
   box-shadow: 0px 0px 10px rgba(240, 83, 194, 1);
   position: absolute;
-  top: 0;
+  top: 100vh;
   font-size: 0.75em;
   width: 90vw;
   margin-left: 6vw;
-  transform: translate(0,93vh);
-  transition: 1s ease-in-out;
+  transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+  /*transform: translate(0,93vh);
+  transition: 1s ease-in-out;*/
 }
 
 #scorecard-label {
@@ -287,6 +324,11 @@ th {
   header {
     height: 12vh;
     margin: 18px;
+  }
+
+  #toggle + label {
+    visibility: hidden;
+    opacity: 0;
   }
 
   #blankHeaderSpace {

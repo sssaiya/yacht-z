@@ -66,25 +66,21 @@
         <p id="userName" class="player-name">USER</p>
         <p id="userScore" class="player-score">100 points</p>
       </div>
-
+      <input type="checkbox" name="toggle" id="toggle"><label for="toggle"></label>
       <table id="scorecard">
         <colgroup>
-          <!--<col id="scorecardHeader">-->
           <col id="columnHeader">
           <col id="columnPlayer">
           <col id="columnOpponent">
         </colgroup>
         <thead>
-          <tr><th colspan="4" id="scorecard-label" scope="col">&uarr; SCORECARD &uarr;</th></tr>
           <tr>
-            <!--<th id="blankHeaderSpace" scope="col"><img src="./images/swipe-left.png" alt="swipe left icon" style="filter:invert(1); width: 40px;"></th>-->
             <th id="blankHeaderSpace" scope="col"></th>
             <th id="youHeader" class="centerColumn" scope="col">You</th>
             <th id="cpuHeader" scope="col">CPU</th>
           </tr>
         </thead>
         <tbody>
-          <!--<tr><td rowspan="17"><p id="scorecard-label">SCORECARD</p></td></tr>-->
           <tr>
             <th class="leftColumn" scope="row">Ones</th>
             <td class="centerColumn">
@@ -197,27 +193,6 @@
     <hr id="sand">
     <img id="flamingo" src="./images/flamingo.svg" alt="neon flamingo">
   </main>
-
-  <script>
-    var scorecardShown = false;
-    let scorecard = document.getElementById("scorecard");
-    let label = document.getElementById("scorecard-label");
-
-    label.onclick = function() {
-      let w = window.innerWidth;
-      if (w < 1000){
-        if (scorecardShown) {
-          label.innerHTML = "&uarr; SCORECARD &uarr;";
-          scorecard.style.transform = "translate(0,93vh)";
-          scorecardShown = false;
-        } else {
-          label.innerHTML = "&darr; SCORECARD &darr;";
-          scorecard.style.transform = "translate(0,0)";
-          scorecardShown = true;
-        }
-      }
-    };
-  </script>
 </body>
 
 </html>
