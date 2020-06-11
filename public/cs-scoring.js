@@ -3,6 +3,7 @@ const MAX_REROLLS = 2;
 let currentRolls = []; 
 // number of times player has rerolled
 let numRerolls = 0;
+let totalScore = 0;
 
 
 // get sum of all numbers - used in reduce function to add all die values
@@ -170,7 +171,10 @@ function score(value) {
 // when a button is selected on the scorecard, make sure the move is valid, then add score
 function completeMove(move){
     if(validateMove(move)){
-        document.querySelector(`#${move}>.centerColumn`).innerHTML = score(move);
+        let scoreval = score(move);
+        document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
+        totalScore += scoreval;
+        document.getElementById('userScore').innerHTML = totalScore;
     }
     else{
         alert("Invalid move! Select another row");
@@ -200,7 +204,7 @@ function updateDice(rollBtn,dice) {
 }
 
 window.onload = () => {
-    // prevent form submission so that everything stays cient-side
+    // prevent form submission so that everything stays client-side
     document.querySelector('#gameboard').onsubmit = (e) => {e.preventDefault()};
     
     // add click listener to each scorecard button to complete each move
