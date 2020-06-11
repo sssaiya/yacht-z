@@ -8,6 +8,7 @@ body {
   background-color: #092526;
   color: white;
   font-family: sans-serif;
+  overflow: hidden; /* Hide scrollbars */
 }
 
 header {
@@ -307,11 +308,11 @@ th {
   }
 
   #blankHeaderSpace {
-    width: 143px;
+    width: 140px;
   }
 
   #cpuHeader {
-    width: 132px;
+    width: 144px;
   }
 
   #gameboard {
@@ -363,7 +364,7 @@ th {
   }
 
   #youHeader {
-    width: 139px;
+    width: 130px;
   }
 }
 

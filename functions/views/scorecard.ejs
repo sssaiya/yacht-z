@@ -103,10 +103,10 @@
             <th class="leftColumn" scope="row">Ones</th>
             <td class="centerColumn">
               <% if (typeof body.onesSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="onesSelect">
+              <p><%= body.onesSelect %></p>
+              <input type="hidden" name="onesSelect" value="<%= body.onesSelect %>">
               <% } else { %>
-              <button name="onesSelect" type="submit"
+              <button name="onesSelect" type="submit" value="<%= scores.ones %>"
                 <%= visibility %>><%= scores.ones %></button>
               <% } %>
             </td>
@@ -116,10 +116,10 @@
             <th class="leftColumn" scope="row">Twos</th>
             <td class="centerColumn">
               <% if (typeof body.twosSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="twosSelect">
+              <p><%= body.twosSelect %></p>
+              <input type="hidden" name="twosSelect" value="<%= body.twosSelect %>">
               <% } else { %>
-              <button name="twosSelect" type="submit"
+              <button name="twosSelect" type="submit" value="<%= scores.twos %>"
                 <%= visibility %>><%= scores.twos %></button>
               <% } %>
             </td>
@@ -129,10 +129,10 @@
             <th class="leftColumn" scope="row">Threes</th>
             <td class="centerColumn">
               <% if (typeof body.threesSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="threesSelect">
+              <p><%= body.threesSelect %></p>
+              <input type="hidden" name="threesSelect" value="<%= body.threesSelect %>">
               <% } else { %>
-              <button name="threesSelect" type="submit"
+              <button name="threesSelect" type="submit" value="<%= scores.threes %>"
                 <%= visibility %>><%= scores.threes %></button>
               <% } %>
             </td>
@@ -142,10 +142,10 @@
             <th class="leftColumn" scope="row">Fours</th>
             <td class="centerColumn">
               <% if (typeof body.foursSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="foursSelect">
+              <p><%= body.foursSelect %></p>
+              <input type="hidden" name="foursSelect" value="<%= body.foursSelect %>">
               <% } else { %>
-              <button name="foursSelect" type="submit"
+              <button name="foursSelect" type="submit" value="<%= scores.fours %>"
                 <%= visibility %>><%= scores.fours %></button>
               <% } %>
             </td>
@@ -155,10 +155,10 @@
             <th class="leftColumn" scope="row">Fives</th>
             <td class="centerColumn">
               <% if (typeof body.fivesSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="fivesSelect">
+              <p><%= body.fivesSelect %></p>
+              <input type="hidden" name="fivesSelect" value="<%= body.fivesSelect %>">
               <% } else { %>
-              <button name="fivesSelect" type="submit"
+              <button name="fivesSelect" type="submit" value="<%= scores.fives %>"
                 <%= visibility %>><%= scores.fives %></button>
               <% } %>
             </td>
@@ -168,10 +168,10 @@
             <th class="leftColumn" scope="row">Sixes</th>
             <td class="centerColumn">
               <% if (typeof body.sixesSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="sixesSelect">
+              <p><%= body.sixesSelect %></p>
+              <input type="hidden" name="sixesSelect" value="<%= body.sixesSelect %>">
               <% } else { %>
-              <button name="sixesSelect" type="submit"
+              <button name="sixesSelect" type="submit" value="<%= scores.sixes %>"
                 <%= visibility %>><%= scores.sixes %></button>
               <% } %>
             </td>
@@ -191,10 +191,12 @@
             <th class="leftColumn" scope="row">Three of a Kind</th>
             <td class="centerColumn">
               <% if (typeof body.threeOfAKindSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="threeOfAKindSelect">
+              <p><%= body.threeOfAKindSelect %></p>
+              <input type="hidden" name="threeOfAKindSelect"
+                value="<%= body.threeOfAKindSelect %>">
               <% } else { %>
               <button name="threeOfAKindSelect" type="submit"
+                value="<%= scores.three_of_a_kind %>"
                 <%= visibility %>><%= scores.three_of_a_kind %></button>
               <% } %>
             </td>
@@ -204,10 +206,12 @@
             <th class="leftColumn" scope="row">Four of a Kind</th>
             <td class="centerColumn">
               <% if (typeof body.fourOfAKindSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="fourOfAKindSelect">
+              <p><%= body.fourOfAKindSelect %></p>
+              <input type="hidden" name="fourOfAKindSelect"
+                value="<%= body.fourOfAKindSelect %>">
               <% } else { %>
               <button name="fourOfAKindSelect" type="submit"
+                value="<%= scores.four_of_a_kind %>"
                 <%= visibility %>><%= scores.four_of_a_kind %></button>
               <% } %>
             </td>
@@ -217,10 +221,12 @@
             <th class="leftColumn" scope="row">Full House</th>
             <td class="centerColumn">
               <% if (typeof body.fullHouseSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="fullHouseSelect">
+              <p><%= body.fullHouseSelect %></p>
+              <input type="hidden" name="fullHouseSelect"
+                value="<%= body.fullHouseSelect %>">
               <% } else { %>
               <button name="fullHouseSelect" type="submit"
+                value="<%= scores.full_house %>"
                 <%= visibility %>><%= scores.full_house %></button>
               <% } %>
             </td>
@@ -230,10 +236,12 @@
             <th class="leftColumn" scope="row">Small Straight</th>
             <td class="centerColumn">
               <% if (typeof body.smallStraightSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="smallStraightSelect">
+              <p><%= body.smallStraightSelect %></p>
+              <input type="hidden" name="smallStraightSelect"
+                value="<%= body.smallStraightSelect %>">
               <% } else { %>
               <button name="smallStraightSelect" type="submit"
+                value="<%= scores.small_straight %>"
                 <%= visibility %>><%= scores.small_straight %></button>
               <% } %>
             </td>
@@ -243,11 +251,13 @@
             <th class="leftColumn" scope="row">Large Straight</th>
             <td class="centerColumn">
               <% if (typeof body.largeStraightSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="largeStraightSelect">
+              <p><%= body.largeStraightSelect %></p>
+              <input type="hidden" name="largeStraightSelect"
+                value="<%= body.largeStraightSelect %>">
               <% } else { %>
               <button name="largeStraightSelect" type="submit"
-                <%= visibility %>><%=scores.large_straight %></button>
+                value="<%= scores.large_straight %>"
+                <%= visibility %>><%= scores.large_straight %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -256,11 +266,11 @@
             <th class="leftColumn" scope="row">Chance</th>
             <td class="centerColumn">
               <% if (typeof body.chanceSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="chanceSelect">
+              <p><%= body.chanceSelect %></p>
+              <input type="hidden" name="chanceSelect" value="<%= body.chanceSelect %>">
               <% } else { %>
-              <button name="chanceSelect" type="submit"
-                <%= visibility %>><%=scores.chance %></button>
+              <button name="chanceSelect" type="submit" value="<%= scores.chance %>"
+                <%= visibility %>><%= scores.chance %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -269,11 +279,11 @@
             <th class="leftColumn" scope="row">YACHT-Z</th>
             <td class="centerColumn">
               <% if (typeof body.yachtZSelect !== 'undefined') { %>
-              <p><%= body.dicetotal %></p>
-              <input type="hidden" name="yachtZSelect">
+              <p><%= body.yachtZSelect %></p>
+              <input type="hidden" name="yachtZSelect" value="<%= body.yachtZSelect %>">
               <% } else { %>
-              <button name="yachtZSelect" type="submit"
-                <%= visibility %>><%=scores.yacht_z %></button>
+              <button name="yachtZSelect" type="submit" value="<%= scores.yacht_z %>"
+                <%= visibility %>><%= scores.yacht_z %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
