@@ -40,23 +40,115 @@ main {
 
 /* Single player button */
 
-#singlePlayer {
-  background: #F053C2;
+.home_buttons {
   border: none;
   border-radius: 5px;
-  color: rgb(255, 255, 255);
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
   font-size: 2em;
   height: 65px;
   margin: 0;
-  text-shadow: 1.5px 1.5px 1.5px black;
   transition: 0.2s ease all;
   width: 586px;
 }
 
-#singlePlayer:hover {
+.home_buttons:hover {
   cursor: pointer;
-  filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.4));
-  transform: scale(1.03);
-  transition: 0.2s ease all;
+  transition: 0.3s ease all;
+}
+
+.roomBtn {
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  font-family: sans-serif;
+  font-size: 1.6em;
+}
+
+#createRoom {
+  border: 2px solid #00e1ff;
+  background: none;
+  color: #00e1ff;
+  display: none;
+  grid-area: create;
+  transition: 0.3s ease all;
+}
+
+#createRoom:hover {
+  background: #00e1ff;
+  color: #092526;
+  cursor: pointer;
+  transition: 0.3s ease all;
+}
+
+#joinRoom {
+  border: 2px solid #95e71f;
+  background: none;
+  color: #95e71f;
+  display: none;
+  grid-area: join;
+  transition: 0.3s ease all;
+}
+
+#joinRoom:hover {
+  background: #95e71f;
+  color: #092526;
+  cursor: pointer;
+  transition: 0.3s ease all;
+}
+
+#roomCode {
+  background-color: #165052;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid white;
+  color: white;
+  display: none;
+  height: 30px;
+  grid-area: roomcode;
+  font-size: 1.3em;
+  font-family: sans-serif;
+  padding: 2px 8px;
+}
+
+#singlePlayer {
+  background: none;
+  border: 2px solid rgb(255, 117, 214);
+  color: rgb(255, 117, 214);
+}
+
+#singlePlayer:hover {
+  background: rgb(255, 117, 214);
+  color: #092526;
+  transition: 0.3s ease all;
+}
+
+#multiplayer {
+  background: none;
+  border: 2px solid white;
+  color: white;
+  display: none;
+  grid-area: multiplayer;
+  justify-self: center;
+  margin-top: 20px;
+}
+
+#multiplayer:hover {
+  background: white;
+  color: #092526;
+  transition: 0.3 ease all;
+}
+
+#multiplayerForm {
+  column-gap: 20px;
+  display: grid;
+  grid-template-areas:
+  'multiplayer multiplayer'
+  'create join'
+  'empty roomcode';
+  grid-template-columns: 1fr 1fr;
+  row-gap: 20px;
+  margin: 0 auto;
+  max-width: 586px;
+  width: 100%;
 }

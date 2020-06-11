@@ -23,11 +23,63 @@
 
   <main>
     <form action="/app" method="get">
-      <button id="singlePlayer" type="submit">
+      <button id="singlePlayer" class="home_buttons" type="submit">
         Play Single Player
       </button>
     </form>
+    <form action="/multiplayer" id="multiplayerForm" method="get">
+      <button id="multiplayer" class="home_buttons" type="button">
+        Play Multiplayer
+      </button>
+      <button id="createRoom" data-hidden="true" class="roomBtn" type="submit">Create
+        Room</button>
+      <button id="joinRoom" data-hidden="true" class="roomBtn" type="button">Join
+        Room</button>
+      <input id="roomCode" data-hidden="true" type="text" name="roomCode"
+        spellcheck="false" autocomplete="off" disabled
+        onkeyup="this.value = this.value.toUpperCase();">
+    </form>
   </main>
+
+  <script type="module">
+    let multiplayer = document.getElementById('multiplayer');
+    let createRoom = document.getElementById('createRoom');
+    let joinRoom = document.getElementById('joinRoom');
+    let roomCode = document.getElementById('roomCode');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      multiplayer.style.display = 'block';
+    });
+
+    multiplayer.addEventListener('click', e => {
+      e.preventDefault();
+      if (createRoom.getAttribute('data-hidden') == "true") {
+        createRoom.style.display = 'block';
+        joinRoom.style.display = 'block';
+        createRoom.setAttribute('data-hidden', "false");
+      } else {
+        createRoom.style.display = 'none';
+        joinRoom.style.display = 'none';
+        roomCode.style.display = 'none';
+        roomCode.disabled = true;
+        createRoom.setAttribute('data-hidden', "true");
+        roomCode.setAttribute('data-hidden', "true");
+      }
+    });
+
+    joinRoom.addEventListener('click', e => {
+      e.preventDefault();
+      if (roomCode.getAttribute('data-hidden') == "true") {
+        roomCode.style.display = 'block';
+        roomCode.disabled = false;
+        roomCode.setAttribute('data-hidden', "false");
+      } else {
+        roomCode.style.display = 'none';
+        roomCode.disabled = true;
+        roomCode.setAttribute('data-hidden', "true");
+      }
+    });
+  </script>
 </body>
 
 </html>
