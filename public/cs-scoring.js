@@ -166,6 +166,10 @@ function completeMove(move){
     }
 }
 
+function prepopulateScore() {
+
+}
+
 function updateDice(rollBtn,dice) {
     if (numRerolls == MAX_REROLLS) {
         rollBtn.disabled = true;
@@ -176,9 +180,11 @@ function updateDice(rollBtn,dice) {
     currentRolls = [];
     for (let i = 0; i < 5; i++) {
         if (dice[i].checked) {
+            // skip locked die
             currentRolls.push(dice[i].nextElementSibling.nextElementSibling.value);
             dice[i].checked = false;
         } else {
+            // update dice image and value
             dice[i].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
             dice[i].nextElementSibling.style.backgroundSize = 'cover';
             dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
@@ -186,6 +192,7 @@ function updateDice(rollBtn,dice) {
         }
     }
     numRerolls++;
+    prepopulateScore();
 }
 
 window.onload = () => {
@@ -198,6 +205,8 @@ window.onload = () => {
     document.querySelector('button[name="foursSelect"]').onclick = () => {completeMove('fours')};
     document.querySelector('button[name="fivesSelect"]').onclick = () => {completeMove('fives')};
     document.querySelector('button[name="sixesSelect"]').onclick = () => {completeMove('sixes')};
+
+    // TODO add special hands button handlers
 
     // dice 
     let dice = [];
