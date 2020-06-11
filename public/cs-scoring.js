@@ -216,6 +216,10 @@ function toggleTurns() {
   }
 }
 
+// function aiMove() {
+
+// }
+
 // when a button is selected on the scorecard, make sure the move is valid, then add score
 function completeMove(move) {
   toggleElements("row");
@@ -224,13 +228,16 @@ function completeMove(move) {
 
   totalScore += scoreval;
   document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
-  if (socket !== "undefined") {
+  
+  try {
     socket.emit("user-move", {
       move: move,
       score: scoreval,
       roomCode: currRoomCode,
       opponentScore: totalScore,
     });
+  } catch(e) {
+    if (e instanceof ReferenceError) console.error("Socket not defined");
   }
 
   resetDice();
@@ -261,9 +268,15 @@ function updateDice(rollBtn, dice) {
   }
 
   // Send the new rolls to the opponent if multiplayer
-  if (socket !== "undefined") {
+  try {
     socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
+  } catch (e) {
+    if (e instanceof ReferenceError) console.error("Socket not defined");
   }
+
+
+  updateButtons();
+
 
   numRerolls++;
 }
