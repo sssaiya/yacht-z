@@ -46,6 +46,7 @@
     "eslint": "^7.1.0",
     "husky": "^4.2.5",
     "lighthouse": "^6.0.0",
+    "lighthouse-badges": "^1.0.30",
     "mocha": "^7.2.0",
     "nyc": "^15.1.0",
     "purgecss": "2.2.0"
