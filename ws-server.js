@@ -26,12 +26,18 @@ io.on('connection', socket => {
 
   // Joins users to a room after the URL has been fetched and loaded
   socket.on('join-room', data => {
-    roomList[data.roomCode].socketIDs.push(socket.id);
-    socket.join(`${data.roomCode}`);
-    socket.emit('room-joined', data.roomCode);
-    socket.to(`${data.roomCode}`).emit('opponent-joined', {
-      message: 'Opponent has joined the match',
-    });
+    if (!roomList[data.roomCode]) {
+      socket.emit('room-not-found', { message: `Room doesn't exist` });
+    } else if (roomList[data.roomCode].socketIDs.length >= 2) {
+      socket.emit('room-full', { message: `Room is full` });
+    } else {
+      roomList[data.roomCode].socketIDs.push(socket.id);
+      socket.join(`${data.roomCode}`);
+      socket.emit('room-joined', data.roomCode);
+      socket.to(`${data.roomCode}`).emit('opponent-joined', {
+        message: 'Opponent has joined the match',
+      });
+    }
   });
 
   // User left handlers

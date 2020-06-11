@@ -171,6 +171,18 @@ socket.on('opponent-move', moveInfo => {
   toggleDice('hide');
 });
 
+// Room wasn't found, route back to home page
+socket.on('room-not-found', msg => {
+  alert(msg);
+  //TODO - Route back to homepage
+});
+
+// Room full, route back to home page
+socket.on('room-full', msg => {
+  alert(msg);
+  //TODO - Route back to homepage
+});
+
 // Send message that user left room before page unloads
 window.addEventListener('beforeunload', () => {
   socket.emit('user-left', currRoomCode);
