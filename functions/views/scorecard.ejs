@@ -19,13 +19,7 @@
   <script src="cs-scoring.js" defer></script>
 
   <header>
-    <svg id="bgTriangle" height="79" width="102" focusable="false">
-      <polygon points="0,0 50,75 100,0" />
-    </svg>
-    <div id="headerText">
-      <p>Welcome to</p>
-      <h1>Yacht-Z</h1>
-    </div>
+    <img src="./images/logo.svg" alt="yachtz logo">
 
     <% if (playermode == 'multiplayer') { %>
     <% if (roomCode !== 'undefined') { %>
@@ -37,6 +31,7 @@
   </header>
 
   <main>
+    <img id="yacht" src="./images/dark-yacht-wave.svg" alt="dark theme yacht">
     <!-- Gameboard Form -->
     <form id="gameboard" action="/app" method="post">
 
@@ -54,18 +49,21 @@
             <label for="die1" style="background: url('images/die-<%= dice[0];%>pips.png')
             no-repeat; background-size: cover"></label>
             <input type="hidden" name="die1value" value="<%= dice[0]; %>">
+            <img class="lock" src="./images/lock.svg" alt="lock">
           </div>
           <div class="player-dice" <%= visibility %>>
             <input id="die2" name="die2" type="checkbox">
             <label for="die2" style="background: url('images/die-<%= dice[1];%>pips.png')
               no-repeat; background-size: cover"></label>
             <input type="hidden" name="die2value" value="<%= dice[1]; %>">
+            <img class="lock" src="./images/lock.svg" alt="lock">
           </div>
           <div class="player-dice" <%= visibility %>>
             <input id="die3" name="die3" type="checkbox">
             <label for="die3" style="background: url('images/die-<%= dice[2];%>pips.png')
               no-repeat; background-size: cover"></label>
             <input type="hidden" name="die3value" value="<%= dice[2]; %>">
+            <img class="lock" src="./images/lock.svg" alt="lock">
           </div>
         </div>
         <!-- Dice Row 2 -->
@@ -75,12 +73,15 @@
             <label for="die4" style="background: url('images/die-<%= dice[3];%>pips.png')
               no-repeat; background-size: cover"></label>
             <input type="hidden" name="die4value" value="<%= dice[3]; %>">
+            <img class="lock" src="./images/lock.svg" alt="lock">
           </div>
           <div class="player-dice" <%= visibility %>>
+
             <input id="die5" name="die5" type="checkbox">
             <label for="die5" style="background: url('images/die-<%= dice[4];%>pips.png')
               no-repeat; background-size: cover"></label>
             <input type="hidden" name="die5value" value="<%= dice[4]; %>">
+            <img class="lock" src="./images/lock.svg" alt="lock">
           </div>
         </div>
       </div>
@@ -97,7 +98,7 @@
         <p id="userName" class="player-name">USER</p>
         <p id="userScore" class="player-score">0 points</p>
       </div>
-
+      <input type="checkbox" name="toggle" id="toggle"><label for="toggle"></label>
       <table id="scorecard">
         <colgroup>
           <col id="columnHeader">
@@ -190,12 +191,12 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr id="sum">
+          <tr id="sum" class="points">
             <th class="leftColumn" scope="row">Sum</th>
             <td class="centerColumn"></td>
             <td class="rightColumn"></td>
           </tr>
-          <tr id="bonus">
+          <tr id="bonus" class="points">
             <th class="leftColumn" scope="row">Bonus</th>
             <td class="centerColumn"></td>
             <td class="rightColumn"></td>
@@ -299,7 +300,7 @@
             </td>
             <td class="rightColumn"></td>
           </tr>
-          <tr id="totalScoreRow">
+          <tr id="totalScoreRow" class="points">
             <th class="leftColumn" scope="row">TOTAL SCORE</th>
             <td class="centerColumn"></td>
             <td class="rightColumn"></td>
@@ -307,6 +308,8 @@
         </tbody>
       </table>
     </form>
+    <hr id="sand">
+    <img id="flamingo" src="./images/flamingo.svg" alt="neon flamingo">
   </main>
 </body>
 
