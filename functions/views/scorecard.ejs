@@ -1,299 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yacht-Z</title>
+  <title>Scorecard Temp</title>
 
-  <style>
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      padding: 5px;
-    }
+  <!-- Main Scorecard CSS -->
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
 
-    th {
-      text-align: left;
-    }
-
-    #diceRollsForm {
-      margin-top: 20px;
-    }
-  </style>
+  <% if (playermode == 'multiplayer') { %>
+  <script defer src="socket.io.js"></script>
+  <script defer src="websocket.js"></script>
+  <% } %>
 </head>
-<body>
-  <header>
-    <h1>Yacht-Z</h1>
-  </header>
-  <main>
-    <form id="scorecardForm" method="post" action="/app">
-      <table id="scorecard">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">You</th>
-            <th scope="col">Opponent</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Ones</th>
-            <td>
-              <% if (typeof body.ones !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="ones">
-              <% } else { %>
-                <button name="ones" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Twos</th>
-            <td>
-              <% if (typeof body.twos !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="twos">
-              <% } else { %>
-                <button name="twos" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Threes</th>
-            <td>
-              <% if (typeof body.threes !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="threes">
-              <% } else { %>
-                <button name="threes" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Fours</th>
-            <td>
-              <% if (typeof body.fours !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="fours">
-              <% } else { %>
-                <button name="fours" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Fives</th>
-            <td>
-              <% if (typeof body.fives !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="fives">
-              <% } else { %>
-                <button name="fives" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Sixes</th>
-            <td>
-              <% if (typeof body.sixes !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="sixes">
-              <% } else { %>
-                <button name="sixes" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Sum</th>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Bonus</th>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Three of a Kind</th>
-            <td>
-              <% if (typeof body.threeOfAKind !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="threeOfAKind">
-              <% } else { %>
-                <button name="threeOfAKind" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Four of a Kind</th>
-            <td>
-              <% if (typeof body.fourOfAKind !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="fourOfAKind">
-              <% } else { %>
-                <button name="fourOfAKind" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Full House</th>
-            <td>
-              <% if (typeof body.fullHouse !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="fullHouse">
-              <% } else { %>
-                <button name="fullHouse" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Small Straight</th>
-            <td>
-              <% if (typeof body.smallStraight !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="smallStraight">
-              <% } else { %>
-                <button name="smallStraight" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Large Straight</th>
-            <td>
-              <% if (typeof body.largeStraight !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="largeStraight">
-              <% } else { %>
-                <button name="largeStraight" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">Chance</th>
-            <td>
-              <% if (typeof body.chance !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="chance">
-              <% } else { %>
-                <button name="chance" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">YACHT-Z</th>
-            <td>
-              <% if (typeof body.yachtZ !== 'undefined') { %>
-                <p><%= body.dicetotal %></p>
-                <input type="hidden" name="yachtZ">
-              <% } else { %>
-                <button name="yachtZ" type="submit">Select</button>
-              <% } %>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">TOTAL SCORE</th>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
 
-      <table id="diceRolls">
+<body id="yachZscorecard">
+  <script src="cs-scoring.js" defer></script>
+
+  <header>
+    <svg id="bgTriangle" height="79" width="102" focusable="false">
+      <polygon points="0,0 50,75 100,0" />
+    </svg>
+    <div id="headerText">
+      <p>Welcome to</p>
+      <h1>Yacht-Z</h1>
+    </div>
+
+    <% if (playermode == 'multiplayer') { %>
+    <% if (roomCode !== 'undefined') { %>
+    <p id="roomCode">Room Code:<br /><span id="roomCodeText"><%= roomCode %></span></p>
+    <% } else { %>
+    <p id="roomCode">Room Code:<br /><span id="roomCodeText"></span></p>
+    <% } %>
+    <% } %>
+  </header>
+
+  <main>
+    <!-- Gameboard Form -->
+    <form id="gameboard" action="/app" method="post">
+
+      <div id="opponent" class="player-character">
+        <div id="opponentImg" class="player-icon"></div>
+        <p id="opponentName" class="player-name"><%= opponentName %></p>
+        <p id="opponentScore" class="player-score">0 points</p>
+      </div>
+
+      <div id="playerDiceWrapper">
+        <!-- Dice Row 1 -->
+        <div id="playerDiceRow1" class="player-diceRow">
+          <div class="player-dice" <%= visibility %>>
+            <input id="die1" name="die1" type="checkbox">
+            <label for="die1" style="background: url('images/die-<%= dice[0];%>pips.png')
+            no-repeat; background-size: cover"></label>
+            <input type="hidden" name="die1value" value="<%= dice[0]; %>">
+          </div>
+          <div class="player-dice" <%= visibility %>>
+            <input id="die2" name="die2" type="checkbox">
+            <label for="die2" style="background: url('images/die-<%= dice[1];%>pips.png')
+              no-repeat; background-size: cover"></label>
+            <input type="hidden" name="die2value" value="<%= dice[1]; %>">
+          </div>
+          <div class="player-dice" <%= visibility %>>
+            <input id="die3" name="die3" type="checkbox">
+            <label for="die3" style="background: url('images/die-<%= dice[2];%>pips.png')
+              no-repeat; background-size: cover"></label>
+            <input type="hidden" name="die3value" value="<%= dice[2]; %>">
+          </div>
+        </div>
+        <!-- Dice Row 2 -->
+        <div id="playerDiceRow2" class="player-diceRow">
+          <div class="player-dice" <%= visibility %>>
+            <input id="die4" name="die4" type="checkbox">
+            <label for="die4" style="background: url('images/die-<%= dice[3];%>pips.png')
+              no-repeat; background-size: cover"></label>
+            <input type="hidden" name="die4value" value="<%= dice[3]; %>">
+          </div>
+          <div class="player-dice" <%= visibility %>>
+            <input id="die5" name="die5" type="checkbox">
+            <label for="die5" style="background: url('images/die-<%= dice[4];%>pips.png')
+              no-repeat; background-size: cover"></label>
+            <input type="hidden" name="die5value" value="<%= dice[4]; %>">
+          </div>
+        </div>
+      </div>
+
+      <% let showButton = `style=""`; %>
+      <% if (parseInt(body.rollNum) >= 3) { showButton = `style=visibility:hidden`; } %>
+      <button id="rerollBtn" type="submit" name="reroll" <%= showButton %>>
+        <%= Roll %>
+        <input type="hidden" name="rollNum" value="<%= parseInt(body.rollNum) + 1 %>">
+      </button>
+
+      <div id="user" class="player-character">
+        <div id="userImg" class="player-icon"></div>
+        <p id="userName" class="player-name">USER</p>
+        <p id="userScore" class="player-score">0 points</p>
+      </div>
+
+      <table id="scorecard">
+        <colgroup>
+          <col id="columnHeader">
+          <col id="columnPlayer">
+          <col id="columnOpponent">
+        </colgroup>
         <thead>
           <tr>
-            <td colspan="7"></td>
-            <th scope="col">Total:</th>
+            <th id="blankHeaderSpace" scope="col"></th>
+            <th id="youHeader" scope="col">You</th>
+            <th id="cpuHeader" scope="col"><%= opponentName %></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Dice:</th>
-            <td>
-              <% if (typeof body.die1 !== 'undefined') { %>
-                <%= dice.pop() %>
+          <tr id="ones">
+            <th class="leftColumn" scope="row">Ones</th>
+            <td class="centerColumn">
+              <% if (typeof body.ones !== 'undefined') { %>
+              <p><%= body.ones %></p>
+              <input type="hidden" name="ones" value="<%= body.ones %>">
               <% } else { %>
-                0
+              <button name="ones" type="submit" value="<%= scores.ones %>"
+                <%= visibility %>><%= scores.ones %></button>
               <% } %>
             </td>
-            <td>
-              <% if (typeof body.die2 !== 'undefined') { %>
-                <%= dice.pop() %>
-              <% } else { %>
-                0
-              <% } %>
-            </td>
-            <td>
-              <% if (typeof body.die3 !== 'undefined') { %>
-                <%= dice.pop() %>
-              <% } else { %>
-                0
-              <% } %>
-            </td>
-            <td>
-              <% if (typeof body.die4 !== 'undefined') { %>
-                <%= dice.pop() %>
-              <% } else { %>
-                0
-              <% } %>
-            </td>
-            <td>
-              <% if (typeof body.die5 !== 'undefined') { %>
-                <%= dice.pop() %>
-              <% } else { %>
-                0
-              <% } %>
-            </td>
-            <td>
-              <% if (typeof body.die6 !== 'undefined') { %>
-                <%= dice.pop() %>
-              <% } else { %>
-                0
-              <% } %>
-            </td>
-            <td id="dicetotal">
-              <%= body.dicetotal %>
-              <input type="hidden" name="dicetotal" value="<%= body.dicetotal %>">
-            </td>
+            <td class="rightColumn"></td>
           </tr>
-          <tr>
-            <th scope="row">Re-roll:</th>
-            <td>
-              <input id="die1" name="die1" type="checkbox">
+          <tr id="twos">
+            <th class="leftColumn" scope="row">Twos</th>
+            <td class="centerColumn">
+              <% if (typeof body.twos !== 'undefined') { %>
+              <p><%= body.twos %></p>
+              <input type="hidden" name="twos" value="<%= body.twos %>">
+              <% } else { %>
+              <button name="twos" type="submit" value="<%= scores.twos %>"
+                <%= visibility %>><%= scores.twos %></button>
+              <% } %>
             </td>
-            <td>
-              <input id="die2" name="die2" type="checkbox">
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="threes">
+            <th class="leftColumn" scope="row">Threes</th>
+            <td class="centerColumn">
+              <% if (typeof body.threes !== 'undefined') { %>
+              <p><%= body.threes %></p>
+              <input type="hidden" name="threes" value="<%= body.threes %>">
+              <% } else { %>
+              <button name="threes" type="submit" value="<%= scores.threes %>"
+                <%= visibility %>><%= scores.threes %></button>
+              <% } %>
             </td>
-            <td>
-              <input id="die3" name="die3" type="checkbox">
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="fours">
+            <th class="leftColumn" scope="row">Fours</th>
+            <td class="centerColumn">
+              <% if (typeof body.fours !== 'undefined') { %>
+              <p><%= body.fours %></p>
+              <input type="hidden" name="fours" value="<%= body.fours %>">
+              <% } else { %>
+              <button name="fours" type="submit" value="<%= scores.fours %>"
+                <%= visibility %>><%= scores.fours %></button>
+              <% } %>
             </td>
-            <td>
-              <input id="die4" name="die4" type="checkbox">
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="fives">
+            <th class="leftColumn" scope="row">Fives</th>
+            <td class="centerColumn">
+              <% if (typeof body.fives !== 'undefined') { %>
+              <p><%= body.fives %></p>
+              <input type="hidden" name="fives" value="<%= body.fives %>">
+              <% } else { %>
+              <button name="fives" type="submit" value="<%= scores.fives %>"
+                <%= visibility %>><%= scores.fives %></button>
+              <% } %>
             </td>
-            <td>
-              <input id="die5" name="die5" type="checkbox">
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="sixes">
+            <th class="leftColumn" scope="row">Sixes</th>
+            <td class="centerColumn">
+              <% if (typeof body.sixes !== 'undefined') { %>
+              <p><%= body.sixes %></p>
+              <input type="hidden" name="sixes" value="<%= body.sixes %>">
+              <% } else { %>
+              <button name="sixes" type="submit" value="<%= scores.sixes %>"
+                <%= visibility %>><%= scores.sixes %></button>
+              <% } %>
             </td>
-            <td>
-              <input id="die6" name="die6" type="checkbox">
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="sum">
+            <th class="leftColumn" scope="row">Sum</th>
+            <td class="centerColumn"></td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="bonus">
+            <th class="leftColumn" scope="row">Bonus</th>
+            <td class="centerColumn"></td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="three_of_a_kind">
+            <th class="leftColumn" scope="row">Three of a Kind</th>
+            <td class="centerColumn">
+              <% if (typeof body.three_of_a_kind !== 'undefined') { %>
+              <p><%= body.three_of_a_kind %></p>
+              <input type="hidden" name="three_of_a_kind"
+                value="<%= body.three_of_a_kind %>">
+              <% } else { %>
+              <button name="three_of_a_kind" type="submit"
+                value="<%= scores.three_of_a_kind %>"
+                <%= visibility %>><%= scores.three_of_a_kind %></button>
+              <% } %>
             </td>
-            <td>
-              <button name="roll" type="submit">Roll</button>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="four_of_a_kind">
+            <th class="leftColumn" scope="row">Four of a Kind</th>
+            <td class="centerColumn">
+              <% if (typeof body.four_of_a_kind !== 'undefined') { %>
+              <p><%= body.four_of_a_kind %></p>
+              <input type="hidden" name="four_of_a_kind"
+                value="<%= body.four_of_a_kind %>">
+              <% } else { %>
+              <button name="four_of_a_kind" type="submit"
+                value="<%= scores.four_of_a_kind %>"
+                <%= visibility %>><%= scores.four_of_a_kind %></button>
+              <% } %>
             </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="full_house">
+            <th class="leftColumn" scope="row">Full House</th>
+            <td class="centerColumn">
+              <% if (typeof body.full_house !== 'undefined') { %>
+              <p><%= body.full_house %></p>
+              <input type="hidden" name="full_house" value="<%= body.full_house %>">
+              <% } else { %>
+              <button name="full_house" type="submit" value="<%= scores.full_house %>"
+                <%= visibility %>><%= scores.full_house %></button>
+              <% } %>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="small_straight">
+            <th class="leftColumn" scope="row">Small Straight</th>
+            <td class="centerColumn">
+              <% if (typeof body.small_straight !== 'undefined') { %>
+              <p><%= body.small_straight %></p>
+              <input type="hidden" name="small_straight"
+                value="<%= body.small_straight %>">
+              <% } else { %>
+              <button name="small_straight" type="submit"
+                value="<%= scores.small_straight %>"
+                <%= visibility %>><%= scores.small_straight %></button>
+              <% } %>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="large_straight">
+            <th class="leftColumn" scope="row">Large Straight</th>
+            <td class="centerColumn">
+              <% if (typeof body.large_straight !== 'undefined') { %>
+              <p><%= body.large_straight %></p>
+              <input type="hidden" name="large_straight"
+                value="<%= body.large_straight %>">
+              <% } else { %>
+              <button name="large_straight" type="submit"
+                value="<%= scores.large_straight %>"
+                <%= visibility %>><%= scores.large_straight %></button>
+              <% } %>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="chance">
+            <th class="leftColumn" scope="row">Chance</th>
+            <td class="centerColumn">
+              <% if (typeof body.chance !== 'undefined') { %>
+              <p><%= body.chance %></p>
+              <input type="hidden" name="chance" value="<%= body.chance %>">
+              <% } else { %>
+              <button name="chance" type="submit" value="<%= scores.chance %>"
+                <%= visibility %>><%= scores.chance %></button>
+              <% } %>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="yacht_z">
+            <th class="leftColumn" scope="row">YACHT-Z</th>
+            <td class="centerColumn">
+              <% if (typeof body.yacht_z !== 'undefined') { %>
+              <p><%= body.yacht_z %></p>
+              <input type="hidden" name="yacht_z" value="<%= body.yacht_z %>">
+              <% } else { %>
+              <button name="yacht_z" type="submit" value="<%= scores.yacht_z %>"
+                <%= visibility %>><%= scores.yacht_z %></button>
+              <% } %>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+          <tr id="totalScoreRow">
+            <th class="leftColumn" scope="row">TOTAL SCORE</th>
+            <td class="centerColumn"></td>
+            <td class="rightColumn"></td>
           </tr>
         </tbody>
       </table>
     </form>
   </main>
 </body>
+
 </html>

@@ -27,10 +27,14 @@ app.get("/app", (req, res) => {
     diceSum += num;
   });
   const scores = makeScoreArray(newRolls);
-  res.render("scorecard-temp", {
-    body: { dicetotal: diceSum },
+  res.render("scorecard", {
+    body: { dicetotal: diceSum, rollNum: 0 },
     dice: newRolls,
     scores: scores,
+    visibility: 'style=visibility:hidden',
+    Roll: 'ROLL',
+    playermode: 'single',
+    opponentName: 'CPU'
   });
 });
 
@@ -50,10 +54,36 @@ app.post("/app", (req, res) => {
 
   const scores = makeScoreArray(dice);
 
-  res.render("scorecard-temp", {
+  res.render("scorecard", {
     body: req.body,
     dice: dice,
     scores: scores,
+    visibility: 'style=visibility:visible',
+    Roll: 'REROLL',
+    playermode: 'single',
+    opponentName: 'CPU'
+  });
+});
+
+// ejs views app - GET
+// For the initial start multiplayer request
+app.get('/multiplayer', (req, res) => {
+  let newRolls = [];
+  newRolls = getNRolls(5);
+  let diceSum = 0;
+  newRolls.forEach((num) => {
+    diceSum += num;
+  });
+  const scores = makeScoreArray(newRolls);
+  res.render("scorecard", {
+    body: { dicetotal: diceSum, rollNum: 0 },
+    dice: newRolls,
+    scores: scores,
+    visibility: 'style=visibility:hidden',
+    Roll: 'ROLL',
+    playermode: 'multiplayer',
+    roomCode: req.query.roomCode,
+    opponentName: 'Waiting...'
   });
 });
 
