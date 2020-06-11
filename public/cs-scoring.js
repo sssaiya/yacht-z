@@ -3,11 +3,36 @@
 /* eslint-disable no-undef*/
 
 const MAX_REROLLS = 2;
+const AI_PAUSE = 2000;
 // GLOBAL reference for dice values. after every roll, store values here
 let currentRolls = [];
 // number of times player has rerolled
 let numRerolls = 0;
-let totalScore = 0;
+let userTotalScore = 0;
+let opponentTotalScore = 0;
+let turnEnum = {
+    USER: 0,
+    OPPONENT: 1
+}
+let turn = turnEnum.USER;
+
+let moveList = [
+    "ones",
+    "twos",
+    "threes",
+    "fours",
+    "fives",
+    "sixes",
+    "three_of_a_kind",
+    "four_of_a_kind",
+    "full_house",
+    "small_straight",
+    "large_straight",
+    "chance",
+    "yacht_z",
+  ];
+
+let diceRef = [];
 
 // Dice checkboxes, having it load at start improves gameplay performance
 let diceRow1Arr = Array.from(
@@ -208,33 +233,65 @@ function toggleTurns() {
     opponent.classList.add("game-turn");
     rollBtn.disabled = true;
     rollBtn.style.opacity = 0.4;
+    turn = turnEnum.OPPONENT;
+    aiMove();
   } else {
     rollBtn.disabled = false;
     rollBtn.style.opacity = 1;
     opponent.classList.remove("game-turn");
     user.classList.add("game-turn");
+    turn = turnEnum.USER;
   }
 }
 
-// function aiMove() {
+function aiMove() {
+//   // greedy ai
+//   maxScore = 0;
+//   maxScoreMove = "";
+//   for (move of moveList) {
+//     let score = score(move);
+//     if (score >= maxScore) {
+//         maxScore = score;
+//         maxScoreMove = move;
+//     }
+//   }
+//   completeMove(maxScoreMove);
 
-// }
+  // Step 1. Roll the dice
+  let step1 = () => updateDice(null, diceRef);
+  // TODO Step 1.5 randomly reroll dice between 1-2 times
+
+  // Step 2. Choose a button
+  let step2 = () => completeMove(moveList[Math.floor(Math.random() * moveList.length)]);
+  let steps = [step1, step2]
+  i = 0,
+  timer = setInterval(() => {
+    steps[i++]();
+    if (i === steps.length) clearInterval(timer);
+  }, AI_PAUSE);
+}
 
 // when a button is selected on the scorecard, make sure the move is valid, then add score
 function completeMove(move) {
-  toggleElements("row");
+//   toggleElements("row");
   let scoreval = score(move);
-  document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
 
-  totalScore += scoreval;
-  document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
+  if (turn == turnEnum.USER) {
+    document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
+    userTotalScore += scoreval;
+    document.getElementById("userScore").innerHTML = `${userTotalScore} points`; // --> OFF
+  } else {
+    document.querySelector(`#${move}>.rightColumn`).innerHTML = scoreval;
+    opponentTotalScore += scoreval;
+    document.getElementById("opponentScore").innerHTML = `${opponentTotalScore} points`; // --> OFF
+  }
   
   try {
     socket.emit("user-move", {
       move: move,
       score: scoreval,
       roomCode: currRoomCode,
-      opponentScore: totalScore,
+      opponentScore: userTotalScore,
     });
   } catch(e) {
     if (e instanceof ReferenceError) console.error("Socket not defined");
@@ -244,11 +301,13 @@ function completeMove(move) {
   toggleTurns();
 }
 function updateDice(rollBtn, dice) {
-  if (numRerolls == MAX_REROLLS) {
-    rollBtn.disabled = true;
-    rollBtn.style.opacity = 0.4;
+  if (turn == turnEnum.USER) {
+    if (numRerolls == MAX_REROLLS) {
+        rollBtn.disabled = true;
+        rollBtn.style.opacity = 0.4;
+    }
+    rollBtn.innerText = "REROLL";
   }
-  rollBtn.innerText = "REROLL";
   let rollValues = getNDiceRolls(5);
   currentRolls = [];
   for (let i = 0; i < 5; i++) {
@@ -258,9 +317,7 @@ function updateDice(rollBtn, dice) {
       );
       dice[i].checked = false;
     } else {
-      dice[
-        i
-      ].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
+      dice[i].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
       dice[i].nextElementSibling.style.backgroundSize = "cover";
       dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
       currentRolls.push(rollValues[i]);
@@ -274,31 +331,12 @@ function updateDice(rollBtn, dice) {
     if (e instanceof ReferenceError) console.error("Socket not defined");
   }
 
-
-  updateButtons();
-
-
+  if (turn == turnEnum.USER) updateButtons();
   numRerolls++;
 }
 
 // Fills in the user buttons with the right moves
 function updateButtons() {
-  let moveList = [
-    "ones",
-    "twos",
-    "threes",
-    "fours",
-    "fives",
-    "sixes",
-    "three_of_a_kind",
-    "four_of_a_kind",
-    "full_house",
-    "small_straight",
-    "large_straight",
-    "chance",
-    "yacht_z",
-  ];
-
   moveList.forEach((move) => {
     let scoreval = score(move);
     let button = document.querySelector(`#${move} button`);
@@ -353,9 +391,8 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // dice checkbox reference
-  let dice = [];
   for (let i = 1; i <= 5; i++) {
-    dice.push(document.getElementById(`die${i}`));
+    diceRef.push(document.getElementById(`die${i}`));
   }
 
   // Set the user's turn
@@ -364,7 +401,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let rollBtn = document.getElementById("rerollBtn");
   rollBtn.onclick = (e) => {
     toggleElements("roll");
-    updateDice(e.target, dice);
+    updateDice(e.target, diceRef);
     updateButtons();
   };
 });
