@@ -3,11 +3,36 @@
 /* eslint-disable no-undef*/
 
 const MAX_REROLLS = 2;
+const AI_PAUSE = 2000;
 // GLOBAL reference for dice values. after every roll, store values here
 let currentRolls = [];
 // number of times player has rerolled
 let numRerolls = 0;
-let totalScore = 0;
+let userTotalScore = 0;
+let opponentTotalScore = 0;
+let turnEnum = {
+    USER: 0,
+    OPPONENT: 1
+}
+let turn = turnEnum.USER;
+
+let moveList = [
+    "ones",
+    "twos",
+    "threes",
+    "fours",
+    "fives",
+    "sixes",
+    "three_of_a_kind",
+    "four_of_a_kind",
+    "full_house",
+    "small_straight",
+    "large_straight",
+    "chance",
+    "yacht_z",
+  ];
+
+let diceRef = [];
 
 // Dice checkboxes, having it load at start improves gameplay performance
 let diceRow1Arr = Array.from(
@@ -200,20 +225,50 @@ function resetDice() {
 }
 
 function toggleTurns() {
-    let user = document.getElementById("user");
-    let opponent = document.getElementById("opponent");
-    let rollBtn = document.getElementById("rerollBtn");
-    if (user.classList.contains("game-turn")) {
-        user.classList.remove("game-turn");
-        opponent.classList.add("game-turn");
-        rollBtn.disabled = true;
-        rollBtn.style.opacity = 0.4;
-    } else {
-        rollBtn.disabled = false;
-        rollBtn.style.opacity = 1;
-        opponent.classList.remove("game-turn");
-        user.classList.add("game-turn");
-    }
+  let user = document.getElementById("user");
+  let opponent = document.getElementById("opponent");
+  let rollBtn = document.getElementById("rerollBtn");
+  if (user.classList.contains("game-turn")) {
+    user.classList.remove("game-turn");
+    opponent.classList.add("game-turn");
+    rollBtn.disabled = true;
+    rollBtn.style.opacity = 0.4;
+    turn = turnEnum.OPPONENT;
+    aiMove();
+  } else {
+    rollBtn.disabled = false;
+    rollBtn.style.opacity = 1;
+    opponent.classList.remove("game-turn");
+    user.classList.add("game-turn");
+    turn = turnEnum.USER;
+  }
+}
+
+function aiMove() {
+//   // greedy ai
+//   maxScore = 0;
+//   maxScoreMove = "";
+//   for (move of moveList) {
+//     let score = score(move);
+//     if (score >= maxScore) {
+//         maxScore = score;
+//         maxScoreMove = move;
+//     }
+//   }
+//   completeMove(maxScoreMove);
+
+  // Step 1. Roll the dice
+  let step1 = () => updateDice(null, diceRef);
+  // TODO Step 1.5 randomly reroll dice between 1-2 times
+
+  // Step 2. Choose a button
+  let step2 = () => completeMove(moveList[Math.floor(Math.random() * moveList.length)]);
+  let steps = [step1, step2]
+  i = 0,
+  timer = setInterval(() => {
+    steps[i++]();
+    if (i === steps.length) clearInterval(timer);
+  }, AI_PAUSE);
 }
 
 // when a button is selected on the scorecard, make sure the move is valid, then add score
@@ -236,11 +291,31 @@ function completeMove(move) {
         });
     }
 
-    resetDice();
-    toggleTurns();
+  if (turn == turnEnum.USER) {
+    document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
+    userTotalScore += scoreval;
+    document.getElementById("userScore").innerHTML = `${userTotalScore} points`; // --> OFF
+  } else {
+    document.querySelector(`#${move}>.rightColumn`).innerHTML = scoreval;
+    opponentTotalScore += scoreval;
+    document.getElementById("opponentScore").innerHTML = `${opponentTotalScore} points`; // --> OFF
+  }
+  
+  try {
+    socket.emit("user-move", {
+      move: move,
+      score: scoreval,
+      roomCode: currRoomCode,
+      opponentScore: userTotalScore,
+    });
+  } catch(e) {
+    if (e instanceof ReferenceError) console.error("Socket not defined");
+  }
+  resetDice();
+  toggleTurns();
 }
-
 function updateDice(rollBtn, dice) {
+  if (turn == turnEnum.USER) {
     if (numRerolls == MAX_REROLLS) {
         rollBtn.innerText = "REROLL";
         rollBtn.disabled = true;
@@ -264,13 +339,17 @@ function updateDice(rollBtn, dice) {
             currentRolls.push(rollValues[i]);
         }
     }
+  }
 
-    // Send the new rolls to the opponent if multiplayer
-    if (typeof socket !== "undefined") {
-        socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
-    }
+  // Send the new rolls to the opponent if multiplayer
+  try {
+    socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
+  } catch (e) {
+    if (e instanceof ReferenceError) console.error("Socket not defined");
+  }
 
-    numRerolls++;
+  if (turn == turnEnum.USER) updateButtons();
+  numRerolls++;
 }
 
 // Fills in the user buttons with the right moves
@@ -344,21 +423,20 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // dice checkbox reference
-    let dice = [];
-    for (let i = 1; i <= 5; i++) {
-        dice.push(document.getElementById(`die${i}`));
-    }
+  // dice checkbox reference
+  for (let i = 1; i <= 5; i++) {
+    diceRef.push(document.getElementById(`die${i}`));
+  }
 
-    // Set the user's turn
-    document.getElementById("user").classList.add("game-turn");
+  // Set the user's turn
+  document.getElementById("user").classList.add("game-turn");
 
-    let rollBtn = document.getElementById("rerollBtn");
-    rollBtn.onclick = (e) => {
-        toggleElements("roll");
-        updateDice(e.target, dice);
-        updateButtons();
-    };
+  let rollBtn = document.getElementById("rerollBtn");
+  rollBtn.onclick = (e) => {
+    toggleElements("roll");
+    updateDice(e.target, diceRef);
+    updateButtons();
+  };
 });
 
 /* eslint no-use-before-define: 2 */ // --> ON
