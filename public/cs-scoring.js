@@ -235,7 +235,9 @@ function toggleTurns() {
         opponent.classList.add("game-turn");
         rollBtn.disabled = true;
         rollBtn.style.opacity = 0.4;
-        aiMove();
+        if (!location.href.includes('multiplayer')) {
+            aiMove();
+        }
     } else {
         rollBtn.disabled = false;
         rollBtn.style.opacity = 1;
@@ -425,12 +427,22 @@ function checkScorecard() {
                 console.log('Game over, congratulations you won!');
                 document.getElementById('modalPopupWrapper').style.display = 'grid';
                 document.getElementById('modalMessage').innerHTML = 'Game over, congratulations you won!';
+                if (location.href.includes('multiplayer')) {
+                    document.getElementById('modalPopup').style.gridTemplateAreas = '"text text" "home home"';
+                    document.getElementById('modalHome').style.gridArea = 'home';
+                    document.getElementById('modalButton').style.display = 'none';
+                }
             }, 1000);
         } else {
             setTimeout(function () {
                 console.log('Game over, unfortunately you lost');
                 document.getElementById('modalPopupWrapper').style.display = 'grid';
                 document.getElementById('modalMessage').innerHTML = 'Game over, unfortunately you lost';
+                if (location.href.includes('multiplayer')) {
+                    document.getElementById('modalPopup').style.gridTemplateAreas = '"text text" "home home"';
+                    document.getElementById('modalHome').style.gridArea = 'home';
+                    document.getElementById('modalButton').style.display = 'none';
+                }
             }, 1000);
         }
     }
@@ -512,7 +524,8 @@ function toggleElements(button) {
             die.style = "visibility: hidden !important";
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
-    } else if (!btnsAndDiceShowing) {``
+    } else if (!btnsAndDiceShowing) {
+        ``
         // Show all of the dice and buttons
         scoringButtons.forEach((button) => {
             button.style = "visibility: visible !important";
