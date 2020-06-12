@@ -8,6 +8,7 @@
 
   <!-- Main Scorecard CSS -->
   <link rel="stylesheet" type="text/css" href="styles/main.css">
+  <link rel="shortcut icon" href="./images/favicon/favicon.ico">
 
   <% if (playermode == 'multiplayer') { %>
   <script defer src="https://host.streamwithme.net/socket.io/socket.io.js"></script>
@@ -19,7 +20,9 @@
   <script src="cs-scoring.js" defer></script>
 
   <header>
-    <img src="./images/logo.svg" alt="yachtz logo">
+    <a href="/">
+      <img src="./images/logo.svg" alt="yachtz logo">
+    </a>
 
     <% if (playermode == 'multiplayer') { %>
     <% if (roomCode !== 'undefined') { %>
@@ -311,7 +314,8 @@
     <div id="modalPopupWrapper">
       <div id="modalPopup">
         <p id="modalMessage"></p>
-        <button id="modalButton">Ok</button>
+        <button id="modalHome">Home</button>
+        <button id="modalButton">Replay</button>
       </div>
     </div>
     <hr id="sand">
