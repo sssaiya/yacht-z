@@ -51,6 +51,8 @@ app.get("/app", (req, res) => {
     fours: "",
     fives: "",
     sixes: "",
+    sum: "",
+    bonus: "",
     three_of_a_kind: "",
     four_of_a_kind: "",
     full_house: "",
@@ -58,22 +60,24 @@ app.get("/app", (req, res) => {
     large_straight: "",
     chance: "",
     yacht_z: "",
+    total_score: ""
   };
 
   res.render("scorecard", {
-    body: { dicetotal: diceSum, rollNum: 0, ai_scores: ai_scores },
+    body: { dicetotal: diceSum, rollNum: 0 },
+    ai_scores: ai_scores,
     dice: newRolls,
     scores: scores,
     visibility: "style=visibility:hidden",
     Roll: "ROLL",
     playermode: "single",
     opponentName: "CPU",
+    gameOver: "none"
   });
 });
 
 // ejs views app - POST
 // For every subsequent post On clicking reRoll
-let moveCount = 0;
 app.post("/app", (req, res) => {
   let dieNames = ["die1", "die2", "die3", "die4", "die5"];
   let dice = [];
@@ -91,21 +95,57 @@ app.post("/app", (req, res) => {
   //Check if player has just completed a turn
   const movesPlayed = getMovesPlayed(req.body);
 
-  if (movesPlayed > moveCount) {
-    console.log("HERE\n\n\n\nAI TIME\n");
-    aiMove();
-    moveCount = movesPlayed;
-    //modify ai_scores
+  let ai_scores = {};
+  ai_scores.ai_scores = {
+    ones: req.body.ai_ones,
+    twos: req.body.ai_twos,
+    threes: req.body.ai_threes,
+    fours: req.body.ai_fours,
+    fives: req.body.ai_fives,
+    sixes: req.body.ai_sixes,
+    sum: req.body.ai_sum,
+    bonus: req.body.ai_bonus,
+    three_of_a_kind: req.body.ai_three_of_a_kind,
+    four_of_a_kind: req.body.ai_four_of_a_kind,
+    full_house: req.body.ai_full_house,
+    small_straight: req.body.ai_small_straight,
+    large_straight: req.body.ai_large_straight,
+    chance: req.body.ai_chance,
+    yacht_z: req.body.ai_yacht_z,
+    total_score: req.body.ai_total_score
+  };
+
+  let roll = "REROLL x" + (3 - req.body.rollNum);
+  let visibility = "style=visibility:visible";
+  if (req.body.reroll != '') {
+    ai_scores = aiMove(req.body);
+    roll = 'ROLL'
+    req.body.rollNum = 0;
+    visibility = "style=visibility:hidden";
+  }
+
+  let winningPlayer = 'none';
+  if (ai_scores.ai_scores.total_score) {
+    // console.log(ai_scores.ai_scores.total_score);
+    let userScore = parseInt(req.body.sum) + parseInt(req.body.bonus) + parseInt(req.body.three_of_a_kind) + parseInt(req.body.four_of_a_kind) + parseInt(req.body.full_house) + parseInt(req.body.small_straight) + parseInt(req.body.large_straight) + parseInt(req.body.chance) + parseInt(req.body.yacht_z);
+
+    winningPlayer = 'Game over, unfortunately you lost';
+    if (userScore > ai_scores.ai_scores.total_score) {
+      winningPlayer = 'Game over, congratulations you won!';
+    }
   }
 
   res.render("scorecard", {
     body: req.body,
     dice: dice,
     scores: scores,
-    visibility: "style=visibility:visible",
-    Roll: "REROLL x" + (3 - req.body.rollNum),
+    visibility: visibility,
+    Roll: roll,
     playermode: "single",
     opponentName: "CPU",
+    ai_scores: ai_scores.ai_scores,
+    newMove: ai_scores.newMove,
+    gameOver: winningPlayer
   });
 });
 
@@ -128,6 +168,26 @@ app.get("/multiplayer", (req, res) => {
   newRolls.forEach((num) => {
     diceSum += num;
   });
+
+  let blank_scores = {
+    ones: "",
+    twos: "",
+    threes: "",
+    fours: "",
+    fives: "",
+    sixes: "",
+    sum: "",
+    bonus: "",
+    three_of_a_kind: "",
+    four_of_a_kind: "",
+    full_house: "",
+    small_straight: "",
+    large_straight: "",
+    chance: "",
+    yacht_z: "",
+    total_score: ""
+  };
+
   const scores = makeScoreArray(newRolls);
   res.render("scorecard", {
     body: { dicetotal: diceSum, rollNum: 0 },
@@ -138,6 +198,8 @@ app.get("/multiplayer", (req, res) => {
     playermode: "multiplayer",
     roomCode: req.query.roomCode,
     opponentName: "Waiting...",
+    ai_scores: blank_scores,
+    gameOver: "none"
   });
 });
 
@@ -284,42 +346,70 @@ function chanceScore(dice) {
   return score;
 }
 
-function aiMove() {
-  //   // greedy ai
-  //   maxScore = 0;
-  //   maxScoreMove = "";
-  //   for (move of moveList) {
-  //     let score = score(move);
-  //     if (score >= maxScore) {
-  //         maxScore = score;
-  //         maxScoreMove = move;
-  //     }
-  //   }
-  //   completeMove(maxScoreMove);
-
-  // Step 1. Roll the dice
+function aiMove(body) {
   const aiRolls = getNRolls(5);
-  console.log(aiRolls);
-
   const ai_scores = makeScoreArray(aiRolls);
-  console.log("AI options");
-  console.log(ai_scores);
-  // let step1 = () => updateAIDice(aiRolls);
-  // TODO Step 1.5 randomly reroll dice between 1-2 times
 
-  // Step 2. Choose a button
-  // let cpuMove = cpuMoveList[Math.floor(Math.random() * cpuMoveList.length)];
-  // let step2 = () => completeMove(cpuMove, "cpu");
-  // let steps = [step1, step2];
-  // let i = 0;
-  // let timer = setInterval(() => {
-  //   steps[i++]();
-  //   if (i === steps.length) {
-  //     clearInterval(timer);
-  //   }
-  // }, AI_PAUSE);
+  let ai_curr_scores = {};
+  ai_curr_scores['ones'] = body.ai_ones;
+  ai_curr_scores['twos'] = body.ai_twos;
+  ai_curr_scores['threes'] = body.ai_threes;
+  ai_curr_scores['fours'] = body.ai_fours;
+  ai_curr_scores['fives'] = body.ai_fives;
+  ai_curr_scores['sixes'] = body.ai_sixes;
+  ai_curr_scores['three_of_a_kind'] = body.ai_three_of_a_kind;
+  ai_curr_scores['four_of_a_kind'] = body.ai_four_of_a_kind;
+  ai_curr_scores['full_house'] = body.ai_full_house;
+  ai_curr_scores['small_straight'] = body.ai_small_straight;
+  ai_curr_scores['large_straight'] = body.ai_large_straight;
+  ai_curr_scores['chance'] = body.ai_chance;
+  ai_curr_scores['yacht_z'] = body.ai_yacht_z;
 
-  // cpuMoveList.splice(cpuMoveList.indexOf(cpuMove), 1);
+  let movePool = [];
+  let upperScores = [];
+  let i = 0;
+  Object.keys(ai_curr_scores).forEach(score => {
+    i += 1;
+    if (ai_curr_scores[score] != "" && i < 7) {
+      upperScores.push(parseInt(ai_curr_scores[score]));
+    }
+    if (ai_curr_scores[score] == "") {
+      movePool.push(score);
+    }
+  });
+
+  let move = movePool[Math.floor(Math.random() * movePool.length)];
+  ai_curr_scores[move] = ai_scores[move];
+
+  if (upperScores.length == 5 && Object.keys(ai_curr_scores).indexOf(move) < 6) {
+    upperScores.push(parseInt(ai_curr_scores[move]));
+  }
+
+  ai_curr_scores['sum'] = body.ai_sum;
+  ai_curr_scores['bonus'] = body.ai_bonus;
+
+  if (upperScores.length == 6) {
+    let newSum = 0;
+    upperScores.forEach(score => { newSum += score });
+    ai_curr_scores['sum'] = newSum;
+    ai_curr_scores['bonus'] = 0;
+
+    if (newSum >= 63) {
+      ai_curr_scores['bonus'] = 35;
+    }
+  }
+
+  if (movePool.length <= 1) {
+    let totalSum = 0;
+    Object.keys(ai_curr_scores).forEach(score => {
+      if (score != 'sum') {
+        totalSum += parseInt(ai_curr_scores[score])
+      }
+    });
+    ai_curr_scores['total_score'] = totalSum;
+  }
+
+  return { ai_scores: ai_curr_scores, newMove: move };
 }
 
 // Expose Express API as a single Cloud Function:

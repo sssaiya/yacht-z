@@ -43,7 +43,7 @@
       <div id="opponent" class="player-character">
         <div id="opponentImg" class="player-icon"></div>
         <p id="opponentName" class="player-name"><%= opponentName %></p>
-        <p id="opponentScore" class="player-score">0 points</p>
+        <p id="opponentScore" class="player-score"></p>
       </div>
 
       <div id="playerDiceWrapper">
@@ -101,7 +101,7 @@
       <div id="user" class="player-character">
         <div id="userImg" class="player-icon"></div>
         <p id="userName" class="player-name">USER</p>
-        <p id="userScore" class="player-score">0 points</p>
+        <p id="userScore" class="player-score"></p>
       </div>
       <input type="checkbox" name="toggle" id="toggle"><label for="toggle"></label>
       <table id="scorecard">
@@ -125,12 +125,17 @@
               <p><%= body.ones %></p>
               <input type="hidden" name="ones" value="<%= body.ones %>">
               <% } else { %>
-              <button name="ones" type="submit" value="<%= scores.ones %>" <%= visibility %>><%= scores.ones %></button>
-              <!-- <button name="moveNum" type="submit" value="<%= scores.ones %>" <%= visibility %>><%= scores.ones %></button> -->
+              <button name="ones" type="submit" value="<%= scores.ones %>"
+                <%= visibility %>><%= scores.ones %></button>
               <% } %>
             </td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'ones') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
             <td class="rightColumn">
-              <p> <%= body.ai_scores.ones %></p>
+              <% } %>
+              <p> <%= ai_scores.ones %> </p>
+              <input type="hidden" name="ai_ones" value="<%= ai_scores.ones %>">
             </td>
           </tr>
           <tr id="twos">
@@ -140,11 +145,20 @@
               <p><%= body.twos %></p>
               <input type="hidden" name="twos" value="<%= body.twos %>">
               <% } else { %>
-              <button name="twos" type="submit" value="<%= scores.twos %>" <%= visibility %>><%= scores.twos %></button>
-              <input type="hidden" onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
+              <button name="twos" type="submit" value="<%= scores.twos %>"
+                <%= visibility %>><%= scores.twos %></button>
+              <input type="hidden"
+                onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'twos') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.twos %>
+              <input type="hidden" name="ai_twos" value="<%= ai_scores.twos %>">
+            </td>
           </tr>
           <tr id="threes">
             <th class="leftColumn" scope="row">Threes</th>
@@ -155,10 +169,18 @@
               <% } else { %>
               <button name="threes" type="submit" value="<%= scores.threes %>"
                 <%= visibility %>><%= scores.threes %></button>
-                <input type="hidden" onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
-                <% } %>
+              <input type="hidden"
+                onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
+              <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'threes') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.threes %>
+              <input type="hidden" name="ai_threes" value="<%= ai_scores.threes %>">
+            </td>
           </tr>
           <tr id="fours">
             <th class="leftColumn" scope="row">Fours</th>
@@ -169,10 +191,18 @@
               <% } else { %>
               <button name="fours" type="submit" value="<%= scores.fours %>"
                 <%= visibility %>><%= scores.fours %></button>
-                <input type="hidden" onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
-                <% } %>
+              <input type="hidden"
+                onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
+              <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'fours') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.fours %>
+              <input type="hidden" name="ai_fours" value="<%= ai_scores.fours %>">
+            </td>
           </tr>
           <tr id="fives">
             <th class="leftColumn" scope="row">Fives</th>
@@ -185,7 +215,14 @@
                 <%= visibility %>><%= scores.fives %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'fives') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.fives %>
+              <input type="hidden" name="ai_fives" value="<%= ai_scores.fives %>">
+            </td>
           </tr>
           <tr id="sixes">
             <th class="leftColumn" scope="row">Sixes</th>
@@ -198,43 +235,93 @@
                 <%= visibility %>><%= scores.sixes %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'sixes') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.sixes %>
+              <input type="hidden" name="ai_sixes" value="<%= ai_scores.sixes %>">
+            </td>
           </tr>
           <tr id="sum" class="points">
             <th class="leftColumn" scope="row">Sum</th>
-            <td class="centerColumn"></td>
-            <td class="rightColumn"></td>
+            <td class="centerColumn">
+              <% if (typeof body.ones !== 'undefined' && typeof body.twos !== 'undefined' && typeof body.threes !== 'undefined' && typeof body.fours !== 'undefined' && typeof body.fives !== 'undefined' && typeof body.sixes !== 'undefined') { %>
+              <p>
+                <%= parseInt(body.ones) + parseInt(body.twos) + parseInt(body.threes) + parseInt(body.fours) + parseInt(body.fives) + parseInt(body.sixes) %>
+              </p>
+              <input type="hidden" name="sum"
+                value="<%= parseInt(body.ones) + parseInt(body.twos) + parseInt(body.threes) + parseInt(body.fours) + parseInt(body.fives) + parseInt(body.sixes) %>">
+              <% } %>
+            </td>
+            <td class="rightColumn">
+              <%= ai_scores.sum %>
+              <input type="hidden" name="ai_sum" value="<%= ai_scores.sum %>">
+            </td>
           </tr>
           <tr id="bonus" class="points">
             <th class="leftColumn" scope="row">Bonus</th>
-            <td class="centerColumn"></td>
-            <td class="rightColumn"></td>
+            <td class="centerColumn">
+              <% if (typeof body.ones !== 'undefined' && typeof body.twos !== 'undefined' && typeof body.threes !== 'undefined' && typeof body.fours !== 'undefined' && typeof body.fives !== 'undefined' && typeof body.sixes !== 'undefined') { %>
+              <%if((parseInt(body.ones) + parseInt(body.twos) + parseInt(body.threes) + parseInt(body.fours) + parseInt(body.fives) + parseInt(body.sixes)) >= 63) { %>
+              <p>35</p>
+              <input type="hidden" name="bonus" value="<%= 35 %>">
+              <% } else { %>
+              <p>0</p>
+              <input type="hidden" name="bonus" value="<%= 0 %>">
+              <% }} %>
+            </td>
+            <td class="rightColumn">
+              <%= ai_scores.bonus %>
+              <input type="hidden" name="ai_bonus" value="<%= ai_scores.bonus %>">
+            </td>
           </tr>
           <tr id="three_of_a_kind">
             <th class="leftColumn" scope="row">Three of a Kind</th>
             <td class="centerColumn">
               <% if (typeof body.three_of_a_kind !== 'undefined') { %>
               <p><%= body.three_of_a_kind %></p>
-              <input type="hidden" name="three_of_a_kind" value="<%= body.three_of_a_kind %>">
+              <input type="hidden" name="three_of_a_kind"
+                value="<%= body.three_of_a_kind %>">
               <% } else { %>
-              <button name="three_of_a_kind" type="submit" value="<%= scores.three_of_a_kind %>"
+              <button name="three_of_a_kind" type="submit"
+                value="<%= scores.three_of_a_kind %>"
                 <%= visibility %>><%= scores.three_of_a_kind %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'three_of_a_kind') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.three_of_a_kind %>
+              <input type="hidden" name="ai_three_of_a_kind"
+                value="<%= ai_scores.three_of_a_kind %>">
+            </td>
           </tr>
           <tr id="four_of_a_kind">
             <th class="leftColumn" scope="row">Four of a Kind</th>
             <td class="centerColumn">
               <% if (typeof body.four_of_a_kind !== 'undefined') { %>
               <p><%= body.four_of_a_kind %></p>
-              <input type="hidden" name="four_of_a_kind" value="<%= body.four_of_a_kind %>">
+              <input type="hidden" name="four_of_a_kind"
+                value="<%= body.four_of_a_kind %>">
               <% } else { %>
-              <button name="four_of_a_kind" type="submit" value="<%= scores.four_of_a_kind %>"
+              <button name="four_of_a_kind" type="submit"
+                value="<%= scores.four_of_a_kind %>"
                 <%= visibility %>><%= scores.four_of_a_kind %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'four_of_a_kind') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.four_of_a_kind %>
+              <input type="hidden" name="ai_four_of_a_kind"
+                value="<%= ai_scores.four_of_a_kind %>">
+            </td>
           </tr>
           <tr id="full_house">
             <th class="leftColumn" scope="row">Full House</th>
@@ -245,36 +332,65 @@
               <% } else { %>
               <button name="full_house" type="submit" value="<%= scores.full_house %>"
                 <%= visibility %>><%= scores.full_house %></button>
-              <input type="hidden" name="moveNum" value="<%= parseInt(body.moveNum) + 1 %>">
+              <input type="hidden" name="moveNum"
+                value="<%= parseInt(body.moveNum) + 1 %>">
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'full_house') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.full_house %>
+              <input type="hidden" name="ai_full_house"
+                value="<%= ai_scores.full_house %>">
+            </td>
           </tr>
           <tr id="small_straight">
             <th class="leftColumn" scope="row">Small Straight</th>
             <td class="centerColumn">
               <% if (typeof body.small_straight !== 'undefined') { %>
               <p><%= body.small_straight %></p>
-              <input type="hidden" name="small_straight" value="<%= body.small_straight %>">
+              <input type="hidden" name="small_straight"
+                value="<%= body.small_straight %>">
               <% } else { %>
-              <button name="small_straight" type="submit" value="<%= scores.small_straight %>"
+              <button name="small_straight" type="submit"
+                value="<%= scores.small_straight %>"
                 <%= visibility %>><%= scores.small_straight %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'small_straight') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.small_straight %>
+              <input type="hidden" name="ai_small_straight"
+                value="<%= ai_scores.small_straight %>">
+            </td>
           </tr>
           <tr id="large_straight">
             <th class="leftColumn" scope="row">Large Straight</th>
             <td class="centerColumn">
               <% if (typeof body.large_straight !== 'undefined') { %>
               <p><%= body.large_straight %></p>
-              <input type="hidden" name="large_straight" value="<%= body.large_straight %>">
+              <input type="hidden" name="large_straight"
+                value="<%= body.large_straight %>">
               <% } else { %>
-              <button name="large_straight" type="submit" value="<%= scores.large_straight %>"
+              <button name="large_straight" type="submit"
+                value="<%= scores.large_straight %>"
                 <%= visibility %>><%= scores.large_straight %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'large_straight') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.large_straight %>
+              <input type="hidden" name="ai_large_straight"
+                value="<%= ai_scores.large_straight %>">
+            </td>
           </tr>
           <tr id="chance">
             <th class="leftColumn" scope="row">Chance</th>
@@ -287,7 +403,14 @@
                 <%= visibility %>><%= scores.chance %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'chance') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.chance %>
+              <input type="hidden" name="ai_chance" value="<%= ai_scores.chance %>">
+            </td>
           </tr>
           <tr id="yacht_z">
             <th class="leftColumn" scope="row">YACHT-Z</th>
@@ -300,25 +423,54 @@
                 <%= visibility %>><%= scores.yacht_z %></button>
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <% if (typeof newMove !== 'undefined' && newMove == 'yacht_z') { %>
+            <td class="rightColumn" style="background-color: #2f6358">
+              <% } else { %>
+            <td class="rightColumn">
+              <% } %>
+              <%= ai_scores.yacht_z %>
+              <input type="hidden" name="ai_yacht_z" value="<%= ai_scores.yacht_z %>">
+            </td>
           </tr>
           <tr id="totalScoreRow" class="points">
             <th class="leftColumn" scope="row">TOTAL SCORE</th>
-            <td class="centerColumn"></td>
-            <td class="rightColumn"></td>
+            <td class="centerColumn">
+              <% if (typeof body.sum !== 'undefined' && typeof body.three_of_a_kind !== 'undefined' && typeof body.four_of_a_kind !== 'undefined' && typeof body.full_house !== 'undefined' && typeof body.small_straight !== 'undefined' && typeof body.large_straight !== 'undefined' && typeof body.chance !== 'undefined' && typeof body.yacht_z !== 'undefined') { %>
+              <p>
+                <%= parseInt(body.sum) + parseInt(body.bonus) + parseInt(body.three_of_a_kind) + parseInt(body.four_of_a_kind) + parseInt(body.full_house) + parseInt(body.small_straight) + parseInt(body.large_straight) + parseInt(body.chance) + parseInt(body.yacht_z) %>
+              </p>
+              <input type="hidden" name="total_score" id="total_score"
+                value="<%= parseInt(body.sum) + parseInt(body.bonus) + parseInt(body.three_of_a_kind) + parseInt(body.four_of_a_kind) + parseInt(body.full_house) + parseInt(body.small_straight) + parseInt(body.large_straight) + parseInt(body.chance) + parseInt(body.yacht_z) %>">
+              <% } %>
+            </td>
+            <td class="rightColumn">
+              <%= ai_scores.total_score %>
+              <input type="hidden" name="ai_total_score" id="ai_total_score"
+                value="<%= ai_scores.total_score %>">
+            </td>
           </tr>
         </tbody>
       </table>
     </form>
-    <div id="modalPopupWrapper">
-      <div id="modalPopup">
-        <p id="modalMessage"></p>
-        <button id="modalHome">Home</button>
-        <button id="modalButton">Replay</button>
+    <% if (gameOver != "none") { %>
+    <div id="modalPopupWrapper" style="display:grid;">
+      <% } else { %>
+      <div id="modalPopupWrapper">
+        <% } %>
+        <div id="modalPopup">
+          <% if (gameOver != "none") { %>
+          <p id="modalMessage"><%= gameOver %></p>
+          <a href="/" id="modalHome" style="text-align: center;">Home</a>
+          <a href="/app?" id="modalButton" style="text-align: center;">Replay</a>
+          <% } else { %>
+          <p id="modalMessage"></p>
+          <button id="modalHome">Home</button>
+          <button id="modalButton">Replay</button>
+          <% } %>
+        </div>
       </div>
-    </div>
-    <hr id="sand">
-    <img id="flamingo" src="./images/flamingo.svg" alt="neon flamingo">
+      <hr id="sand">
+      <img id="flamingo" src="./images/flamingo.svg" alt="neon flamingo">
   </main>
 </body>
 
