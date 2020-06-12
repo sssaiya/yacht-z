@@ -69,3 +69,5 @@ node_modules/
 *-report.html
 
 .DS_store
+
+dist/

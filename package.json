@@ -6,20 +6,22 @@
   "scripts": {
     "serve": "firebase serve",
     "local": "wait-on http://localhost:5000 && open http://localhost:5000 & npm run serve",
-    "prelocal": "npm run lint && npm run validate",
+    "prelocal": "npm run lint && npm run validate && npm run build",
     "postlocal": "kill -9 $(lsof -t -i:5000)",
     "pretest": "npm run lint && npm run validate && npm run purgeDiff",
     "test": "",
     "test:unit": "",
     "coverage": "nyc npm test:unit",
-    "lint": "eslint public/*.js",
+    "lint": "eslint public/js/*.js",
     "validate": "html-validate public/*.html",
     "build-prod": "npm run lighthouse:ci",
-    "css": "node_modules/purgecss/bin/purgecss",
     "purgeDiff": "node purgeCSSDiff.js",
-    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./public/lighthouse-report.html --quiet --chrome-flags='--headless' https://yacht-z.web.app",
+    "lighthouse:ci": "node_modules/lighthouse/lighthouse-cli/index.js --output-path=./dist/lighthouse-report.html --quiet --chrome-flags='--headless' https://yacht-z.web.app/app",
     "lighthouse": "wait-on http://localhost:5000 && node_modules/lighthouse/lighthouse-cli/index.js --output-path=./lighthouse-localhost-report.html --view --quiet --chrome-flags='--headless' http://localhost:5000 & npm run serve",
-    "postlighthouse": "kill -9 $(lsof -t -i:5000)"
+    "postlighthouse": "kill -9 $(lsof -t -i:5000)",
+    "build": "node build.js && npm run minify-html && npm run minify-html2",
+    "minify-html": "html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype public/index.html -o dist/index.html",
+    "minify-html2": "html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype public/scorecard.html -o dist/scorecard.html"
   },
   "husky": {
     "hooks": {
@@ -43,12 +45,19 @@
     "wait-on": "^5.0.0"
   },
   "devDependencies": {
+    "compress-images": "^1.7.8",
     "eslint": "^7.1.0",
+    "gifsicle": "^5.1.0",
+    "html-minifier": "^4.0.0",
     "husky": "^4.2.5",
     "lighthouse": "^6.0.0",
+    "make-dir": "^3.1.0",
     "mocha": "^7.2.0",
+    "node-minify": "^3.6.0",
     "nyc": "^15.1.0",
-    "purgecss": "2.2.0"
+    "pngquant-bin": "^6.0.0",
+    "purgecss": "2.2.0",
+    "uglifycss": "0.0.29"
   },
   "nyc": {
     "all": true,
