@@ -93,7 +93,7 @@ app.post("/app", (req, res) => {
   const scores = makeScoreArray(dice);
 
   //Check if player has just completed a turn
-  const movesPlayed = getMovesPlayed(req.body);
+  getMovesPlayed(req.body);
 
   let ai_scores = {};
   ai_scores.ai_scores = {
@@ -151,7 +151,7 @@ app.post("/app", (req, res) => {
 
 function getMovesPlayed(body) {
   let played = 0;
-  for (let [key, value] of Object.entries(body)) {
+  for (let [key] of Object.entries(body)) {
     if (moveList.includes(key)) {
       played++;
     }
