@@ -381,16 +381,11 @@ th {
   }
 
   #blankHeaderSpace {
-    width: 140px;
-  }
-
-  #cpuHeader {
     width: 144px;
-    width: 170px;
   }
 
   #cpuHeader {
-    width: 159px;
+    width: 138px;
   }
 
   #flamingo {
@@ -474,19 +469,19 @@ th {
   }
 
   #youHeader {
-    width: 130px;
+    width: 141px;
   }
 }
 
 @media only screen and (min-width: 1000px) and (max-height: 833px) and (pointer: fine) {
   #blankHeaderSpace {
-    width: 138px;
+    width: 144px;
   }
   #cpuHeader {
-    width: 142px;
+    width: 138px;
   }
 
   #youHeader {
-    width: 134px;
+    width: 141px;
   }
 }

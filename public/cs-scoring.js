@@ -9,6 +9,9 @@ let currentRolls = [];
 let numRerolls = 0;
 let totalScore = 0;
 
+// Array of Current Scores
+let playerScores = {};
+
 // Dice checkboxes, having it load at start improves gameplay performance
 let diceRow1Arr = Array.from(
     document.querySelectorAll("#playerDiceRow1 .player-dice")
@@ -224,6 +227,7 @@ function completeMove(move) {
         scoreval = 0;
     }
     document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
+    playerScores[move] = scoreval;
 
     totalScore += scoreval;
     document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
@@ -236,8 +240,62 @@ function completeMove(move) {
         });
     }
 
+    checkScorecard();
+
     resetDice();
     toggleTurns();
+}
+
+// Checks the scorecard and updates with sum/bonus/total score if applicable
+function checkScorecard() {
+    let userFinalScore = document.querySelector(`#totalScoreRow>.centerColumn`);
+    let opponentFinalScore = document.querySelector(`#totalScoreRow>.rightColumn`);
+
+    // Checks the upper half of the scorecard
+    let upperScores = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
+    let currScores = Object.keys(playerScores);
+    let sum = 0;
+    let upperSum = 0;
+
+    upperScores.forEach(score => {
+        if (currScores.includes(score)) {
+            sum += 1;
+            upperSum += playerScores[score];
+        }
+    });
+
+    if (sum == 6) {
+        document.querySelector(`#sum>.centerColumn`).innerHTML = upperSum;
+        playerScores['Sum'] = upperSum;
+        if (upperSum >= 63) {
+            document.querySelector(`#bonus>.centerColumn`).innerHTML = 35;
+            playerScores['Bonus'] = 35;
+        } else {
+            document.querySelector(`#bonus>.centerColumn`).innerHTML = 0;
+            playerScores['Bonus'] = 0;
+        }
+        currScores = Object.keys(playerScores);
+    }
+
+    if (currScores.length == 15) {
+        let totalSum = 0;
+        currScores.forEach(score => {
+            if (!upperScores.includes(score)) {
+                totalSum += playerScores[score];
+            }
+        });
+        userFinalScore.innerHTML = totalSum;
+    }
+
+    if (opponentFinalScore.innerHTML != "" && userFinalScore.innerHTML != "") {
+        let oppScore = parseInt(opponentFinalScore.innerHTML);
+        let usrScore = parseInt(userFinalScore.innerHTML);
+        if (usrScore > oppScore) {
+            console.log('Game over, congratulations you won!');
+        } else {
+            console.log('Game over, unfortunately you lost');
+        }
+    }
 }
 
 function updateDice(rollBtn, dice) {

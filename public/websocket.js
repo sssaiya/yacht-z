@@ -9,6 +9,8 @@ for (let i = 1; i <= 5; i++) {
   diceArr.push(document.getElementById(`die${i}`));
 }
 
+let opponentScores = {};
+
 console.log("Websocket JS");
 
 // If the user input a room code, join that room, else create one
@@ -175,6 +177,10 @@ socket.on("opponent-move", (moveInfo) => {
   document.getElementById(
     "opponentScore"
   ).innerHTML = `${moveInfo.opponentScore} points`;
+
+  opponentScores[moveInfo.move] = moveInfo.score;
+  checkOpponentScorecard();
+
   toggleTurns();
   toggleDice("hide");
 });
@@ -190,6 +196,58 @@ socket.on('room-full', msg => {
   alert(msg);
   //TODO - Route back to homepage
 });
+
+// Checks the scorecard and updates with sum/bonus/total score if applicable
+function checkOpponentScorecard() {
+  let userFinalScore = document.querySelector(`#totalScoreRow>.centerColumn`);
+  let opponentFinalScore = document.querySelector(`#totalScoreRow>.rightColumn`);
+
+  // Checks the upper half of the scorecard
+  let upperScores = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
+  let currScores = Object.keys(opponentScores);
+  let sum = 0;
+  let upperSum = 0;
+
+  upperScores.forEach(score => {
+    if (currScores.includes(score)) {
+      sum += 1;
+      upperSum += opponentScores[score];
+    }
+  });
+
+  if (sum == 6) {
+    document.querySelector(`#sum>.rightColumn`).innerHTML = upperSum;
+    opponentScores['Sum'] = upperSum;
+    if (upperSum >= 63) {
+      document.querySelector(`#bonus>.rightColumn`).innerHTML = 35;
+      opponentScores['Bonus'] = 35;
+    } else {
+      document.querySelector(`#bonus>.rightColumn`).innerHTML = 0;
+      opponentScores['Bonus'] = 0;
+    }
+    currScores = Object.keys(opponentScores);
+  }
+
+  if (currScores.length == 15) {
+    let totalSum = 0;
+    currScores.forEach(score => {
+      if (!upperScores.includes(score)) {
+        totalSum += opponentScores[score];
+      }
+    });
+    opponentFinalScore.innerHTML = totalSum;
+  }
+
+  if (opponentFinalScore.innerHTML != "" && userFinalScore.innerHTML != "") {
+    let oppScore = parseInt(opponentFinalScore.innerHTML);
+    let usrScore = parseInt(userFinalScore.innerHTML);
+    if (usrScore > oppScore) {
+      console.log('Game over, congratulations you won!');
+    } else {
+      console.log('Game over, unfortunately you lost');
+    }
+  }
+}
 
 // Send message that user left room before page unloads
 window.addEventListener("beforeunload", () => {
