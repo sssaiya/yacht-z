@@ -45,6 +45,7 @@ let cpuMoveList = [
     "yacht_z",
 ];
 
+
 // Scoring buttons, loading them at start improves gameplay performance
 let scoringButtons = document
     .getElementById("scorecard")
@@ -467,6 +468,7 @@ function updateDice(rollBtn, dice) {
         socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
     }
 
+
     numRerolls++;
 }
 
@@ -508,17 +510,21 @@ function toggleElements(button) {
         scoringButtons.forEach((button) => {
             button.style = "visibility: hidden !important";
         });
-        dice.forEach((die) => {
-            die.style = "visibility: hidden !important";
+        // disable dice locking on opponent turn and before user first rolls
+        diceRef.forEach((die) => {
+            die.disabled = true;
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
-    } else if (!btnsAndDiceShowing) {
+    } else if (turn == turnEnum.USER && !btnsAndDiceShowing) {
         // Show all of the dice and buttons
         scoringButtons.forEach((button) => {
             button.style = "visibility: visible !important";
         });
         dice.forEach((die) => {
             die.style = "visibility: visible !important";
+        });
+        diceRef.forEach((die) => {
+            die.disabled = false;
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
     }
