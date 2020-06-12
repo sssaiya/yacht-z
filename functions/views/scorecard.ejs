@@ -14,7 +14,7 @@
 
   <% if (playermode == 'multiplayer') { %>
   <script defer src="https://host.streamwithme.net/socket.io/socket.io.js"></script>
-  <script defer src="websocket.js"></script>
+  <script defer src="/js/websocket.js"></script>
   <% } %>
 </head>
 
@@ -463,7 +463,9 @@
       <hr id="sand">
       <img id="flamingo" src="./images/flamingo.svg" alt="neon flamingo">
   </main>
+  <% if (playermode != 'multiplayer') { %>
   <script src="./sw.js"></script>
+  <% } %>
 </body>
 
 </html>
