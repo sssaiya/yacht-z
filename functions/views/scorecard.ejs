@@ -125,8 +125,7 @@
               <p><%= body.ones %></p>
               <input type="hidden" name="ones" value="<%= body.ones %>">
               <% } else { %>
-              <button name="ones" type="submit" value="<%= scores.ones %>"
-                <%= visibility %>><%= scores.ones %></button>
+              <button name="ones" type="submit" value="<%= scores.ones %>" <%= visibility %>><%= scores.ones %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -138,8 +137,7 @@
               <p><%= body.twos %></p>
               <input type="hidden" name="twos" value="<%= body.twos %>">
               <% } else { %>
-              <button name="twos" type="submit" value="<%= scores.twos %>"
-                <%= visibility %>><%= scores.twos %></button>
+              <button name="twos" type="submit" value="<%= scores.twos %>" <%= visibility %>><%= scores.twos %></button>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -211,11 +209,9 @@
             <td class="centerColumn">
               <% if (typeof body.three_of_a_kind !== 'undefined') { %>
               <p><%= body.three_of_a_kind %></p>
-              <input type="hidden" name="three_of_a_kind"
-                value="<%= body.three_of_a_kind %>">
+              <input type="hidden" name="three_of_a_kind" value="<%= body.three_of_a_kind %>">
               <% } else { %>
-              <button name="three_of_a_kind" type="submit"
-                value="<%= scores.three_of_a_kind %>"
+              <button name="three_of_a_kind" type="submit" value="<%= scores.three_of_a_kind %>"
                 <%= visibility %>><%= scores.three_of_a_kind %></button>
               <% } %>
             </td>
@@ -226,11 +222,9 @@
             <td class="centerColumn">
               <% if (typeof body.four_of_a_kind !== 'undefined') { %>
               <p><%= body.four_of_a_kind %></p>
-              <input type="hidden" name="four_of_a_kind"
-                value="<%= body.four_of_a_kind %>">
+              <input type="hidden" name="four_of_a_kind" value="<%= body.four_of_a_kind %>">
               <% } else { %>
-              <button name="four_of_a_kind" type="submit"
-                value="<%= scores.four_of_a_kind %>"
+              <button name="four_of_a_kind" type="submit" value="<%= scores.four_of_a_kind %>"
                 <%= visibility %>><%= scores.four_of_a_kind %></button>
               <% } %>
             </td>
@@ -254,11 +248,9 @@
             <td class="centerColumn">
               <% if (typeof body.small_straight !== 'undefined') { %>
               <p><%= body.small_straight %></p>
-              <input type="hidden" name="small_straight"
-                value="<%= body.small_straight %>">
+              <input type="hidden" name="small_straight" value="<%= body.small_straight %>">
               <% } else { %>
-              <button name="small_straight" type="submit"
-                value="<%= scores.small_straight %>"
+              <button name="small_straight" type="submit" value="<%= scores.small_straight %>"
                 <%= visibility %>><%= scores.small_straight %></button>
               <% } %>
             </td>
@@ -269,11 +261,9 @@
             <td class="centerColumn">
               <% if (typeof body.large_straight !== 'undefined') { %>
               <p><%= body.large_straight %></p>
-              <input type="hidden" name="large_straight"
-                value="<%= body.large_straight %>">
+              <input type="hidden" name="large_straight" value="<%= body.large_straight %>">
               <% } else { %>
-              <button name="large_straight" type="submit"
-                value="<%= scores.large_straight %>"
+              <button name="large_straight" type="submit" value="<%= scores.large_straight %>"
                 <%= visibility %>><%= scores.large_straight %></button>
               <% } %>
             </td>
@@ -323,6 +313,7 @@
     <hr id="sand">
     <img id="flamingo" src="./images/flamingo.svg" alt="neon flamingo">
   </main>
+  <script src="./sw.js"></script>
 </body>
 
 </html>
