@@ -3,20 +3,33 @@
 /* eslint-disable no-undef*/
 
 const MAX_REROLLS = 2;
-const AI_PAUSE = 2000;
+const AI_PAUSE = 100;
 // GLOBAL reference for dice values. after every roll, store values here
 let currentRolls = [];
 // number of times player has rerolled
 let numRerolls = 0;
-let userTotalScore = 0;
+let totalScore = 0;
 let opponentTotalScore = 0;
-let turnEnum = {
-    USER: 0,
-    OPPONENT: 1
-}
-let turn = turnEnum.USER;
 
-let moveList = [
+// Array of Current Scores
+let playerScores = {};
+let opponentScores = {};
+
+// Dice checkboxes, having it load at start improves gameplay performance
+let diceRow1Arr = Array.from(
+    document.querySelectorAll("#playerDiceRow1 .player-dice")
+);
+let diceRow2Arr = Array.from(
+    document.querySelectorAll("#playerDiceRow2 .player-dice")
+);
+let dice = diceRow1Arr.concat(diceRow2Arr);
+
+let diceArr = [];
+for (let i = 1; i <= 5; i++) {
+    diceArr.push(document.getElementById(`die${i}`));
+}
+
+let cpuMoveList = [
     "ones",
     "twos",
     "threes",
@@ -30,19 +43,8 @@ let moveList = [
     "large_straight",
     "chance",
     "yacht_z",
-  ];
+];
 
-// Reference to the actual die 1-5 input elements
-let diceRef = [];
-
-// Dice checkboxes, having it load at start improves gameplay performance
-let diceRow1Arr = Array.from(
-    document.querySelectorAll("#playerDiceRow1 .player-dice")
-);
-let diceRow2Arr = Array.from(
-    document.querySelectorAll("#playerDiceRow2 .player-dice")
-);
-let dice = diceRow1Arr.concat(diceRow2Arr);
 
 // Scoring buttons, loading them at start improves gameplay performance
 let scoringButtons = document
@@ -226,90 +228,223 @@ function resetDice() {
 }
 
 function toggleTurns() {
-  let user = document.getElementById("user");
-  let opponent = document.getElementById("opponent");
-  let rollBtn = document.getElementById("rerollBtn");
-  if (user.classList.contains("game-turn")) {
-    user.classList.remove("game-turn");
-    opponent.classList.add("game-turn");
-    rollBtn.disabled = true;
-    rollBtn.style.opacity = 0.4;
-    turn = turnEnum.OPPONENT;
-    aiMove();
-  } else {
-    rollBtn.disabled = false;
-    rollBtn.style.opacity = 1;
-    opponent.classList.remove("game-turn");
-    user.classList.add("game-turn");
-    turn = turnEnum.USER;
-  }
+    let user = document.getElementById("user");
+    let opponent = document.getElementById("opponent");
+    let rollBtn = document.getElementById("rerollBtn");
+    if (user.classList.contains("game-turn")) {
+        user.classList.remove("game-turn");
+        opponent.classList.add("game-turn");
+        rollBtn.disabled = true;
+        rollBtn.style.opacity = 0.4;
+        aiMove();
+    } else {
+        rollBtn.disabled = false;
+        rollBtn.style.opacity = 1;
+        opponent.classList.remove("game-turn");
+        user.classList.add("game-turn");
+    }
 }
 
 function aiMove() {
-//   // greedy ai
-//   maxScore = 0;
-//   maxScoreMove = "";
-//   for (move of moveList) {
-//     let score = score(move);
-//     if (score >= maxScore) {
-//         maxScore = score;
-//         maxScoreMove = move;
-//     }
-//   }
-//   completeMove(maxScoreMove);
+    //   // greedy ai
+    //   maxScore = 0;
+    //   maxScoreMove = "";
+    //   for (move of moveList) {
+    //     let score = score(move);
+    //     if (score >= maxScore) {
+    //         maxScore = score;
+    //         maxScoreMove = move;
+    //     }
+    //   }
+    //   completeMove(maxScoreMove);
 
-  // Step 1. Roll the dice
-  let step1 = () => updateDice(null, diceRef);
-  // TODO Step 1.5 randomly reroll dice between 1-2 times
+    // Step 1. Roll the dice
+    let aiRolls = getNDiceRolls(5);
+    let step1 = () => updateAIDice(aiRolls);
+    // TODO Step 1.5 randomly reroll dice between 1-2 times
 
-  // Step 2. Choose a button
-  let step2 = () => completeMove(moveList[Math.floor(Math.random() * moveList.length)]);
-  let steps = [step1, step2]
-  i = 0, 
-  timer = setInterval(() => {
-    steps[i++]();
-    if (i === steps.length) clearInterval(timer);
-  }, AI_PAUSE);
+    // Step 2. Choose a button
+    let cpuMove = cpuMoveList[Math.floor(Math.random() * cpuMoveList.length)];
+    let step2 = () => completeMove(cpuMove, 'cpu');
+    let steps = [step1, step2];
+    let i = 0;
+    let timer = setInterval(() => {
+        steps[i++]();
+        if (i === steps.length) { clearInterval(timer) };
+    }, AI_PAUSE);
+
+    cpuMoveList.splice(cpuMoveList.indexOf(cpuMove), 1);
+}
+
+function updateAIDice(opponentRolls) {
+    for (let i = 0; i < 5; i++) {
+        diceArr[i].nextElementSibling.style.background = `url('images/die-${opponentRolls[i]}pips.png') no-repeat`;
+        diceArr[i].nextElementSibling.style.backgroundSize = "cover";
+        diceArr[i].nextElementSibling.nextElementSibling.value = opponentRolls[i];
+    }
+
+    toggleDice("show");
+}
+
+// Toggles showing the dice, since opponent doesn't need to show buttons
+function toggleDice(toggle) {
+    let playerDice = Array.from(document.querySelectorAll(".player-dice"));
+
+    if (toggle == "hide") {
+        for (let i = 0; i < 5; i++) {
+            diceArr[i].disabled = false;
+            playerDice[i].style = "visibility: hidden !important";
+        }
+    } else {
+        for (let i = 0; i < 5; i++) {
+            diceArr[i].disabled = true;
+            playerDice[i].style = "visibility: visible !important";
+        }
+    }
 }
 
 // when a button is selected on the scorecard, make sure the move is valid, then add score
-function completeMove(move) {
-  toggleElements("row");
-  let scoreval = score(move);
-  if (!validateMove(move)) {
-    scoreval = 0;
-  }
-
-  if (turn == turnEnum.USER) {
-    document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
-    userTotalScore += scoreval;
-    document.getElementById("userScore").innerHTML = `${userTotalScore} points`; // --> OFF
-  } else {
-    document.querySelector(`#${move}>.rightColumn`).innerHTML = scoreval;
-    opponentTotalScore += scoreval;
-    document.getElementById("opponentScore").innerHTML = `${opponentTotalScore} points`; // --> OFF
-  }
-  
-  if (typeof socket !== "undefined") {
-    socket.emit("user-move", {
-      move: move,
-      score: scoreval,
-      roomCode: currRoomCode,
-      opponentScore: userTotalScore,
-    });
-  } 
-
-  resetDice();
-  toggleTurns();
-}
-function updateDice(rollBtn, dice) {
-  if (turn == turnEnum.USER) {
-    if (numRerolls == MAX_REROLLS) {
-        rollBtn.innerText = "REROLL";
-        rollBtn.disabled = true;
-        rollBtn.style.opacity = 0.4;
+function completeMove(move, user) {
+    if (user == 'user') {
+        toggleElements("row");
+    } else {
+        toggleDice("hide");
     }
-    rollBtn.innerText = "REROLL x"+(2-numRerolls);
+    let scoreval = score(move);
+    if (!validateMove(move)) {
+        scoreval = 0;
+    }
+    let column = 'centerColumn';
+    if (user == 'cpu') { column = 'rightColumn'; }
+    document.querySelector(`#${move}>.${column}`).innerHTML = scoreval;
+    if (user == 'cpu') {
+        opponentScores[move] = scoreval;
+        opponentTotalScore += scoreval;
+    } else {
+        playerScores[move] = scoreval;
+        totalScore += scoreval;
+    }
+
+    if (user == 'cpu') {
+        document.getElementById("opponentScore").innerHTML = `${opponentTotalScore} points`; // --> OFF
+    } else {
+        document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
+    }
+
+    if (typeof socket !== "undefined") {
+        socket.emit("user-move", {
+            move: move,
+            score: scoreval,
+            roomCode: currRoomCode,
+            opponentScore: totalScore,
+        });
+    }
+
+    checkScorecard();
+
+    resetDice();
+    toggleTurns();
+}
+
+// Checks the scorecard and updates with sum/bonus/total score if applicable
+function checkScorecard() {
+    let userFinalScore = document.querySelector(`#totalScoreRow>.centerColumn`);
+    let opponentFinalScore = document.querySelector(`#totalScoreRow>.rightColumn`);
+
+    // Checks the upper half of the scorecard
+    let upperScores = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
+    let currScores = Object.keys(playerScores);
+    let currOppScores = Object.keys(opponentScores);
+    let sum = 0;
+    let oppSum = 0;
+    let upperSum = 0;
+    let oppUpperSum = 0;
+
+    upperScores.forEach(score => {
+        if (currScores.includes(score)) {
+            sum += 1;
+            upperSum += playerScores[score];
+        }
+
+        if (currOppScores.includes(score)) {
+            oppSum += 1;
+            oppUpperSum += opponentScores[score];
+        }
+    });
+
+    if (sum == 6) {
+        document.querySelector(`#sum>.centerColumn`).innerHTML = upperSum;
+        playerScores['Sum'] = upperSum;
+        if (upperSum >= 63) {
+            document.querySelector(`#bonus>.centerColumn`).innerHTML = 35;
+            playerScores['Bonus'] = 35;
+        } else {
+            document.querySelector(`#bonus>.centerColumn`).innerHTML = 0;
+            playerScores['Bonus'] = 0;
+        }
+        currScores = Object.keys(playerScores);
+    }
+
+    if (oppSum == 6) {
+        document.querySelector(`#sum>.rightColumn`).innerHTML = oppUpperSum;
+        opponentScores['Sum'] = oppUpperSum;
+        if (oppUpperSum >= 63) {
+            document.querySelector(`#bonus>.rightColumn`).innerHTML = 35;
+            opponentScores['Bonus'] = 35;
+        } else {
+            document.querySelector(`#bonus>.rightColumn`).innerHTML = 0;
+            opponentScores['Bonus'] = 0;
+        }
+        currOppScores = Object.keys(opponentScores);
+    }
+
+    if (currScores.length == 15) {
+        let totalSum = 0;
+        currScores.forEach(score => {
+            if (!upperScores.includes(score)) {
+                totalSum += playerScores[score];
+            }
+        });
+        userFinalScore.innerHTML = totalSum;
+    }
+
+    if (currOppScores.length == 15) {
+        let totalSum = 0;
+        currOppScores.forEach(score => {
+            if (!upperScores.includes(score)) {
+                totalSum += opponentScores[score];
+            }
+        });
+        opponentFinalScore.innerHTML = totalSum;
+    }
+
+    if (opponentFinalScore.innerHTML != "" && userFinalScore.innerHTML != "") {
+        let oppScore = parseInt(opponentFinalScore.innerHTML);
+        let usrScore = parseInt(userFinalScore.innerHTML);
+        if (usrScore > oppScore) {
+            setTimeout(function () {
+                console.log('Game over, congratulations you won!');
+                document.getElementById('modalPopupWrapper').style.display = 'grid';
+                document.getElementById('modalMessage').innerHTML = 'Game over, congratulations you won!';
+            }, 1000);
+        } else {
+            setTimeout(function () {
+                console.log('Game over, unfortunately you lost');
+                document.getElementById('modalPopupWrapper').style.display = 'grid';
+                document.getElementById('modalMessage').innerHTML = 'Game over, unfortunately you lost';
+            }, 1000);
+        }
+    }
+}
+
+function updateDice(rollBtn, dice) {
+    if (rollBtn) {
+        if (numRerolls == MAX_REROLLS) {
+            rollBtn.disabled = true;
+            rollBtn.style.opacity = 0.4;
+        }
+        rollBtn.innerText = `REROLL x${2 - numRerolls}`;
+    }
     let rollValues = getNDiceRolls(5);
     currentRolls = [];
     for (let i = 0; i < 5; i++) {
@@ -327,15 +462,14 @@ function updateDice(rollBtn, dice) {
             currentRolls.push(rollValues[i]);
         }
     }
-  }
 
-  // Send the new rolls to the opponent if multiplayer
-  if (typeof socket !== "undefined") {
-    socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
-  } 
+    // Send the new rolls to the opponent if multiplayer
+    if (typeof socket !== "undefined") {
+        socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
+    }
 
-  if (turn == turnEnum.USER) updateButtons();
-  numRerolls++;
+
+    numRerolls++;
 }
 
 // Fills in the user buttons with the right moves
@@ -358,7 +492,7 @@ function updateButtons() {
 
     moveList.forEach((move) => {
         let scoreval = score(move);
-        let button = document.querySelector(`button[name=${move}]`);
+        let button = document.querySelector(`#${move} button`);
         if (button) {
             if (validateMove(move)) {
                 button.innerHTML = scoreval;
@@ -409,24 +543,29 @@ window.addEventListener("DOMContentLoaded", () => {
     scoringButtons = Array.from(scoringButtons);
     scoringButtons.forEach((button) => {
         button.addEventListener("click", function () {
-            completeMove(button.name);
+            completeMove(button.name, 'user');
         });
     });
 
-  // dice checkbox reference
-  for (let i = 1; i <= 5; i++) {
-    diceRef.push(document.getElementById(`die${i}`));
-  }
+    // Set the user's turn
+    document.getElementById("user").classList.add("game-turn");
 
-  // Set the user's turn
-  document.getElementById("user").classList.add("game-turn");
+    let rollBtn = document.getElementById("rerollBtn");
+    rollBtn.onclick = (e) => {
+        toggleElements("roll");
+        updateDice(e.target, diceArr);
+        updateButtons();
+    };
+});
 
-  let rollBtn = document.getElementById("rerollBtn");
-  rollBtn.onclick = (e) => {
-    toggleElements("roll");
-    updateDice(e.target, diceRef);
-    updateButtons();
-  };
+document.getElementById('modalHome').addEventListener('click', e => {
+    e.preventDefault();
+    location.href = "/";
+});
+
+document.getElementById('modalButton').addEventListener('click', e => {
+    e.preventDefault();
+    location.href = "/app?";
 });
 
 /* eslint no-use-before-define: 2 */ // --> ON
