@@ -3,7 +3,7 @@
 /* eslint-disable no-undef*/
 
 const MAX_REROLLS = 2;
-const AI_PAUSE = 100;
+const AI_PAUSE = 1000;
 // GLOBAL reference for dice values. after every roll, store values here
 let currentRolls = [];
 // number of times player has rerolled
@@ -44,7 +44,6 @@ let cpuMoveList = [
     "chance",
     "yacht_z",
 ];
-
 
 // Scoring buttons, loading them at start improves gameplay performance
 let scoringButtons = document
@@ -270,7 +269,7 @@ function aiMove() {
     let i = 0;
     let timer = setInterval(() => {
         steps[i++]();
-        if (i === steps.length) { clearInterval(timer) };
+        if (i === steps.length) { clearInterval(timer); }
     }, AI_PAUSE);
 
     cpuMoveList.splice(cpuMoveList.indexOf(cpuMove), 1);
@@ -468,7 +467,6 @@ function updateDice(rollBtn, dice) {
         socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
     }
 
-
     numRerolls++;
 }
 
@@ -510,21 +508,17 @@ function toggleElements(button) {
         scoringButtons.forEach((button) => {
             button.style = "visibility: hidden !important";
         });
-        // disable dice locking on opponent turn and before user first rolls
-        diceRef.forEach((die) => {
-            die.disabled = true;
+        dice.forEach((die) => {
+            die.style = "visibility: hidden !important";
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
-    } else if (turn == turnEnum.USER && !btnsAndDiceShowing) {
+    } else if (!btnsAndDiceShowing) {``
         // Show all of the dice and buttons
         scoringButtons.forEach((button) => {
             button.style = "visibility: visible !important";
         });
         dice.forEach((die) => {
             die.style = "visibility: visible !important";
-        });
-        diceRef.forEach((die) => {
-            die.disabled = false;
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
     }
