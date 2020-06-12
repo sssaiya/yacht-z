@@ -227,7 +227,7 @@ function completeMove(move) {
 
     totalScore += scoreval;
     document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
-    if (socket !== "undefined") {
+    if (typeof socket !== "undefined") {
         socket.emit("user-move", {
             move: move,
             score: scoreval,
@@ -242,10 +242,11 @@ function completeMove(move) {
 
 function updateDice(rollBtn, dice) {
     if (numRerolls == MAX_REROLLS) {
+        rollBtn.innerText = "REROLL";
         rollBtn.disabled = true;
         rollBtn.style.opacity = 0.4;
     }
-    rollBtn.innerText = "REROLL";
+    rollBtn.innerText = "REROLL x"+(2-numRerolls);
     let rollValues = getNDiceRolls(5);
     currentRolls = [];
     for (let i = 0; i < 5; i++) {
@@ -265,7 +266,7 @@ function updateDice(rollBtn, dice) {
     }
 
     // Send the new rolls to the opponent if multiplayer
-    if (socket !== "undefined") {
+    if (typeof socket !== "undefined") {
         socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
     }
 
@@ -292,7 +293,7 @@ function updateButtons() {
 
     moveList.forEach((move) => {
         let scoreval = score(move);
-        let button = document.querySelector(`#${move} button`);
+        let button = document.querySelector(`button[name=${move}]`);
         if (button) {
             if (validateMove(move)) {
                 button.innerHTML = scoreval;

@@ -59,7 +59,7 @@ app.post("/app", (req, res) => {
     dice: dice,
     scores: scores,
     visibility: 'style=visibility:visible',
-    Roll: 'REROLL',
+    Roll: 'REROLL x'+(3-req.body.rollNum),
     playermode: 'single',
     opponentName: 'CPU'
   });
