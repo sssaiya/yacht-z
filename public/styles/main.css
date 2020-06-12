@@ -168,9 +168,11 @@ th {
 }
 
 #roomCode {
+  display: block;
   font-size: 1.1em;
-  grid-area: roomCode;
-  text-align: center;
+  left: 2.5vw;
+  position: absolute;
+  top: 12vh;
 }
 
 #sand {
@@ -494,6 +496,10 @@ th {
     width: 110vw;
     right: 0;
     z-index: -1;
+  }
+
+  #roomCode {
+    top: 15vh;
   }
 
   #sand {

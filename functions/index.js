@@ -17,6 +17,22 @@ app.set("views", "./views");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const moveList = [
+  "ones",
+  "twos",
+  "threes",
+  "fours",
+  "fives",
+  "sixes",
+  "three_of_a_kind",
+  "four_of_a_kind",
+  "full_house",
+  "small_straight",
+  "large_straight",
+  "chance",
+  "yacht_z",
+];
+
 // ejs views app - GET
 // For the initial start request
 app.get("/app", (req, res) => {
@@ -27,14 +43,36 @@ app.get("/app", (req, res) => {
     diceSum += num;
   });
   const scores = makeScoreArray(newRolls);
+
+  let ai_scores = {
+    ones: "",
+    twos: "",
+    threes: "",
+    fours: "",
+    fives: "",
+    sixes: "",
+    sum: "",
+    bonus: "",
+    three_of_a_kind: "",
+    four_of_a_kind: "",
+    full_house: "",
+    small_straight: "",
+    large_straight: "",
+    chance: "",
+    yacht_z: "",
+    total_score: ""
+  };
+
   res.render("scorecard", {
     body: { dicetotal: diceSum, rollNum: 0 },
+    ai_scores: ai_scores,
     dice: newRolls,
     scores: scores,
-    visibility: 'style=visibility:hidden',
-    Roll: 'ROLL',
-    playermode: 'single',
-    opponentName: 'CPU'
+    visibility: "style=visibility:hidden",
+    Roll: "ROLL",
+    playermode: "single",
+    opponentName: "CPU",
+    gameOver: "none"
   });
 });
 
@@ -54,36 +92,114 @@ app.post("/app", (req, res) => {
 
   const scores = makeScoreArray(dice);
 
+  //Check if player has just completed a turn
+  const movesPlayed = getMovesPlayed(req.body);
+
+  let ai_scores = {};
+  ai_scores.ai_scores = {
+    ones: req.body.ai_ones,
+    twos: req.body.ai_twos,
+    threes: req.body.ai_threes,
+    fours: req.body.ai_fours,
+    fives: req.body.ai_fives,
+    sixes: req.body.ai_sixes,
+    sum: req.body.ai_sum,
+    bonus: req.body.ai_bonus,
+    three_of_a_kind: req.body.ai_three_of_a_kind,
+    four_of_a_kind: req.body.ai_four_of_a_kind,
+    full_house: req.body.ai_full_house,
+    small_straight: req.body.ai_small_straight,
+    large_straight: req.body.ai_large_straight,
+    chance: req.body.ai_chance,
+    yacht_z: req.body.ai_yacht_z,
+    total_score: req.body.ai_total_score
+  };
+
+  let roll = "REROLL x" + (3 - req.body.rollNum);
+  let visibility = "style=visibility:visible";
+  if (req.body.reroll != '') {
+    ai_scores = aiMove(req.body);
+    roll = 'ROLL'
+    req.body.rollNum = 0;
+    visibility = "style=visibility:hidden";
+  }
+
+  let winningPlayer = 'none';
+  if (ai_scores.ai_scores.total_score) {
+    // console.log(ai_scores.ai_scores.total_score);
+    let userScore = parseInt(req.body.sum) + parseInt(req.body.bonus) + parseInt(req.body.three_of_a_kind) + parseInt(req.body.four_of_a_kind) + parseInt(req.body.full_house) + parseInt(req.body.small_straight) + parseInt(req.body.large_straight) + parseInt(req.body.chance) + parseInt(req.body.yacht_z);
+
+    winningPlayer = 'Game over, unfortunately you lost';
+    if (userScore > ai_scores.ai_scores.total_score) {
+      winningPlayer = 'Game over, congratulations you won!';
+    }
+  }
+
   res.render("scorecard", {
     body: req.body,
     dice: dice,
     scores: scores,
-    visibility: 'style=visibility:visible',
-    Roll: 'REROLL x'+(3-req.body.rollNum),
-    playermode: 'single',
-    opponentName: 'CPU'
+    visibility: visibility,
+    Roll: roll,
+    playermode: "single",
+    opponentName: "CPU",
+    ai_scores: ai_scores.ai_scores,
+    newMove: ai_scores.newMove,
+    gameOver: winningPlayer
   });
 });
 
+function getMovesPlayed(body) {
+  let played = 0;
+  for (let [key, value] of Object.entries(body)) {
+    if (moveList.includes(key)) {
+      played++;
+    }
+  }
+  return played;
+}
+
 // ejs views app - GET
 // For the initial start multiplayer request
-app.get('/multiplayer', (req, res) => {
+app.get("/multiplayer", (req, res) => {
   let newRolls = [];
   newRolls = getNRolls(5);
   let diceSum = 0;
   newRolls.forEach((num) => {
     diceSum += num;
   });
+
+  let blank_scores = {
+    ones: "",
+    twos: "",
+    threes: "",
+    fours: "",
+    fives: "",
+    sixes: "",
+    sum: "",
+    bonus: "",
+    three_of_a_kind: "",
+    four_of_a_kind: "",
+    full_house: "",
+    small_straight: "",
+    large_straight: "",
+    chance: "",
+    yacht_z: "",
+    total_score: ""
+  };
+
   const scores = makeScoreArray(newRolls);
   res.render("scorecard", {
     body: { dicetotal: diceSum, rollNum: 0 },
     dice: newRolls,
     scores: scores,
-    visibility: 'style=visibility:hidden',
-    Roll: 'ROLL',
-    playermode: 'multiplayer',
+    visibility: "style=visibility:hidden",
+    Roll: "ROLL",
+    playermode: "multiplayer",
     roomCode: req.query.roomCode,
-    opponentName: 'Waiting...'
+    opponentName: "Waiting...",
+    ai_scores: blank_scores,
+    gameOver: "none"
   });
 });
 
@@ -202,7 +318,6 @@ function straight(n, dice) {
   const diceSortedUniqueArray = [...diceSortedUnique];
 
   if (n == 4) {
-
     //small straight check
     if (isArrayInArray(smallStraights, diceSortedUniqueArray)) {
       score = 30;
@@ -230,25 +345,72 @@ function chanceScore(dice) {
   });
   return score;
 }
+
+function aiMove(body) {
+  const aiRolls = getNRolls(5);
+  const ai_scores = makeScoreArray(aiRolls);
+
+  let ai_curr_scores = {};
+  ai_curr_scores['ones'] = body.ai_ones;
+  ai_curr_scores['twos'] = body.ai_twos;
+  ai_curr_scores['threes'] = body.ai_threes;
+  ai_curr_scores['fours'] = body.ai_fours;
+  ai_curr_scores['fives'] = body.ai_fives;
+  ai_curr_scores['sixes'] = body.ai_sixes;
+  ai_curr_scores['three_of_a_kind'] = body.ai_three_of_a_kind;
+  ai_curr_scores['four_of_a_kind'] = body.ai_four_of_a_kind;
+  ai_curr_scores['full_house'] = body.ai_full_house;
+  ai_curr_scores['small_straight'] = body.ai_small_straight;
+  ai_curr_scores['large_straight'] = body.ai_large_straight;
+  ai_curr_scores['chance'] = body.ai_chance;
+  ai_curr_scores['yacht_z'] = body.ai_yacht_z;
+
+  let movePool = [];
+  let upperScores = [];
+  let i = 0;
+  Object.keys(ai_curr_scores).forEach(score => {
+    i += 1;
+    if (ai_curr_scores[score] != "" && i < 7) {
+      upperScores.push(parseInt(ai_curr_scores[score]));
+    }
+    if (ai_curr_scores[score] == "") {
+      movePool.push(score);
+    }
+  });
+
+  let move = movePool[Math.floor(Math.random() * movePool.length)];
+  ai_curr_scores[move] = ai_scores[move];
+
+  if (upperScores.length == 5 && Object.keys(ai_curr_scores).indexOf(move) < 6) {
+    upperScores.push(parseInt(ai_curr_scores[move]));
+  }
+
+  ai_curr_scores['sum'] = body.ai_sum;
+  ai_curr_scores['bonus'] = body.ai_bonus;
+
+  if (upperScores.length == 6) {
+    let newSum = 0;
+    upperScores.forEach(score => { newSum += score });
+    ai_curr_scores['sum'] = newSum;
+    ai_curr_scores['bonus'] = 0;
+
+    if (newSum >= 63) {
+      ai_curr_scores['bonus'] = 35;
+    }
+  }
+
+  if (movePool.length <= 1) {
+    let totalSum = 0;
+    Object.keys(ai_curr_scores).forEach(score => {
+      if (score != 'sum') {
+        totalSum += parseInt(ai_curr_scores[score])
+      }
+    });
+    ai_curr_scores['total_score'] = totalSum;
+  }
+
+  return { ai_scores: ai_curr_scores, newMove: move };
+}
+
 // Expose Express API as a single Cloud Function:
 exports.app = functions.https.onRequest(app);
-
-// TODO
-
-// SUm in EJS logic
-
-// 2) Game Logic - It needs to keep track of how many times you've rolled,
-//it'll probably be easier to just hide the re-roll button after N rolls than
-// like send a rejection response from the server for too many rolls
-
-// 3) Game Logic - This should probably be done after the first two game logic issues have been solved,
-//but we need to have some super basic opponent AI.
-//Don't put too much effort into making the AI super good or anything,
-//we just need the game to work.
-//Once you can play an actual game then we can go back and improve the AI if we want.
-
-// 4) Game Logic - We need a win condition. If we limit the number of times
-// the user can roll and calculate the score for each row,
-// and have an AI that does the same thing, that's basically the whole game.
-// This should be done after the above 3 game logics, but we need something that determines
-// if the game has been completed and who has won, and then a little popup congratulations with a replay button
