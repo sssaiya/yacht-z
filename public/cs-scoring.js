@@ -32,6 +32,7 @@ let moveList = [
     "yacht_z",
   ];
 
+// Reference to the actual die 1-5 input elements
 let diceRef = [];
 
 // Dice checkboxes, having it load at start improves gameplay performance
@@ -264,7 +265,7 @@ function aiMove() {
   // Step 2. Choose a button
   let step2 = () => completeMove(moveList[Math.floor(Math.random() * moveList.length)]);
   let steps = [step1, step2]
-  i = 0,
+  i = 0, 
   timer = setInterval(() => {
     steps[i++]();
     if (i === steps.length) clearInterval(timer);
@@ -273,23 +274,11 @@ function aiMove() {
 
 // when a button is selected on the scorecard, make sure the move is valid, then add score
 function completeMove(move) {
-    toggleElements("row");
-    let scoreval = score(move);
-    if (!validateMove(move)) {
-        scoreval = 0;
-    }
-    document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
-
-    userTotalScore += scoreval;
-    document.getElementById("userScore").innerHTML = `${userTotalScore} points`; // --> OFF
-    if (typeof socket !== "undefined") {
-        socket.emit("user-move", {
-            move: move,
-            score: scoreval,
-            roomCode: currRoomCode,
-            opponentScore: userTotalScore,
-        });
-    }
+  toggleElements("row");
+  let scoreval = score(move);
+  if (!validateMove(move)) {
+    scoreval = 0;
+  }
 
   if (turn == turnEnum.USER) {
     document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
@@ -387,17 +376,21 @@ function toggleElements(button) {
         scoringButtons.forEach((button) => {
             button.style = "visibility: hidden !important";
         });
-        dice.forEach((die) => {
-            die.style = "visibility: hidden !important";
+        // disable dice locking on opponent turn and before user first rolls
+        diceRef.forEach((die) => {
+            die.disabled = true;
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
-    } else if (!btnsAndDiceShowing) {
+    } else if (turn == turnEnum.USER && !btnsAndDiceShowing) {
         // Show all of the dice and buttons
         scoringButtons.forEach((button) => {
             button.style = "visibility: visible !important";
         });
         dice.forEach((die) => {
             die.style = "visibility: visible !important";
+        });
+        diceRef.forEach((die) => {
+            die.disabled = false;
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
     }
