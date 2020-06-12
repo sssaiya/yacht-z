@@ -14,8 +14,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build
-        run: npm run build-prod
-      
+        run: npm run build
+
       # - name: Build/release Electron app
       #   uses: samuelmeuli/action-electron-builder@v1
       #   with:
@@ -29,12 +29,12 @@ jobs:
 
       - name: Make Lighthouse report
         run: npm run lighthouse:ci
-        
+
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
-          name: public
-          path: public
+          name: dist
+          path: dist
   deploy:
     name: Deploy
     needs: build
@@ -42,18 +42,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-      
+
       - name: Download Artifact
         uses: actions/download-artifact@master
         with:
-          name: public
-          path: public
+          name: dist
+          path: dist
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy
-      
-
 
         env:
           FIREBASE_TOKEN: ${{ '1//06gjH5ddXVmbKCgYIARAAGAYSNgF-L9Ir_kyglWO9umc9lc1f_HJjB7zby9IVN0jRGQCq0RZTIe7aF_tJiceV3Rv8cqFvGiDUYQ' }}
