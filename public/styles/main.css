@@ -213,6 +213,43 @@ th {
   text-align: center;
 }
 
+#modalButton {
+  align-self: flex-start;
+  height: 30px;
+  justify-self: center;
+  max-width: 173px;
+  width: 100%;
+}
+
+#modalMessage {
+  align-self: flex-end;
+  font-size: 1.4em;
+}
+
+#modalPopup {
+  align-items: center;
+  background-color: navy;
+  display: grid;
+  grid-template-rows: 2fr 1.6fr;
+  height: 341px;
+  justify-content: center;
+  max-width: 561px;
+  row-gap: 31px;
+  width: 90%;
+}
+
+#modalPopupWrapper {
+  align-content: center;
+  background-color: rgba(255,255,255,0.5);
+  display: none; /* Toggles to display: grid */
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 #opponent {
   grid-area: opponent;
 }

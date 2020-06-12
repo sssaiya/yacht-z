@@ -231,7 +231,7 @@ function completeMove(move) {
 
     totalScore += scoreval;
     document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
-    if (socket !== "undefined") {
+    if (typeof socket !== "undefined") {
         socket.emit("user-move", {
             move: move,
             score: scoreval,
@@ -323,7 +323,7 @@ function updateDice(rollBtn, dice) {
     }
 
     // Send the new rolls to the opponent if multiplayer
-    if (socket !== "undefined") {
+    if (typeof socket !== "undefined") {
         socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
     }
 
@@ -347,6 +347,8 @@ function updateButtons() {
         "chance",
         "yacht_z",
     ];
+
+    console.log('test');
 
     moveList.forEach((move) => {
         let scoreval = score(move);
