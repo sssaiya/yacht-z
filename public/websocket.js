@@ -242,9 +242,23 @@ function checkOpponentScorecard() {
     let oppScore = parseInt(opponentFinalScore.innerHTML);
     let usrScore = parseInt(userFinalScore.innerHTML);
     if (usrScore > oppScore) {
-      console.log('Game over, congratulations you won!');
+      setTimeout(function () {
+        console.log('Game over, congratulations you won!');
+        document.getElementById('modalPopupWrapper').style.display = 'grid';
+        document.getElementById('modalMessage').innerHTML = 'Game over, congratulations you won!';
+        document.getElementById('modalPopup').style.gridTemplateAreas = '"text text" "home home"';
+        document.getElementById('modalHome').style.gridArea = 'home';
+        document.getElementById('modalButton').style.display = 'none';
+      }, 1000);
     } else {
-      console.log('Game over, unfortunately you lost');
+      setTimeout(function () {
+        console.log('Game over, unfortunately you lost');
+        document.getElementById('modalPopupWrapper').style.display = 'grid';
+        document.getElementById('modalMessage').innerHTML = 'Game over, unfortunately you lost';
+        document.getElementById('modalPopup').style.gridTemplateAreas = '"text text" "home home"';
+        document.getElementById('modalHome').style.gridArea = 'home';
+        document.getElementById('modalButton').style.display = 'none';
+      }, 1000);
     }
   }
 }
