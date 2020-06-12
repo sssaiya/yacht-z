@@ -4,12 +4,12 @@ const socket = io("https://host.streamwithme.net/");
 
 var currRoomCode = "";
 
-let diceArr = [];
+let diceArrWS = [];
 for (let i = 1; i <= 5; i++) {
-  diceArr.push(document.getElementById(`die${i}`));
+  diceArrWS.push(document.getElementById(`die${i}`));
 }
 
-let opponentScores = {};
+let opponentScoresWS = {};
 
 console.log("Websocket JS");
 
@@ -57,17 +57,17 @@ socket.on("opponent-joined", (message) => {
 socket.on("opponent-rolls", (dice) => {
   console.log(dice.opponentRolls);
   updateOpponentDice(dice.opponentRolls);
-  diceArr.forEach((die) => (die.checked = false));
+  diceArrWS.forEach((die) => (die.checked = false));
 });
 
 // If dice are received from the opponent, the new dice are updated on screen
 function updateOpponentDice(opponentRolls) {
   for (let i = 0; i < 5; i++) {
-    diceArr[
+    diceArrWS[
       i
     ].nextElementSibling.style.background = `url('images/die-${opponentRolls[i]}pips.png') no-repeat`;
-    diceArr[i].nextElementSibling.style.backgroundSize = "cover";
-    diceArr[i].nextElementSibling.nextElementSibling.value = opponentRolls[i];
+    diceArrWS[i].nextElementSibling.style.backgroundSize = "cover";
+    diceArrWS[i].nextElementSibling.nextElementSibling.value = opponentRolls[i];
   }
 
   toggleDice("show");
@@ -89,7 +89,7 @@ function toggleTurns() {
     opponent.classList.remove("game-turn");
     user.classList.add("game-turn");
   }
-  diceArr.forEach((die) => (die.checked = false));
+  diceArrWS.forEach((die) => (die.checked = false));
 }
 
 // Toggles showing the dice, since opponent doesn't need to show buttons
@@ -98,67 +98,67 @@ function toggleDice(toggle) {
 
   if (toggle == "hide") {
     for (let i = 0; i < 5; i++) {
-      diceArr[i].disabled = false;
+      diceArrWS[i].disabled = false;
       playerDice[i].style = "visibility: hidden !important";
     }
   } else {
     for (let i = 0; i < 5; i++) {
-      diceArr[i].disabled = true;
+      diceArrWS[i].disabled = true;
       playerDice[i].style = "visibility: visible !important";
     }
   }
 }
 
 // Sends message when the first die is locked/unlocked
-diceArr[0].addEventListener("click", () => {
+diceArrWS[0].addEventListener("click", () => {
   if (document.getElementById("user").classList.contains("game-turn")) {
     socket.emit("user-locked-die", {
       dieNum: 1,
-      checked: diceArr[0].checked,
+      checked: diceArrWS[0].checked,
       roomCode: currRoomCode,
     });
   }
 });
 
 // Sends message when the first die is locked/unlocked
-diceArr[1].addEventListener("click", () => {
+diceArrWS[1].addEventListener("click", () => {
   if (document.getElementById("user").classList.contains("game-turn")) {
     socket.emit("user-locked-die", {
       dieNum: 2,
-      checked: diceArr[1].checked,
+      checked: diceArrWS[1].checked,
       roomCode: currRoomCode,
     });
   }
 });
 
 // Sends message when the first die is locked/unlocked
-diceArr[2].addEventListener("click", () => {
+diceArrWS[2].addEventListener("click", () => {
   if (document.getElementById("user").classList.contains("game-turn")) {
     socket.emit("user-locked-die", {
       dieNum: 3,
-      checked: diceArr[2].checked,
+      checked: diceArrWS[2].checked,
       roomCode: currRoomCode,
     });
   }
 });
 
 // Sends message when the first die is locked/unlocked
-diceArr[3].addEventListener("click", () => {
+diceArrWS[3].addEventListener("click", () => {
   if (document.getElementById("user").classList.contains("game-turn")) {
     socket.emit("user-locked-die", {
       dieNum: 4,
-      checked: diceArr[3].checked,
+      checked: diceArrWS[3].checked,
       roomCode: currRoomCode,
     });
   }
 });
 
 // Sends message when the first die is locked/unlocked
-diceArr[4].addEventListener("click", () => {
+diceArrWS[4].addEventListener("click", () => {
   if (document.getElementById("user").classList.contains("game-turn")) {
     socket.emit("user-locked-die", {
       dieNum: 5,
-      checked: diceArr[4].checked,
+      checked: diceArrWS[4].checked,
       roomCode: currRoomCode,
     });
   }
@@ -178,7 +178,7 @@ socket.on("opponent-move", (moveInfo) => {
     "opponentScore"
   ).innerHTML = `${moveInfo.opponentScore} points`;
 
-  opponentScores[moveInfo.move] = moveInfo.score;
+  opponentScoresWS[moveInfo.move] = moveInfo.score;
   checkOpponentScorecard();
 
   toggleTurns();
@@ -204,35 +204,35 @@ function checkOpponentScorecard() {
 
   // Checks the upper half of the scorecard
   let upperScores = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
-  let currScores = Object.keys(opponentScores);
+  let currScores = Object.keys(opponentScoresWS);
   let sum = 0;
   let upperSum = 0;
 
   upperScores.forEach(score => {
     if (currScores.includes(score)) {
       sum += 1;
-      upperSum += opponentScores[score];
+      upperSum += opponentScoresWS[score];
     }
   });
 
   if (sum == 6) {
     document.querySelector(`#sum>.rightColumn`).innerHTML = upperSum;
-    opponentScores['Sum'] = upperSum;
+    opponentScoresWS['Sum'] = upperSum;
     if (upperSum >= 63) {
       document.querySelector(`#bonus>.rightColumn`).innerHTML = 35;
-      opponentScores['Bonus'] = 35;
+      opponentScoresWS['Bonus'] = 35;
     } else {
       document.querySelector(`#bonus>.rightColumn`).innerHTML = 0;
-      opponentScores['Bonus'] = 0;
+      opponentScoresWS['Bonus'] = 0;
     }
-    currScores = Object.keys(opponentScores);
+    currScores = Object.keys(opponentScoresWS);
   }
 
   if (currScores.length == 15) {
     let totalSum = 0;
     currScores.forEach(score => {
       if (!upperScores.includes(score)) {
-        totalSum += opponentScores[score];
+        totalSum += opponentScoresWS[score];
       }
     });
     opponentFinalScore.innerHTML = totalSum;

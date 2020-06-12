@@ -235,7 +235,9 @@ function toggleTurns() {
         opponent.classList.add("game-turn");
         rollBtn.disabled = true;
         rollBtn.style.opacity = 0.4;
-        aiMove();
+        if (!location.href.includes('multiplayer')) {
+            aiMove();
+        }
     } else {
         rollBtn.disabled = false;
         rollBtn.style.opacity = 1;
@@ -512,7 +514,8 @@ function toggleElements(button) {
             die.style = "visibility: hidden !important";
         });
         btnsAndDiceShowing = !btnsAndDiceShowing;
-    } else if (!btnsAndDiceShowing) {``
+    } else if (!btnsAndDiceShowing) {
+        ``
         // Show all of the dice and buttons
         scoringButtons.forEach((button) => {
             button.style = "visibility: visible !important";
