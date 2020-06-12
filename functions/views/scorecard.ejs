@@ -125,11 +125,13 @@
               <p><%= body.ones %></p>
               <input type="hidden" name="ones" value="<%= body.ones %>">
               <% } else { %>
-              <button name="ones" type="submit" value="<%= scores.ones %>"
-                <%= visibility %>><%= scores.ones %></button>
+              <button name="ones" type="submit" value="<%= scores.ones %>" <%= visibility %>><%= scores.ones %></button>
+              <!-- <button name="moveNum" type="submit" value="<%= scores.ones %>" <%= visibility %>><%= scores.ones %></button> -->
               <% } %>
             </td>
-            <td class="rightColumn"></td>
+            <td class="rightColumn">
+              <p> <%= body.ai_scores.ones %></p>
+            </td>
           </tr>
           <tr id="twos">
             <th class="leftColumn" scope="row">Twos</th>
@@ -138,8 +140,8 @@
               <p><%= body.twos %></p>
               <input type="hidden" name="twos" value="<%= body.twos %>">
               <% } else { %>
-              <button name="twos" type="submit" value="<%= scores.twos %>"
-                <%= visibility %>><%= scores.twos %></button>
+              <button name="twos" type="submit" value="<%= scores.twos %>" <%= visibility %>><%= scores.twos %></button>
+              <input type="hidden" onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -153,7 +155,8 @@
               <% } else { %>
               <button name="threes" type="submit" value="<%= scores.threes %>"
                 <%= visibility %>><%= scores.threes %></button>
-              <% } %>
+                <input type="hidden" onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
+                <% } %>
             </td>
             <td class="rightColumn"></td>
           </tr>
@@ -166,7 +169,8 @@
               <% } else { %>
               <button name="fours" type="submit" value="<%= scores.fours %>"
                 <%= visibility %>><%= scores.fours %></button>
-              <% } %>
+                <input type="hidden" onclick=<%= body.moveNum = (parseInt(body.moveNum)+1) %>>
+                <% } %>
             </td>
             <td class="rightColumn"></td>
           </tr>
@@ -211,11 +215,9 @@
             <td class="centerColumn">
               <% if (typeof body.three_of_a_kind !== 'undefined') { %>
               <p><%= body.three_of_a_kind %></p>
-              <input type="hidden" name="three_of_a_kind"
-                value="<%= body.three_of_a_kind %>">
+              <input type="hidden" name="three_of_a_kind" value="<%= body.three_of_a_kind %>">
               <% } else { %>
-              <button name="three_of_a_kind" type="submit"
-                value="<%= scores.three_of_a_kind %>"
+              <button name="three_of_a_kind" type="submit" value="<%= scores.three_of_a_kind %>"
                 <%= visibility %>><%= scores.three_of_a_kind %></button>
               <% } %>
             </td>
@@ -226,11 +228,9 @@
             <td class="centerColumn">
               <% if (typeof body.four_of_a_kind !== 'undefined') { %>
               <p><%= body.four_of_a_kind %></p>
-              <input type="hidden" name="four_of_a_kind"
-                value="<%= body.four_of_a_kind %>">
+              <input type="hidden" name="four_of_a_kind" value="<%= body.four_of_a_kind %>">
               <% } else { %>
-              <button name="four_of_a_kind" type="submit"
-                value="<%= scores.four_of_a_kind %>"
+              <button name="four_of_a_kind" type="submit" value="<%= scores.four_of_a_kind %>"
                 <%= visibility %>><%= scores.four_of_a_kind %></button>
               <% } %>
             </td>
@@ -245,6 +245,7 @@
               <% } else { %>
               <button name="full_house" type="submit" value="<%= scores.full_house %>"
                 <%= visibility %>><%= scores.full_house %></button>
+              <input type="hidden" name="moveNum" value="<%= parseInt(body.moveNum) + 1 %>">
               <% } %>
             </td>
             <td class="rightColumn"></td>
@@ -254,11 +255,9 @@
             <td class="centerColumn">
               <% if (typeof body.small_straight !== 'undefined') { %>
               <p><%= body.small_straight %></p>
-              <input type="hidden" name="small_straight"
-                value="<%= body.small_straight %>">
+              <input type="hidden" name="small_straight" value="<%= body.small_straight %>">
               <% } else { %>
-              <button name="small_straight" type="submit"
-                value="<%= scores.small_straight %>"
+              <button name="small_straight" type="submit" value="<%= scores.small_straight %>"
                 <%= visibility %>><%= scores.small_straight %></button>
               <% } %>
             </td>
@@ -269,11 +268,9 @@
             <td class="centerColumn">
               <% if (typeof body.large_straight !== 'undefined') { %>
               <p><%= body.large_straight %></p>
-              <input type="hidden" name="large_straight"
-                value="<%= body.large_straight %>">
+              <input type="hidden" name="large_straight" value="<%= body.large_straight %>">
               <% } else { %>
-              <button name="large_straight" type="submit"
-                value="<%= scores.large_straight %>"
+              <button name="large_straight" type="submit" value="<%= scores.large_straight %>"
                 <%= visibility %>><%= scores.large_straight %></button>
               <% } %>
             </td>

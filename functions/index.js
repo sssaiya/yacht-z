@@ -17,6 +17,22 @@ app.set("views", "./views");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const moveList = [
+  "ones",
+  "twos",
+  "threes",
+  "fours",
+  "fives",
+  "sixes",
+  "three_of_a_kind",
+  "four_of_a_kind",
+  "full_house",
+  "small_straight",
+  "large_straight",
+  "chance",
+  "yacht_z",
+];
+
 // ejs views app - GET
 // For the initial start request
 app.get("/app", (req, res) => {
@@ -27,19 +43,37 @@ app.get("/app", (req, res) => {
     diceSum += num;
   });
   const scores = makeScoreArray(newRolls);
+
+  let ai_scores = {
+    ones: "",
+    twos: "",
+    threes: "",
+    fours: "",
+    fives: "",
+    sixes: "",
+    three_of_a_kind: "",
+    four_of_a_kind: "",
+    full_house: "",
+    small_straight: "",
+    large_straight: "",
+    chance: "",
+    yacht_z: "",
+  };
+
   res.render("scorecard", {
-    body: { dicetotal: diceSum, rollNum: 0 },
+    body: { dicetotal: diceSum, rollNum: 0, ai_scores: ai_scores },
     dice: newRolls,
     scores: scores,
-    visibility: 'style=visibility:hidden',
-    Roll: 'ROLL',
-    playermode: 'single',
-    opponentName: 'CPU'
+    visibility: "style=visibility:hidden",
+    Roll: "ROLL",
+    playermode: "single",
+    opponentName: "CPU",
   });
 });
 
 // ejs views app - POST
 // For every subsequent post On clicking reRoll
+let moveCount = 0;
 app.post("/app", (req, res) => {
   let dieNames = ["die1", "die2", "die3", "die4", "die5"];
   let dice = [];
@@ -54,20 +88,40 @@ app.post("/app", (req, res) => {
 
   const scores = makeScoreArray(dice);
 
+  //Check if player has just completed a turn
+  const movesPlayed = getMovesPlayed(req.body);
+
+  if (movesPlayed > moveCount) {
+    console.log("HERE\n\n\n\nAI TIME\n");
+    aiMove();
+    moveCount = movesPlayed;
+    //modify ai_scores
+  }
+
   res.render("scorecard", {
     body: req.body,
     dice: dice,
     scores: scores,
-    visibility: 'style=visibility:visible',
-    Roll: 'REROLL x'+(3-req.body.rollNum),
-    playermode: 'single',
-    opponentName: 'CPU'
+    visibility: "style=visibility:visible",
+    Roll: "REROLL x" + (3 - req.body.rollNum),
+    playermode: "single",
+    opponentName: "CPU",
   });
 });
 
+function getMovesPlayed(body) {
+  let played = 0;
+  for (let [key, value] of Object.entries(body)) {
+    if (moveList.includes(key)) {
+      played++;
+    }
+  }
+  return played;
+}
+
 // ejs views app - GET
 // For the initial start multiplayer request
-app.get('/multiplayer', (req, res) => {
+app.get("/multiplayer", (req, res) => {
   let newRolls = [];
   newRolls = getNRolls(5);
   let diceSum = 0;
@@ -79,11 +133,11 @@ app.get('/multiplayer', (req, res) => {
     body: { dicetotal: diceSum, rollNum: 0 },
     dice: newRolls,
     scores: scores,
-    visibility: 'style=visibility:hidden',
-    Roll: 'ROLL',
-    playermode: 'multiplayer',
+    visibility: "style=visibility:hidden",
+    Roll: "ROLL",
+    playermode: "multiplayer",
     roomCode: req.query.roomCode,
-    opponentName: 'Waiting...'
+    opponentName: "Waiting...",
   });
 });
 
@@ -202,7 +256,6 @@ function straight(n, dice) {
   const diceSortedUniqueArray = [...diceSortedUnique];
 
   if (n == 4) {
-
     //small straight check
     if (isArrayInArray(smallStraights, diceSortedUniqueArray)) {
       score = 30;
@@ -230,25 +283,44 @@ function chanceScore(dice) {
   });
   return score;
 }
+
+function aiMove() {
+  //   // greedy ai
+  //   maxScore = 0;
+  //   maxScoreMove = "";
+  //   for (move of moveList) {
+  //     let score = score(move);
+  //     if (score >= maxScore) {
+  //         maxScore = score;
+  //         maxScoreMove = move;
+  //     }
+  //   }
+  //   completeMove(maxScoreMove);
+
+  // Step 1. Roll the dice
+  const aiRolls = getNRolls(5);
+  console.log(aiRolls);
+
+  const ai_scores = makeScoreArray(aiRolls);
+  console.log("AI options");
+  console.log(ai_scores);
+  // let step1 = () => updateAIDice(aiRolls);
+  // TODO Step 1.5 randomly reroll dice between 1-2 times
+
+  // Step 2. Choose a button
+  // let cpuMove = cpuMoveList[Math.floor(Math.random() * cpuMoveList.length)];
+  // let step2 = () => completeMove(cpuMove, "cpu");
+  // let steps = [step1, step2];
+  // let i = 0;
+  // let timer = setInterval(() => {
+  //   steps[i++]();
+  //   if (i === steps.length) {
+  //     clearInterval(timer);
+  //   }
+  // }, AI_PAUSE);
+
+  // cpuMoveList.splice(cpuMoveList.indexOf(cpuMove), 1);
+}
+
 // Expose Express API as a single Cloud Function:
 exports.app = functions.https.onRequest(app);
-
-// TODO
-
-// SUm in EJS logic
-
-// 2) Game Logic - It needs to keep track of how many times you've rolled,
-//it'll probably be easier to just hide the re-roll button after N rolls than
-// like send a rejection response from the server for too many rolls
-
-// 3) Game Logic - This should probably be done after the first two game logic issues have been solved,
-//but we need to have some super basic opponent AI.
-//Don't put too much effort into making the AI super good or anything,
-//we just need the game to work.
-//Once you can play an actual game then we can go back and improve the AI if we want.
-
-// 4) Game Logic - We need a win condition. If we limit the number of times
-// the user can roll and calculate the score for each row,
-// and have an AI that does the same thing, that's basically the whole game.
-// This should be done after the above 3 game logics, but we need something that determines
-// if the game has been completed and who has won, and then a little popup congratulations with a replay button
