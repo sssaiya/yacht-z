@@ -280,14 +280,14 @@ function completeMove(move) {
     }
     document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
 
-    totalScore += scoreval;
-    document.getElementById("userScore").innerHTML = `${totalScore} points`; // --> OFF
+    userTotalScore += scoreval;
+    document.getElementById("userScore").innerHTML = `${userTotalScore} points`; // --> OFF
     if (typeof socket !== "undefined") {
         socket.emit("user-move", {
             move: move,
             score: scoreval,
             roomCode: currRoomCode,
-            opponentScore: totalScore,
+            opponentScore: userTotalScore,
         });
     }
 
@@ -301,16 +301,15 @@ function completeMove(move) {
     document.getElementById("opponentScore").innerHTML = `${opponentTotalScore} points`; // --> OFF
   }
   
-  try {
+  if (typeof socket !== "undefined") {
     socket.emit("user-move", {
       move: move,
       score: scoreval,
       roomCode: currRoomCode,
       opponentScore: userTotalScore,
     });
-  } catch(e) {
-    if (e instanceof ReferenceError) console.error("Socket not defined");
-  }
+  } 
+
   resetDice();
   toggleTurns();
 }
@@ -342,11 +341,9 @@ function updateDice(rollBtn, dice) {
   }
 
   // Send the new rolls to the opponent if multiplayer
-  try {
+  if (typeof socket !== "undefined") {
     socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
-  } catch (e) {
-    if (e instanceof ReferenceError) console.error("Socket not defined");
-  }
+  } 
 
   if (turn == turnEnum.USER) updateButtons();
   numRerolls++;
