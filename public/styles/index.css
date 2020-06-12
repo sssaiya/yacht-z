@@ -73,6 +73,7 @@ header {
 
 .roomBtn {
   border: none;
+  background-color: #092526;
   border-radius: 5px;
   height: 40px;
   font-family: sans-serif;
@@ -122,6 +123,7 @@ header {
   font-size: 1.3em;
   font-family: sans-serif;
   padding: 2px 8px;
+  margin-bottom: 2rem;
 }
 
 #singlePlayer {
@@ -161,7 +163,7 @@ header {
   grid-template-columns: 1fr 1fr;
   row-gap: 20px;
   margin: 0 auto;
-  max-width: 586px;
+  max-width: 50vw;
   width: 100%;
 }
 

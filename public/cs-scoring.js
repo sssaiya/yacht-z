@@ -276,6 +276,9 @@ function aiMove() {
 function completeMove(move) {
   toggleElements("row");
   let scoreval = score(move);
+  if (!validateMove(move)) {
+    scoreval = 0;
+  }
 
   if (turn == turnEnum.USER) {
     document.querySelector(`#${move}>.centerColumn`).innerHTML = scoreval;
@@ -287,49 +290,49 @@ function completeMove(move) {
     document.getElementById("opponentScore").innerHTML = `${opponentTotalScore} points`; // --> OFF
   }
   
-  try {
+  if (typeof socket !== "undefined") {
     socket.emit("user-move", {
       move: move,
       score: scoreval,
       roomCode: currRoomCode,
       opponentScore: userTotalScore,
     });
-  } catch(e) {
-    if (e instanceof ReferenceError) console.error("Socket not defined");
-  }
+  } 
+
   resetDice();
   toggleTurns();
 }
 function updateDice(rollBtn, dice) {
   if (turn == turnEnum.USER) {
     if (numRerolls == MAX_REROLLS) {
+        rollBtn.innerText = "REROLL";
         rollBtn.disabled = true;
         rollBtn.style.opacity = 0.4;
     }
-    rollBtn.innerText = "REROLL";
-  }
-  let rollValues = getNDiceRolls(5);
-  currentRolls = [];
-  for (let i = 0; i < 5; i++) {
-    if (dice[i].checked) {
-      currentRolls.push(
-        parseInt(dice[i].nextElementSibling.nextElementSibling.value)
-      );
-      dice[i].checked = false;
-    } else {
-      dice[i].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
-      dice[i].nextElementSibling.style.backgroundSize = "cover";
-      dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
-      currentRolls.push(rollValues[i]);
+    rollBtn.innerText = "REROLL x"+(2-numRerolls);
+    let rollValues = getNDiceRolls(5);
+    currentRolls = [];
+    for (let i = 0; i < 5; i++) {
+        if (dice[i].checked) {
+            currentRolls.push(
+                parseInt(dice[i].nextElementSibling.nextElementSibling.value)
+            );
+            dice[i].checked = false;
+        } else {
+            dice[
+                i
+            ].nextElementSibling.style.background = `url('images/die-${rollValues[i]}pips.png') no-repeat`;
+            dice[i].nextElementSibling.style.backgroundSize = "cover";
+            dice[i].nextElementSibling.nextElementSibling.value = rollValues[i];
+            currentRolls.push(rollValues[i]);
+        }
     }
   }
 
   // Send the new rolls to the opponent if multiplayer
-  try {
+  if (typeof socket !== "undefined") {
     socket.emit("user-roll", { rolls: currentRolls, roomCode: currRoomCode });
-  } catch (e) {
-    if (e instanceof ReferenceError) console.error("Socket not defined");
-  }
+  } 
 
   if (turn == turnEnum.USER) updateButtons();
   numRerolls++;
@@ -337,17 +340,33 @@ function updateDice(rollBtn, dice) {
 
 // Fills in the user buttons with the right moves
 function updateButtons() {
-  moveList.forEach((move) => {
-    let scoreval = score(move);
-    let button = document.querySelector(`#${move} button`);
-    if (button) {
-      if (validateMove(move)) {
-        button.innerHTML = scoreval;
-      } else {
-        button.innerHTML = 0;
-      }
-    }
-  });
+    let moveList = [
+        "ones",
+        "twos",
+        "threes",
+        "fours",
+        "fives",
+        "sixes",
+        "three_of_a_kind",
+        "four_of_a_kind",
+        "full_house",
+        "small_straight",
+        "large_straight",
+        "chance",
+        "yacht_z",
+    ];
+
+    moveList.forEach((move) => {
+        let scoreval = score(move);
+        let button = document.querySelector(`button[name=${move}]`);
+        if (button) {
+            if (validateMove(move)) {
+                button.innerHTML = scoreval;
+            } else {
+                button.innerHTML = 0;
+            }
+        }
+    });
 }
 
 // Displays the hidden dice/buttons when roll is clicked
