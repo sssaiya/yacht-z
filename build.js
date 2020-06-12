@@ -54,6 +54,22 @@ fs.copyFile(
   }
 );
 
+fs.copyFile(
+  "public/service-worker.js",
+  "dist/service-worker.js",
+  (err) => {
+    if (err) throw err;
+  }
+);
+
+fs.copyFile(
+  "public/sw.js",
+  "dist/sw.js",
+  (err) => {
+    if (err) throw err;
+  }
+);
+
 var compress_images = require("compress-images"),
   INPUT_path_to_your_images,
   OUTPUT_path;
