@@ -12,7 +12,7 @@
     "test": "",
     "test:unit": "",
     "coverage": "nyc npm test:unit",
-    "lint": "eslint public/js/*.js",
+    "lint": "eslint -c config/.eslintrc.json public/js/*.js",
     "validate": "html-validate public/*.html",
     "build-prod": "npm run lighthouse:ci",
     "purgeDiff": "node purgeCSSDiff.js",
