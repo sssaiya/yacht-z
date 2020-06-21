@@ -5,7 +5,7 @@ const jsdiff = require("diff");
 async function purge() {
   return await new PurgeCSS()
     .purge({
-      content: ["public/js/*.js", "public/*.html"],
+      content: ["public/js/*.js", "public/*.html", "functions/views/*.ejs"],
       css: ["public/styles/*.css"],
     })
     .catch((e) => {
