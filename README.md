@@ -2,6 +2,10 @@
 
 # Yacht-z
 
+![Yacht-z Logo](./public/images/logo.svg)
+
+Click [HERE](https://yacht-z.web.app/) To Play !
+
 ## Commands
 
 `npm run local`
