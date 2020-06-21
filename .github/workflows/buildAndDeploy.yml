@@ -51,7 +51,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy
+          args: deploy --project="yacht-z"
 
         env:
           FIREBASE_TOKEN: ${{ '1//06gjH5ddXVmbKCgYIARAAGAYSNgF-L9Ir_kyglWO9umc9lc1f_HJjB7zby9IVN0jRGQCq0RZTIe7aF_tJiceV3Rv8cqFvGiDUYQ' }}
