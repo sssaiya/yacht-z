@@ -209,12 +209,6 @@ th {
   justify-items: center;
 }
 
-#headerText {
-  grid-area: title;
-  margin: -110px 0 0 0px;
-  text-align: center;
-}
-
 #modalButton {
   align-self: center;
   background: none;
@@ -401,13 +395,6 @@ th {
   width: 90vw;
   margin-left: 6vw;
   transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-}
-
-#scorecard-label {
-  text-align:center;
-  letter-spacing:0.5em;
-  font-size: 1.3em;
-  width: 100vw;
 }
 
 #scorecard button {

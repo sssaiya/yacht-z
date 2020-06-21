@@ -5,8 +5,8 @@ const jsdiff = require("diff");
 async function purge() {
   return await new PurgeCSS()
     .purge({
-      content: ["public/*.js", "public/*.html"],
-      css: ["public/*.css"],
+      content: ["public/js/*.js", "public/*.html", "functions/views/*.ejs"],
+      css: ["public/styles/*.css"],
     })
     .catch((e) => {
       console.log(e);
@@ -25,6 +25,7 @@ Promise.resolve(purge()).then(function (value) {
       const originalCss = data.toString();
 
       var diff = jsdiff.diffCss(originalCss, purgedCss);
+      var printedFiledName = false;
       diff.forEach(function (part) {
         const toRemove = part.removed ? true : false;
         var color = part.added
@@ -33,7 +34,12 @@ Promise.resolve(purge()).then(function (value) {
           ? "\x1b[41m"
           : "\x1b[42m";
 
+        
         if (toRemove) {
+          if(!printedFiledName){
+            console.error(color + "%s\x1b[0m", "✗ Unused CSS found in "+fileName);
+            printedFiledName = true;
+          }
           console.error(color + "%s\x1b[0m", part.value);
           removed = true;
         }
