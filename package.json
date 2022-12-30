@@ -52,7 +52,7 @@
     "husky": "^4.2.5",
     "lighthouse": "^6.0.0",
     "make-dir": "^3.1.0",
-    "mocha": "^7.2.0",
+    "mocha": "^10.2.0",
     "node-minify": "^3.6.0",
     "nyc": "^15.1.0",
     "pngquant-bin": "^6.0.0",
